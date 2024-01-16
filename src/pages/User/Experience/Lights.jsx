@@ -113,7 +113,7 @@ const PointLights = () => {
       />
 
       {/* SIDE LIGHTS */}
-      {/* <pointLight
+      <pointLight
         ref={pointLight1}
         position={[-23, 13, -1.5]}
         color='#FFDB90'
@@ -127,7 +127,7 @@ const PointLights = () => {
         color='#FFDB90'
         intensity={8}
         distance={26}
-      /> */}
+      />
 
       {/* BACK LIGHTS */}
       {/* <pointLight
@@ -208,7 +208,7 @@ const Lights = () => {
   return (
     <>
       <PointLights />
-      {/* <SpotLights /> */}
+      <SpotLights />
       {/* <DirectionalLights /> */}
     </>
   )

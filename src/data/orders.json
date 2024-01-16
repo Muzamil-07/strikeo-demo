@@ -1,0 +1,574 @@
+{
+  "totalOrders": 93,
+  "orders": [
+    {
+      "id": "656f6b6bb35e0786567e3085",
+      "customer": "656bedc026c6abb43176c43e",
+      "orders": [
+        {
+          "company": {
+            "id": "65649e9c8ec2cb00c75f55c8",
+            "name": "Yamaha",
+            "description": "test",
+            "contact": {
+              "phone": "0000000000",
+              "email": "contact@yamaha.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "54000",
+            "address": "St 2 , 10-9B",
+            "website": "yamaha.com",
+            "logo": "",
+            "registrationDate": "2023-11-27T13:50:20.384Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 3,
+                "price": 3500
+              },
+              "product": "656cacdeaf3df07f8ceeebcf",
+              "isReviewed": false,
+              "_id": "656f6b6bb35e0786567e3087"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 1,
+                "price": 3500
+              },
+              "product": "656cacdeaf3df07f8ceeebcf",
+              "isReviewed": false,
+              "_id": "656f6b6bb35e0786567e3088"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 44,
+                "quantity": 4,
+                "price": 10000
+              },
+              "product": "656f222b15e96cdbb48882a0",
+              "isReviewed": false,
+              "_id": "656f6b6bb35e0786567e3089"
+            }
+          ],
+          "status": "Processing",
+          "vendorBill": 45200,
+          "_id": "656f6b6bb35e0786567e3086",
+          "agent": "656ca59daf3df07f8ceee72d"
+        },
+        {
+          "company": {
+            "id": "6558b2264f80e1e521e70654",
+            "name": "Devfum",
+            "description": "Random Description",
+            "contact": {
+              "phone": "03448243247",
+              "email": "salman247.dev@gmail.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "65757",
+            "address": "46-J model town ",
+            "website": "devfum.com",
+            "logo": "http://localhost:8000/uploads/1700311589584-profile-r3.png",
+            "registrationDate": "2023-11-18T12:46:30.808Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 24,
+                "quantity": 4,
+                "price": 3700
+              },
+              "product": "656f248215e96cdbb48883bc",
+              "isReviewed": false,
+              "_id": "656f6b6bb35e0786567e308b"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 24,
+                "quantity": 2,
+                "price": 3700
+              },
+              "product": "656f248215e96cdbb48883bc",
+              "isReviewed": false,
+              "_id": "656f6b6bb35e0786567e308c"
+            }
+          ],
+          "status": "Shipped",
+          "vendorBill": 16200,
+          "_id": "656f6b6bb35e0786567e308a",
+          "agent": "656ca59daf3df07f8ceee72d"
+        }
+      ],
+      "bill": 18885,
+      "payment": {
+        "method": "card",
+        "status": "Paid"
+      },
+      "isConfirmed": true,
+      "isCompleted": false,
+      "shippingDetails": {
+        "firstName": "Fasih",
+        "lastName": "ur Rehman",
+        "email": "rfasih14@gmail.com",
+        "phone": "03164246008",
+        "address": "140 tufail block canal bank scheme Lahore",
+        "city": "Lahore",
+        "state": "Punjab",
+        "country": "Pakistan",
+        "zipCode": "54000"
+      },
+      "orderedAt": "2023-11-12T12:26:36.055Z",
+      "orderNumber": "000001"
+    },
+    {
+      "id": "656f6b74b35e0786567e309e",
+      "customer": "656bedc026c6abb43176c43e",
+      "orders": [
+        {
+          "company": {
+            "id": "65649e9c8ec2cb00c75f55c8",
+            "name": "Yamaha",
+            "description": "test",
+            "contact": {
+              "phone": "0000000000",
+              "email": "contact@yamaha.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "54000",
+            "address": "St 2 , 10-9B",
+            "website": "yamaha.com",
+            "logo": "",
+            "registrationDate": "2023-11-27T13:50:20.384Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 4,
+                "price": 3500
+              },
+              "product": "656cacdeaf3df07f8ceeebcf",
+              "isReviewed": false,
+              "_id": "656f6b74b35e0786567e30a0"
+            }
+          ],
+          "status": "Delivered",
+          "vendorBill": 13200,
+          "_id": "656f6b74b35e0786567e309f",
+          "agent": null
+        },
+        {
+          "company": {
+            "id": "6558b2264f80e1e521e70654",
+            "name": "Devfum",
+            "description": "Random Description",
+            "contact": {
+              "phone": "03448243247",
+              "email": "salman247.dev@gmail.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "65757",
+            "address": "46-J model town ",
+            "website": "devfum.com",
+            "logo": "http://localhost:8000/uploads/1700311589584-profile-r3.png",
+            "registrationDate": "2023-11-18T12:46:30.808Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 24,
+                "quantity": 3,
+                "price": 3700
+              },
+              "product": "656f248215e96cdbb48883bc",
+              "isReviewed": false,
+              "_id": "656f6b74b35e0786567e30a2"
+            }
+          ],
+          "status": "Delivered",
+          "vendorBill": 8100,
+          "_id": "656f6b74b35e0786567e30a1",
+          "agent": null
+        }
+      ],
+      "bill": 19176,
+      "payment": {
+        "method": "card",
+        "status": "Paid"
+      },
+      "isConfirmed": true,
+      "isCompleted": true,
+      "shippingDetails": {
+        "firstName": "Fasih",
+        "lastName": "ur Rehman",
+        "email": "rfasih14@gmail.com",
+        "phone": "03164246008",
+        "address": "140 tufail block canal bank scheme Lahore",
+        "city": "Lahore",
+        "state": "Punjab",
+        "country": "Pakistan",
+        "zipCode": "54000"
+      },
+      "orderedAt": "2023-11-12T14:46:13.569Z",
+      "orderNumber": "000002"
+    },
+    {
+      "id": "656f6b78b35e0786567e30af",
+      "customer": "656bedc026c6abb43176c43e",
+      "orders": [
+        {
+          "company": {
+            "id": "65649e9c8ec2cb00c75f55c8",
+            "name": "Yamaha",
+            "description": "test",
+            "contact": {
+              "phone": "0000000000",
+              "email": "contact@yamaha.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "54000",
+            "address": "St 2 , 10-9B",
+            "website": "yamaha.com",
+            "logo": "",
+            "registrationDate": "2023-11-27T13:50:20.384Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 3,
+                "price": 4500
+              },
+              "product": "656dead51f8ba21313c5d982",
+              "isReviewed": false,
+              "_id": "656f6b78b35e0786567e30b1"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 44,
+                "quantity": 1,
+                "price": 10000
+              },
+              "product": "656f222b15e96cdbb48882a0",
+              "isReviewed": false,
+              "_id": "656f6b78b35e0786567e30b2"
+            }
+          ],
+          "status": "Pending",
+          "vendorBill": 19500,
+          "_id": "656f6b78b35e0786567e30b0"
+        },
+        {
+          "company": {
+            "id": "6558b2264f80e1e521e70654",
+            "name": "Devfum",
+            "description": "Random Description",
+            "contact": {
+              "phone": "03448243247",
+              "email": "salman247.dev@gmail.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "65757",
+            "address": "46-J model town ",
+            "website": "devfum.com",
+            "logo": "http://localhost:8000/uploads/1700311589584-profile-r3.png",
+            "registrationDate": "2023-11-18T12:46:30.808Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 24,
+                "quantity": 1,
+                "price": 3700
+              },
+              "product": "656f248215e96cdbb48883bc",
+              "isReviewed": false,
+              "_id": "656f6b78b35e0786567e30b4"
+            }
+          ],
+          "status": "Processing",
+          "vendorBill": 2700,
+          "_id": "656f6b78b35e0786567e30b3"
+        }
+      ],
+      "bill": 19019,
+      "payment": {
+        "method": "card",
+        "status": "Paid"
+      },
+      "isConfirmed": true,
+      "isCompleted": false,
+      "shippingDetails": {
+        "firstName": "Fasih",
+        "lastName": "ur Rehman",
+        "email": "rfasih14@gmail.com",
+        "phone": "03164246008",
+        "address": "140 tufail block canal bank scheme Lahore",
+        "city": "Lahore",
+        "state": "Punjab",
+        "country": "Pakistan",
+        "zipCode": "54000"
+      },
+      "orderedAt": "2023-11-13T06:35:54.493Z",
+      "orderNumber": "000003"
+    },
+    {
+      "id": "656f6b7cb35e0786567e30c3",
+      "customer": "656bedc026c6abb43176c43e",
+      "orders": [
+        {
+          "company": {
+            "id": "65649e9c8ec2cb00c75f55c8",
+            "name": "Yamaha",
+            "description": "test",
+            "contact": {
+              "phone": "0000000000",
+              "email": "contact@yamaha.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "54000",
+            "address": "St 2 , 10-9B",
+            "website": "yamaha.com",
+            "logo": "",
+            "registrationDate": "2023-11-27T13:50:20.384Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 2,
+                "price": 3500
+              },
+              "product": "656cacdeaf3df07f8ceeebcf",
+              "isReviewed": false,
+              "_id": "656f6b7cb35e0786567e30c5"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 4,
+                "price": 3500
+              },
+              "product": "656cacdeaf3df07f8ceeebcf",
+              "isReviewed": false,
+              "_id": "656f6b7cb35e0786567e30c6"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 2,
+                "price": 3500
+              },
+              "product": "656cacdeaf3df07f8ceeebcf",
+              "isReviewed": false,
+              "_id": "656f6b7cb35e0786567e30c7"
+            }
+          ],
+          "status": "Pending",
+          "vendorBill": 26400,
+          "_id": "656f6b7cb35e0786567e30c4"
+        },
+        {
+          "company": {
+            "id": "6558b2264f80e1e521e70654",
+            "name": "Devfum",
+            "description": "Random Description",
+            "contact": {
+              "phone": "03448243247",
+              "email": "salman247.dev@gmail.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "65757",
+            "address": "46-J model town ",
+            "website": "devfum.com",
+            "logo": "http://localhost:8000/uploads/1700311589584-profile-r3.png",
+            "registrationDate": "2023-11-18T12:46:30.808Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 24,
+                "quantity": 3,
+                "price": 3700
+              },
+              "product": "656f248215e96cdbb48883bc",
+              "isReviewed": false,
+              "_id": "656f6b7cb35e0786567e30c9"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 24,
+                "quantity": 1,
+                "price": 3700
+              },
+              "product": "656f248215e96cdbb48883bc",
+              "isReviewed": false,
+              "_id": "656f6b7cb35e0786567e30ca"
+            }
+          ],
+          "status": "Shipped",
+          "vendorBill": 10800,
+          "_id": "656f6b7cb35e0786567e30c8",
+          "agent": "656ca59daf3df07f8ceee72d"
+        }
+      ],
+      "bill": 13341,
+      "payment": {
+        "method": "card",
+        "status": "Paid"
+      },
+      "isConfirmed": true,
+      "isCompleted": false,
+      "shippingDetails": {
+        "firstName": "Fasih",
+        "lastName": "ur Rehman",
+        "email": "rfasih14@gmail.com",
+        "phone": "03164246008",
+        "address": "140 tufail block canal bank scheme Lahore",
+        "city": "Lahore",
+        "state": "Punjab",
+        "country": "Pakistan",
+        "zipCode": "54000"
+      },
+      "orderedAt": "2023-10-11T03:42:02.782Z",
+      "orderNumber": "000004"
+    },
+    {
+      "id": "656f6b81b35e0786567e30dd",
+      "customer": "656bedc026c6abb43176c43e",
+      "orders": [
+        {
+          "company": {
+            "id": "65649e9c8ec2cb00c75f55c8",
+            "name": "Yamaha",
+            "description": "test",
+            "contact": {
+              "phone": "0000000000",
+              "email": "contact@yamaha.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "54000",
+            "address": "St 2 , 10-9B",
+            "website": "yamaha.com",
+            "logo": "",
+            "registrationDate": "2023-11-27T13:50:20.384Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#000000",
+                "size": 22,
+                "quantity": 2,
+                "price": 3500
+              },
+              "product": "656cacdeaf3df07f8ceeebcf",
+              "isReviewed": false,
+              "_id": "656f6b81b35e0786567e30df"
+            },
+            {
+              "details": {
+                "color": "#000000",
+                "size": 44,
+                "quantity": 5,
+                "price": 10000
+              },
+              "product": "656f222b15e96cdbb48882a0",
+              "isReviewed": false,
+              "_id": "656f6b81b35e0786567e30e0"
+            }
+          ],
+          "status": "Delivered",
+          "vendorBill": 51600,
+          "_id": "656f6b81b35e0786567e30de",
+          "agent": "657058b0646476333fbffc64"
+        },
+        {
+          "company": {
+            "id": "6558b2264f80e1e521e70654",
+            "name": "Devfum",
+            "description": "Random Description",
+            "contact": {
+              "phone": "03448243247",
+              "email": "salman247.dev@gmail.com"
+            },
+            "country": "Pakistan",
+            "city": "Lahore",
+            "zipCode": "65757",
+            "address": "46-J model town ",
+            "website": "devfum.com",
+            "logo": "http://localhost:8000/uploads/1700311589584-profile-r3.png",
+            "registrationDate": "2023-11-18T12:46:30.808Z"
+          },
+          "items": [
+            {
+              "details": {
+                "color": "#b12b2b",
+                "size": 24,
+                "quantity": 1,
+                "price": 3900
+              },
+              "product": "656f259715e96cdbb48883d2",
+              "isReviewed": false,
+              "_id": "656f6b81b35e0786567e30e2"
+            }
+          ],
+          "status": "Shipped",
+          "vendorBill": 2900,
+          "_id": "656f6b81b35e0786567e30e1",
+          "agent": "656ca59daf3df07f8ceee72d"
+        }
+      ],
+      "bill": 19669,
+      "payment": {
+        "method": "card",
+        "status": "Paid"
+      },
+      "isConfirmed": true,
+      "isCompleted": false,
+      "shippingDetails": {
+        "firstName": "Fasih",
+        "lastName": "ur Rehman",
+        "email": "rfasih14@gmail.com",
+        "phone": "03164246008",
+        "address": "140 tufail block canal bank scheme Lahore",
+        "city": "Lahore",
+        "state": "Punjab",
+        "country": "Pakistan",
+        "zipCode": "54000"
+      },
+      "orderedAt": "2023-11-15T05:07:24.878Z",
+      "orderNumber": "000005"
+    }
+  ],
+  "totalPages": 19,
+  "hasPrevPage": false,
+  "hasNextPage": true,
+  "currentPage": 1
+}

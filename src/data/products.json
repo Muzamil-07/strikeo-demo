@@ -1,0 +1,292 @@
+[
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c1",
+		"name": "Leather Biker Jacket",
+		"description": "A classic leather biker jacket for a cool and edgy look.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["black", "brown"],
+		"tags": ["leather", "biker", "edgy"],
+		"availableSizes": ["S", "M", "L"],
+		"brand": "Brand X",
+		"shop": "Shop A",
+		"averageRating": 4.5,
+		"ratings": [
+			{
+				"user": "user1",
+				"rating": 5,
+				"reviewedDate": "2023-05-01T09:30:40Z",
+				"description": "I love this jacket! The quality of the leather is amazing, and it fits perfectly."
+			},
+			{
+				"user": "user2",
+				"rating": 4.5,
+				"reviewedDate": "2023-06-01T14:20:30Z",
+				"description": "Great jacket. It's comfortable and looks stylish. The only downside is that the zipper can be a bit stiff."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c2",
+		"name": "Denim Jacket",
+		"description": "A versatile denim jacket for a casual and timeless look.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["blue"],
+		"tags": ["denim", "casual", "timeless"],
+		"availableSizes": ["S", "M", "L"],
+		"brand": "Brand Y",
+		"shop": "Shop B",
+		"averageRating": 4.2,
+		"ratings": [
+			{
+				"user": "user3",
+				"rating": 4,
+				"reviewedDate": "2023-05-03T11:15:25Z",
+				"description": "I'm happy with this denim jacket. It's well-made and goes well with many outfits."
+			},
+			{
+				"user": "user4",
+				"rating": 4.5,
+				"reviewedDate": "2023-06-03T16:40:50Z",
+				"description": "Nice jacket. It has a comfortable fit and the denim material feels durable."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c3",
+		"name": "Puffer Jacket",
+		"description": "A lightweight and warm puffer jacket for cold weather.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["black", "blue", "red"],
+		"tags": ["puffer", "lightweight", "warm"],
+		"availableSizes": ["M", "L", "XL"],
+		"brand": "Brand Z",
+		"shop": "Shop C",
+		"averageRating": 4.7,
+		"ratings": [
+			{
+				"user": "user5",
+				"rating": 5,
+				"reviewedDate": "2023-05-05T13:45:30Z",
+				"description": "This puffer jacket is fantastic! It keeps me warm in freezing temperatures without feeling bulky."
+			},
+			{
+				"user": "user6",
+				"rating": 4.5,
+				"reviewedDate": "2023-06-05T10:20:15Z",
+				"description": "Great jacket for the price. It's lightweight yet provides excellent insulation."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c4",
+		"name": "Hooded Bomber Jacket",
+		"description": "A trendy hooded bomber jacket for a casual look.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["black", "green", "gray"],
+		"tags": ["bomber", "hooded", "casual"],
+		"availableSizes": ["S", "M", "L", "XL"],
+		"brand": "Brand Y",
+		"shop": "Shop B",
+		"averageRating": 4.2,
+		"ratings": [
+			{
+				"user": "user7",
+				"rating": 4,
+				"reviewedDate": "2023-05-07T16:40:25Z",
+				"description": "I really like the style of this jacket. The hood adds an extra level of comfort."
+			},
+			{
+				"user": "user8",
+				"rating": 4.5,
+				"reviewedDate": "2023-06-07T10:50:45Z",
+				"description": "Nice bomber jacket. It fits well and the material is of good quality."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c5",
+		"name": "Fleece-Lined Jacket",
+		"description": "A cozy fleece-lined jacket for extra warmth.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["black", "blue", "gray"],
+		"tags": ["fleece-lined", "cozy", "warm"],
+		"availableSizes": ["M", "L", "XL"],
+		"brand": "Brand Z",
+		"shop": "Shop C",
+		"averageRating": 4.6,
+		"ratings": [
+			{
+				"user": "user9",
+				"rating": 5,
+				"reviewedDate": "2023-05-09T11:30:40Z",
+				"description": "This jacket is incredibly warm and comfortable. Perfect for cold winter days."
+			},
+			{
+				"user": "user10",
+				"rating": 4.5,
+				"reviewedDate": "2023-06-09T08:15:55Z",
+				"description": "I love the soft fleece lining. It feels great against the skin."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c6",
+		"name": "Cropped Denim Jacket",
+		"description": "A trendy cropped denim jacket for a chic look.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["blue"],
+		"tags": ["cropped", "denim", "chic"],
+		"availableSizes": ["S", "M", "L"],
+		"brand": "Brand X",
+		"shop": "Shop A",
+		"averageRating": 4.8,
+		"ratings": [
+			{
+				"user": "user11",
+				"rating": 5,
+				"reviewedDate": "2023-05-11T13:25:50Z",
+				"description": "I absolutely adore this cropped denim jacket. It's stylish and fits perfectly."
+			},
+			{
+				"user": "user12",
+				"rating": 5,
+				"reviewedDate": "2023-06-11T16:55:15Z",
+				"description": "Great quality jacket. The cropped length adds a trendy touch."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c7",
+		"name": "Quilted Bomber Jacket",
+		"description": "A stylish quilted bomber jacket for a fashionable look.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["black", "navy", "burgundy"],
+		"tags": ["quilted", "bomber", "stylish"],
+		"availableSizes": ["S", "M", "L"],
+		"brand": "Brand Y",
+		"shop": "Shop B",
+		"averageRating": 4.0,
+		"ratings": [
+			{
+				"user": "user13",
+				"rating": 4,
+				"reviewedDate": "2023-05-13T12:10:35Z",
+				"description": "I'm happy with this quilted bomber jacket. It adds a trendy flair to my outfits."
+			},
+			{
+				"user": "user14",
+				"rating": 4,
+				"reviewedDate": "2023-06-13T10:30:40Z",
+				"description": "Nice jacket. The quilted design is unique and the fit is comfortable."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c8",
+		"name": "Waterproof Rain Jacket",
+		"description": "A functional waterproof rain jacket for protection against the elements.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["black", "blue", "yellow"],
+		"tags": ["waterproof", "rain", "functional"],
+		"availableSizes": ["M", "L", "XL"],
+		"brand": "Brand Z",
+		"shop": "Shop C",
+		"averageRating": 4.3,
+		"ratings": [
+			{
+				"user": "user15",
+				"rating": 4,
+				"reviewedDate": "2023-05-15T14:40:25Z",
+				"description": "This rain jacket keeps me dry during heavy downpours. It's a must-have for rainy seasons."
+			},
+			{
+				"user": "user16",
+				"rating": 4.5,
+				"reviewedDate": "2023-06-15T11:20:15Z",
+				"description": "Good quality waterproof jacket. It has a nice fit and the material is durable."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7c9",
+		"name": "Faux Leather Jacket",
+		"description": "A stylish faux leather jacket for a sleek and modern look.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["black", "brown"],
+		"tags": ["faux leather", "sleek", "modern"],
+		"availableSizes": ["S", "M", "L"],
+		"brand": "Brand X",
+		"shop": "Shop A",
+		"averageRating": 4.2,
+		"ratings": [
+			{
+				"user": "user17",
+				"rating": 4,
+				"reviewedDate": "2023-05-17T16:55:35Z",
+				"description": "I love this faux leather jacket. It looks and feels like real leather."
+			},
+			{
+				"user": "user18",
+				"rating": 4.5,
+				"reviewedDate": "2023-06-17T10:45:40Z",
+				"description": "Nice jacket. It's comfortable and the faux leather material is of good quality."
+			}
+		]
+	},
+	{
+		"id": "5f1a8b2e4c7a2d93e810f7ca",
+		"name": "Shearling Jacket",
+		"description": "A cozy shearling jacket for a warm and stylish winter.",
+		"category": "jacket",
+		"price": 25000,
+		"images": ["/src/assets/images/leather-jacket.png", "/src/assets/images/leather-jacket.png"],
+		"defaultImage": "/src/assets/images/leather-jacket.png",
+		"availableColors": ["brown"],
+		"tags": ["shearling", "cozy", "winter"],
+		"availableSizes": ["S", "M", "L"],
+		"brand": "Brand Z",
+		"shop": "Shop C",
+		"averageRating": 4.8,
+		"ratings": [
+			{
+				"user": "user19",
+				"rating": 5,
+				"reviewedDate": "2023-06-03T13:25:50Z",
+				"description": "This shearling jacket is so comfortable and warm. I love wearing it during the winter months."
+			},
+			{
+				"user": "user20",
+				"rating": 5,
+				"reviewedDate": "2023-06-22T16:55:15Z",
+				"description": "Great quality jacket. The shearling lining is soft and luxurious."
+			}
+		]
+	}
+]

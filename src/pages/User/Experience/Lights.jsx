@@ -82,6 +82,7 @@ const PointLights = () => {
         position={[-27.5, 16, -17.5]}
         // position={[0, 20, 0]}
         color={'#FFDB90'}
+        distance={26}
         intensity={3}
       />
 

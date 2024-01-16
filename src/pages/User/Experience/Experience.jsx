@@ -78,6 +78,7 @@ import { SimpleMannequinWithBandana } from './Items/Mannequins/SimpleMannequinWi
 import ReactPlayer from 'react-player'
 import { useNavigate } from 'react-router-dom'
 import { Store } from './Store/Store'
+import { BakedStore } from './Store/BakedStore'
 
 // Function to get player input from keyboard and mouse
 function getInput (keyboard, mouse) {
@@ -331,7 +332,7 @@ const Scene = () => {
 
   return (
     <group>
-      <Lights />
+      {/* <Lights /> */}
       {/* <Room scale={12} rotation-y={Math.PI / 2} /> */}
       {/* <ClosedRoom scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
       <Boundries />
@@ -356,13 +357,14 @@ const Scene = () => {
       <TableWithLogo position={[0, 0, 0]} scale={10} rotation-y={Math.PI / 2} />
 
       <Setup scale={9} position={[-28, 0, -2]} rotation-y={Math.PI / 2} />
-      <AdaptiveDpr pixelated /> */}
+      */}
 
       {/* <Bike scale={7.5} position={[0, 0, 8]} rotation-y={Math.PI / 2} /> */}
-      <Store scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
+      {/* <Store scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} /> */}
+      <BakedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
       <Boundries />
       {/* <Environment files={'autumn_forest_04_1k.exr'} path='/' /> */}
-
+      <AdaptiveDpr pixelated />
       <Player walk={4} jump={5} input={() => getInput(keyboard, mouse)} />
       {/* <TestModels scale={5} rotation-x={Math.PI / 2} position={[15, 10, 0]} /> */}
       {/* <SolarPannels scale={5} position={[0, 12, 0]} /> */}

@@ -64,10 +64,10 @@ const PointLights = () => {
   const pointLight8 = useRef(null)
   const pointLight9 = useRef(null)
   // useHelper(pointLight1, PointLightHelper, 2, 'red')
-  // useHelper(pointLight2, PointLightHelper, 2, 'yellow')
+  useHelper(pointLight2, PointLightHelper, 2, 'yellow')
   // useHelper(pointLight3, PointLightHelper, 2, 'green')
   // useHelper(pointLight4, PointLightHelper, 2, 'orange')
-  // useHelper(pointLight5, PointLightHelper, 2, 'blue')
+  useHelper(pointLight5, PointLightHelper, 2, 'blue')
   // useHelper(pointLight6, PointLightHelper, 2, 'cyan')
   // useHelper(pointLight7, PointLightHelper, 2, 'blue')
   // useHelper(pointLight8, PointLightHelper, 2, 'cyan')
@@ -79,42 +79,43 @@ const PointLights = () => {
       <pointLight
         castShadow={settings.pointLight.castShadow}
         ref={pointLight5}
-        position={[-27.5, 16, -17.5]}
-        // position={[0, 20, 0]}
+        // position={[-27.5, 16, -17.5]}
+        position={[-17, 18, 8]}
         color={'#FFDB90'}
-        distance={26}
+        distance={55}
         intensity={3}
       />
 
-      <pointLight
+      {/* <pointLight
         castShadow={settings.pointLight.castShadow}
         ref={pointLight3}
         position={[-10, 16, -15]}
         color={'#FFDB90'}
         distance={26}
         intensity={3}
-      />
+      /> */}
 
       <pointLight
         castShadow={settings.pointLight.castShadow}
         ref={pointLight2}
-        position={[27, 16, -17.5]}
+        // position={[27, 16, -17.5]}
+        position={[17, 18, 8]}
         color={'#FFDB90'}
-        distance={26}
+        distance={55}
         intensity={3}
       />
 
-      <pointLight
+      {/* <pointLight
         castShadow={settings.pointLight.castShadow}
         ref={pointLight4}
         position={[10, 16, -15]}
         color={'#FFDB90'}
         distance={26}
         intensity={3}
-      />
+      /> */}
 
       {/* SIDE LIGHTS */}
-      <pointLight
+      {/* <pointLight
         ref={pointLight1}
         position={[-23, 13, -1.5]}
         color='#FFDB90'
@@ -128,7 +129,7 @@ const PointLights = () => {
         color='#FFDB90'
         intensity={8}
         distance={26}
-      />
+      /> */}
 
       {/* BACK LIGHTS */}
       {/* <pointLight
@@ -209,7 +210,7 @@ const Lights = () => {
   return (
     <>
       <PointLights />
-      <SpotLights />
+      {/* <SpotLights /> */}
       {/* <DirectionalLights /> */}
     </>
   )

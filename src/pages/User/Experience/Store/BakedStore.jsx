@@ -8,7 +8,7 @@ import { useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
 
 export function BakedStore (props) {
-  const { nodes, materials } = useGLTF('/models/light baking test.glb')
+  const { nodes, materials } = useGLTF('/models/light baking test1.glb')
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -32,7 +32,7 @@ export function BakedStore (props) {
         castShadow
         receiveShadow
         geometry={nodes.Curve003.geometry}
-        material={materials['Shiny Metal']}
+        material={materials['Shiny Metal.001']}
         position={[2.399, 1.587, 0.01]}
         rotation={[Math.PI / 2, 0, Math.PI / 2]}
         scale={1.048}
@@ -254,7 +254,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).001']}
           position={[0, 1.103, 0]}
           rotation={[0, 0, Math.PI]}
         />
@@ -262,7 +262,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring001.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).002']}
           position={[0, 0.871, 0]}
           rotation={[0, 0, Math.PI]}
         />
@@ -270,7 +270,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring002.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).002']}
           position={[0, 0.871, -1.904]}
           rotation={[0, 0, Math.PI]}
         />
@@ -278,7 +278,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring003.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).001']}
           position={[0, 1.103, -1.904]}
           rotation={[0, 0, Math.PI]}
         />
@@ -286,7 +286,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring004.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).002']}
           position={[0, 0.871, -3.289]}
           rotation={[0, 0, Math.PI]}
         />
@@ -294,7 +294,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring005.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).001']}
           position={[0, 1.103, -3.289]}
           rotation={[0, 0, Math.PI]}
         />
@@ -302,7 +302,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring006.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).002']}
           position={[0, 0.871, 1.372]}
           rotation={[0, 0, Math.PI]}
         />
@@ -310,7 +310,7 @@ export function BakedStore (props) {
           castShadow
           receiveShadow
           geometry={nodes.ring007.geometry}
-          material={materials['metals (aluminium)']}
+          material={materials['metals (aluminium).001']}
           position={[0, 1.103, 1.372]}
           rotation={[0, 0, Math.PI]}
         />
@@ -509,7 +509,7 @@ export function BakedStore (props) {
         castShadow
         receiveShadow
         geometry={nodes.s23Pluse_cream_mat_s23_cream_0001.geometry}
-        material={materials.mat_s23_cream}
+        material={materials['mat_s23_cream.001']}
         position={[-0.152, 1.037, -0.193]}
         rotation={[-Math.PI / 2, 0.392, Math.PI / 2]}
         scale={1.064}
@@ -527,7 +527,7 @@ export function BakedStore (props) {
         castShadow
         receiveShadow
         geometry={nodes.Object_2003.geometry}
-        material={materials['Scene_-_Root']}
+        material={materials['Scene_-_Root.001']}
         position={[-0.165, 0.925, -0.183]}
         scale={0.001}
       />
@@ -535,7 +535,7 @@ export function BakedStore (props) {
         castShadow
         receiveShadow
         geometry={nodes.Object_2004.geometry}
-        material={materials['Scene_-_Root']}
+        material={materials['Scene_-_Root.001']}
         position={[-0.165, 0.925, -0.375]}
         scale={0.001}
       />
@@ -3744,4 +3744,4 @@ export function BakedStore (props) {
   )
 }
 
-useGLTF.preload('/models/light baking test.glb')
+useGLTF.preload('/models/light baking test1.glb')

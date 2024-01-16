@@ -332,7 +332,7 @@ const Scene = () => {
 
   return (
     <group>
-      {/* <Lights /> */}
+      <Lights />
       {/* <Room scale={12} rotation-y={Math.PI / 2} /> */}
       {/* <ClosedRoom scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
       <Boundries />
@@ -365,7 +365,7 @@ const Scene = () => {
       <Boundries />
       {/* <Environment files={'autumn_forest_04_1k.exr'} path='/' /> */}
       <AdaptiveDpr pixelated />
-      <Player walk={4} jump={5} input={() => getInput(keyboard, mouse)} />
+      <Player walk={2} jump={5} input={() => getInput(keyboard, mouse)} />
       {/* <TestModels scale={5} rotation-x={Math.PI / 2} position={[15, 10, 0]} /> */}
       {/* <SolarPannels scale={5} position={[0, 12, 0]} /> */}
     </group>

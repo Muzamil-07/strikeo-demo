@@ -331,7 +331,7 @@ const Scene = () => {
 
   return (
     <group>
-      {/* <Lights /> */}
+      <Lights />
       {/* <Room scale={12} rotation-y={Math.PI / 2} /> */}
       {/* <ClosedRoom scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
       <Boundries />
@@ -361,7 +361,7 @@ const Scene = () => {
       {/* <Bike scale={7.5} position={[0, 0, 8]} rotation-y={Math.PI / 2} /> */}
       <Store scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
       <Boundries />
-      <Environment files={'autumn_forest_04_1k.exr'} path='/' />
+      {/* <Environment files={'autumn_forest_04_1k.exr'} path='/' /> */}
 
       <Player walk={4} jump={5} input={() => getInput(keyboard, mouse)} />
       {/* <TestModels scale={5} rotation-x={Math.PI / 2} position={[15, 10, 0]} /> */}

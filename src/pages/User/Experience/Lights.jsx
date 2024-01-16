@@ -79,13 +79,13 @@ const PointLights = () => {
       <pointLight
         castShadow={settings.pointLight.castShadow}
         ref={pointLight5}
-        // position={[-27.5, 16, -17.5]}
-        position={[0, 20, 0]}
+        position={[-27.5, 16, -17.5]}
+        // position={[0, 20, 0]}
         color={'#FFDB90'}
         intensity={3}
       />
 
-      {/* <pointLight
+      <pointLight
         castShadow={settings.pointLight.castShadow}
         ref={pointLight3}
         position={[-10, 16, -15]}
@@ -110,7 +110,7 @@ const PointLights = () => {
         color={'#FFDB90'}
         distance={26}
         intensity={3}
-      /> */}
+      />
 
       {/* SIDE LIGHTS */}
       {/* <pointLight

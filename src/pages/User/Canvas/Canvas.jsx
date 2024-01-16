@@ -1,15 +1,7 @@
 /* eslint-disable react/no-unknown-property */
-'use client'
-import {
-  MeshReflectorMaterial,
-  OrbitControls,
-  Preload,
-  SoftShadows,
-  Stage
-} from '@react-three/drei'
+import { OrbitControls, Preload, SoftShadows } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React, { Suspense, useEffect, useState } from 'react'
-import * as THREE from 'three'
 import CanvasLoader from './CanvasLoader'
 
 const ModelCanvas = ({ children, autoRotate = true }) => {

@@ -389,12 +389,13 @@ const Experience = () => {
           height: '100vh',
           position: 'fixed'
         }}
+        gl={{ powerPreference: 'high-performance' }}
         camera={{
           fov: 65,
           near: 0.1,
           far: 1000
         }}
-        shadows
+        dpr={[1, 2]}
       >
         <Suspense fallback={<Loader3d />}>
           <Perf position='top-left' />

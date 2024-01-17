@@ -389,7 +389,9 @@ const Experience = () => {
           height: '100vh',
           position: 'fixed'
         }}
-        gl={{ powerPreference: 'high-performance' }}
+        gl={{
+          antialias: false
+        }}
         camera={{
           fov: 65,
           near: 0.1,

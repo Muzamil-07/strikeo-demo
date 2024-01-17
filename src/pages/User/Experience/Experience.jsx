@@ -357,10 +357,10 @@ const Scene = () => {
         <Helmets />
       </group> */}
 
-      <Samsung scale={11} position={[4, 10.5, 1]} />
+      {/* <Samsung scale={11} position={[4, 10.5, 1]} />
       <Samsung scale={11} position={[-4, 10.5, 1]} />
 
-      <TableWithLogo position={[0, 0, 0]} scale={10} rotation-y={Math.PI / 2} />
+      <TableWithLogo position={[0, 0, 0]} scale={10} rotation-y={Math.PI / 2} /> */}
 
       {/* <Setup scale={9} position={[-28, 0, -2]} rotation-y={Math.PI / 2} /> */}
 

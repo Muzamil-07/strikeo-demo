@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unknown-property */
 import {
   AdaptiveDpr,
+  AdaptiveEvents,
   BakeShadows,
   Environment,
   FirstPersonControls,
@@ -79,6 +80,7 @@ import ReactPlayer from 'react-player'
 import { useNavigate } from 'react-router-dom'
 import { Store } from './Store/Store'
 import { BakedStore } from './Store/BakedStore'
+import { OptimizedStore } from './Store/OptimizeStore'
 
 // Function to get player input from keyboard and mouse
 function getInput (keyboard, mouse) {
@@ -322,6 +324,13 @@ const Boundries = () => {
         opacity={0}
         rotation={[0, Math.PI / 2, 0]}
       />
+      <Barriers
+        position={[0, 0.2, 0]}
+        transparent={true}
+        geometry={[200, 200]}
+        opacity={0}
+        rotation={[-Math.PI / 2, 0, 0]}
+      />
     </>
   )
 }
@@ -361,10 +370,12 @@ const Scene = () => {
 
       {/* <Bike scale={7.5} position={[0, 0, 8]} rotation-y={Math.PI / 2} /> */}
       {/* <Store scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} /> */}
-      <BakedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
+      {/* <BakedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} /> */}
+      <OptimizedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
       <Boundries />
       {/* <Environment files={'autumn_forest_04_1k.exr'} path='/' /> */}
       <AdaptiveDpr pixelated />
+      <AdaptiveEvents />
       <Player walk={2} jump={5} input={() => getInput(keyboard, mouse)} />
       {/* <TestModels scale={5} rotation-x={Math.PI / 2} position={[15, 10, 0]} /> */}
       {/* <SolarPannels scale={5} position={[0, 12, 0]} /> */}
@@ -389,8 +400,6 @@ const Experience = () => {
         }}
         shadows
       >
-        <SoftShadows size={8} samples={40} focus={1} />
-        <BakeShadows />
         <Suspense fallback={<Loader3d />}>
           <Perf position='top-left' />
           <Physics>

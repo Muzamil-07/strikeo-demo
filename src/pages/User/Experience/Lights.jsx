@@ -46,7 +46,7 @@ const SpotLights = () => {
         color='#FFDB90'
         position={[0, 25, 15]}
         angle={0.6}
-        intensity={2}
+        intensity={4}
         distance={90}
         penumbra={1}
       />
@@ -171,6 +171,10 @@ const DirectionalLights = () => {
   useHelper(dirLight4, DirectionalLightHelper, 3, 'orange')
   useHelper(dirLight5, DirectionalLightHelper, 3, 'cyan')
 
+  useLayoutEffect(() => {
+    dirLight2.current.target.position.set(0, 0, -70)
+    dirLight2.current.target.updateMatrixWorld()
+  }, [])
   return (
     <>
       {/* <directionalLight
@@ -179,13 +183,13 @@ const DirectionalLights = () => {
   color='white'
   intensity={settings.directionalLight.intensity}
 /> */}
-      <directionalLight
+      {/* <directionalLight
         ref={dirLight2}
-        position={[7, 7, 7]}
-        color='white'
-        intensity={settings.directionalLight.intensity}
-      />
-      <directionalLight
+        position={[0, 10, 0]}
+        color='#FFDB90'
+        intensity={0.5}
+      /> */}
+      {/* <directionalLight
         ref={dirLight3}
         position={[-7, 7, 7]}
         color='white'
@@ -202,7 +206,7 @@ const DirectionalLights = () => {
         position={[-7, 7, -7]}
         color='white'
         intensity={settings.directionalLight.intensity}
-      />
+      /> */}
     </>
   )
 }

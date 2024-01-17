@@ -357,21 +357,17 @@ const Scene = () => {
         <Helmets />
       </group> */}
 
-      {/* <Samsung scale={11} position={[4, 10.5, 1]} />
+      <Samsung scale={11} position={[4, 10.5, 1]} />
       <Samsung scale={11} position={[-4, 10.5, 1]} />
-      <OptBike scale={7.5} position={[0, 0, 8]} rotation-y={Math.PI / 2} />
-      <TyreRack scale={6} position={[26, 0, 0]} />
-      <Mannequins />
 
       <TableWithLogo position={[0, 0, 0]} scale={10} rotation-y={Math.PI / 2} />
 
-      <Setup scale={9} position={[-28, 0, -2]} rotation-y={Math.PI / 2} />
-      */}
+      {/* <Setup scale={9} position={[-28, 0, -2]} rotation-y={Math.PI / 2} /> */}
 
       {/* <Bike scale={7.5} position={[0, 0, 8]} rotation-y={Math.PI / 2} /> */}
       {/* <Store scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} /> */}
-      {/* <BakedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} /> */}
-      <OptimizedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
+      <BakedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
+      {/* <OptimizedStore scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} /> */}
       <Boundries />
       {/* <Environment files={'autumn_forest_04_1k.exr'} path='/' /> */}
       <AdaptiveDpr pixelated />

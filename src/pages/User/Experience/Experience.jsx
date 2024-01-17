@@ -341,7 +341,7 @@ const Scene = () => {
 
   return (
     <group>
-      <Lights />
+      {/* <Lights /> */}
       {/* <Room scale={12} rotation-y={Math.PI / 2} /> */}
       {/* <ClosedRoom scale={[10, 10, 10.5]} rotation-y={Math.PI / 2} />
       <Boundries />

@@ -167,7 +167,6 @@ const VendorTabs = ({ selectedVendor, setSelectedVendor, getVendors, currentPage
 			getVendors(currentPage);
 			getVendor();
 		} catch (error) {
-			console.log(error);
 			toast.error("Failed to update vendor!");
 		}
 		setActionLoader({ ...actionLoader, vendor: false });
@@ -274,14 +273,12 @@ const VendorTabs = ({ selectedVendor, setSelectedVendor, getVendors, currentPage
 				imgData = res.data;
 			}
 
-			// console.log("imgData: ", imgData[0]?.[company?.file?.name]);
 
 			const res = await http.put("company/" + vendor.company.id, {
 				...vendor.company,
 				logo: vendor.company.file ? imgData[0]?.[vendor.company?.file?.name] : vendor.company.logo,
 			});
 
-			// console.log(res.data.data, "company updated");
 			toast.success("Company updated successfully");
 			setVendor({ ...vendor, company: res.data.data });
 			setMode("view");

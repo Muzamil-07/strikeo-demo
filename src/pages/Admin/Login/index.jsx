@@ -64,7 +64,6 @@ const Login = () => {
 
 				const { token, role, ...details } = response.data.data;
 
-				// console.log(role);
 
 				if (role && role.type !== "StrikeO" && role !== "employee" && role.type !== "Vendor") {
 					toast.error("Authorization failed");

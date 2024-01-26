@@ -153,8 +153,6 @@ const Login = () => {
         password: form.password
       })
 
-      console.log('RES', response)
-
       if ('error' in response) {
         toast.error(response.error.data.message, toastOptions)
       } else {

@@ -19,7 +19,7 @@ export function CricketHelmet (props) {
       }}
       onClick={event => {
         event.stopPropagation()
-        console.log('---->', event.object)
+
         navigate('/products/category/sports', {
           state: {
             category: 'sports',

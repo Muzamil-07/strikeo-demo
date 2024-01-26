@@ -9,14 +9,15 @@ import ExportModel from '../components/ModelExporter'
 import Header from '../components/Header/Header'
 import { Pagination } from 'flowbite-react'
 import VideoComponent from '../components/Video/VideoComponent'
+import { useSelector } from 'react-redux'
 
 const Products = () => {
   const { state } = useLocation()
-  console.log('----------=======', state)
+  const contentvisibilty = useSelector(state => state.contentvisibilty)
 
   if (!state) return <Navigate to='/experience' />
   const [currentPage, setCurrentPage] = useState(1)
-  const [contentVisibility, setContentVisibility] = useState(false)
+  // const [contentVisibility, setContentVisibility] = useState(false)
 
   const { category } = useParams()
 
@@ -50,11 +51,11 @@ const Products = () => {
 
   return (
     <>
-      <VideoComponent setContentVisibility={setContentVisibility} />
-
       <Header background={'black'} />
-      {contentVisibility && (
-        <div className="bg-[url('/strikeo.png')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
+      <VideoComponent />
+
+      {contentvisibilty && (
+        <div className="bg-[url('/strikeo.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
           <div className='fixed left-0 top-0 bg-black bg-opacity-60 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none'></div>
           <div className='fixed inset-0 z-[1065] h-full  pt-[6rem] pb-[3rem]'>
             <div className='h-full w-11/12 mx-auto rounded-2xl bg-primary bg-opacity-70 pl-8 pr-6 py-8'>

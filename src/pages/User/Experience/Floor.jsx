@@ -6,7 +6,6 @@ import * as THREE from 'three'
 const Floor = () => {
   const base = useTexture('/models/Floor/base.png')
   base.flipY = true
-  console.log(base)
   const normal = useTexture('/models/Floor/normal.jpg')
   const roughness = useTexture('/models/Floor/roughness.jpg')
 

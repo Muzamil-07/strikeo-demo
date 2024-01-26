@@ -5,6 +5,7 @@ import { Avatar, Button, Dropdown, Navbar } from 'flowbite-react'
 import {
   nodeAPI,
   useGetAllCategoriesQuery,
+  useGetAllProductsQuery,
   useGetCartQuery,
   useGetFavouritesQuery,
   useRemoveItemFromCartMutation,
@@ -21,6 +22,10 @@ import Favourites from '../../../../components/Favourites'
 import ShoppingCart from '../../../../components/Cart'
 import { HiShoppingCart } from 'react-icons/hi'
 import { MdOutlineRateReview } from 'react-icons/md'
+import { ReactSearchAutocomplete } from 'react-search-autocomplete'
+import { useDebounce } from 'use-debounce'
+import { FaSearch } from 'react-icons/fa'
+import { setContentVisibilty } from '../../../../redux/slices/ContentVisibility'
 
 const Header = ({ background }) => {
   const navigate = useNavigate()
@@ -28,6 +33,7 @@ const Header = ({ background }) => {
 
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isFavouritesOpen, setIsFavouritesOpen] = useState(false)
+  const [searchText, setSearchText] = useState('')
   const [removeItemFromCart] = useRemoveItemFromCartMutation()
   const [removeItemFromFavourites] = useRemoveItemFromFavouritesMutation()
 
@@ -41,7 +47,6 @@ const Header = ({ background }) => {
   }, [data])
 
   const handleCheckout = () => {
-    // console.log("Checkout:", items);
     // setItems([]);
     setIsCartOpen(false)
   }
@@ -51,6 +56,11 @@ const Header = ({ background }) => {
     isLoading: isCartLoading,
     isError: isCartError
   } = useGetCartQuery()
+  const { data: productsData } = useGetAllProductsQuery({
+    page: 1,
+    search: searchText,
+    limit: 10
+  })
   const {
     data: favouriteData,
     isLoading: isFavouriteLoading,
@@ -71,7 +81,6 @@ const Header = ({ background }) => {
   }
 
   const handleRemoveFav = async product => {
-    console.log(product)
     const response = await removeItemFromFavourites(product.id)
     // try {
     //   const res = await http.post("/user/favourites/remove/" + product.id);
@@ -92,6 +101,37 @@ const Header = ({ background }) => {
     navigate('/login')
   }
 
+  const handleOnSearch = (string, results) => {
+    // onSearch will have as the first callback parameter
+    // the string searched and for the second the results.
+    setSearchText(string)
+  }
+
+  // const handleOnHover = (result) => {
+  // 	// the item hovered
+  // 	console.log(result);
+  // };
+
+  const handleOnSelect = item => {
+    navigate(`/products/${item.id}`, {
+      state: {
+        category: item.category,
+        item
+      }
+    })
+  }
+
+  const formatResult = item => {
+    return (
+      <div className='flex gap-4 cursor-pointer'>
+        <img src={item.image} alt={item.name} className='w-8 h-8' />
+        <span>{item.name}</span>
+      </div>
+    )
+  }
+
+  const [toggleSearchbar, setToggleSearchbar] = useState(false)
+
   if (categories)
     return (
       <>
@@ -110,7 +150,28 @@ const Header = ({ background }) => {
               STRIKE-O
             </span>
           </Navbar.Brand>
-          <div className='flex md:order-2'>
+
+          <div className='flex gap-4 md:order-2'>
+            <div style={{ width: !toggleSearchbar ? '' : 350 }}>
+              {!toggleSearchbar ? (
+                <FaSearch
+                  color='white'
+                  size={30}
+                  className='mt-2 mr-3 cursor-pointer'
+                  onClick={() => setToggleSearchbar(true)}
+                />
+              ) : (
+                <ReactSearchAutocomplete
+                  items={productsData?.data?.products || []}
+                  onSearch={handleOnSearch}
+                  onSelect={handleOnSelect}
+                  inputDebounce={1000}
+                  autoFocus
+                  formatResult={formatResult}
+                />
+              )}
+            </div>
+
             <Dropdown
               arrowIcon={false}
               inline
@@ -161,6 +222,7 @@ const Header = ({ background }) => {
     <Dropdown.Divider />
     <Dropdown.Item>Sign out</Dropdown.Item> */}
             </Dropdown>
+
             <Navbar.Toggle />
             {cartData && (
               <div
@@ -204,6 +266,7 @@ const Header = ({ background }) => {
                           category: category.name,
                           item: 'laptop'
                         }}
+                        onClick={()=>dispatch(setContentVisibilty(true))}
                       >
                         {category.name}
                       </Link>
@@ -221,12 +284,15 @@ const Header = ({ background }) => {
                         className='w-[300px]'
                       >
                         {category.subCategories.map((subCategory, index) => (
-                          <Dropdown.Item key={index}>
+                          <Dropdown.Item
+                            key={index}
+                            onClick={() => dispatch(setContentVisibilty(true))}
+                          >
                             <Link
                               to={`/products/category/${category.name}`}
                               state={{
                                 category: category.name,
-                                item: ''
+                                item: 'laptop'
                               }}
                               className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'
                             >

@@ -55,7 +55,6 @@ const Home = () => {
         productId: id,
       });
 
-      console.log(res.data.data, "--------- Cart Details ---------");
 
       dispatch(setCart(res.data.data));
       toast.success(`Item removed from cart!`);

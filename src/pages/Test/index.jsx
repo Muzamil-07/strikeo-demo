@@ -19,7 +19,6 @@ const Test = () => {
     setIsLoginModalOpen(false);
   };
   const openLoginModal = () => {
-    console.log("openLoginModal");
     setIsLoginModalOpen(true);
   };
   const openCartModal = () => {

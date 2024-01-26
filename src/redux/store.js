@@ -1,18 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./slices/User";
-import jacketPositionReducer from "./slices/JacketPosition";
-import cartReducer from "./slices/Cart";
-import themeReducer from "./slices/Theme";
-import favouritesReducer from "./slices/Favourite";
-import categoriesReducer from "./slices/Category";
-import billingReducer from "./slices/Billing";
-import vendorViewReducer from "./slices/View";
-import storage from "redux-persist/lib/storage";
+import { configureStore } from '@reduxjs/toolkit'
+import userReducer from './slices/User'
+import jacketPositionReducer from './slices/JacketPosition'
+import cartReducer from './slices/Cart'
+import themeReducer from './slices/Theme'
+import favouritesReducer from './slices/Favourite'
+import categoriesReducer from './slices/Category'
+import billingReducer from './slices/Billing'
+import vendorViewReducer from './slices/View'
+import contentVisibilityReducer from './slices/ContentVisibility'
+import storage from 'redux-persist/lib/storage'
 
-import { combineReducers } from "redux";
-import { persistReducer } from "redux-persist";
-import { nodeAPI } from "../services/nodeApi";
-import { setupListeners } from "@reduxjs/toolkit/query";
+import { combineReducers } from 'redux'
+import { persistReducer } from 'redux-persist'
+import { nodeAPI } from '../services/nodeApi'
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 const reducers = combineReducers({
   [nodeAPI.reducerPath]: nodeAPI.reducer,
@@ -24,23 +25,24 @@ const reducers = combineReducers({
   jacketPosition: jacketPositionReducer,
   categories: categoriesReducer,
   vendorView: vendorViewReducer,
-});
+  contentvisibilty: contentVisibilityReducer
+})
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  blacklist: ["nodeAPI"],
-};
+  blacklist: ['nodeAPI', 'contentvisibilty']
+}
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+const persistedReducer = persistReducer(persistConfig, reducers)
 
 export const store = configureStore({
   reducer: persistedReducer,
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ serializableCheck: false }).concat(
       nodeAPI.middleware
-    ),
-});
-setupListeners(store.dispatch);
+    )
+})
+setupListeners(store.dispatch)

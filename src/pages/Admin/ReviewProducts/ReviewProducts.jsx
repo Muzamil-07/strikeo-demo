@@ -152,7 +152,6 @@ const ReviewProducts = () => {
 			toast.success("Product rejected successfully.");
 			getProducts(currentPage);
 		} catch (error) {
-			console.log(error);
 			toast.error("Failed to reject product.");
 		}
 	};

@@ -26,7 +26,6 @@ export default function VendorsTable({
 		http
 			.put("vendor/block/" + id)
 			.then(() => {
-				// console.log(res.data, "user activation");
 				toast.success("User blocked successfully.");
 				getVendors(currentPage);
 			})
@@ -40,7 +39,6 @@ export default function VendorsTable({
 		http
 			.put("vendor/unblock/" + id)
 			.then(() => {
-				// console.log(res.data, "user activation");
 				toast.success("User unblocked successfully.");
 				getVendors(currentPage);
 			})

@@ -265,7 +265,6 @@ const Register = () => {
   useEffect(() => {
     if (isFormInvalid) {
       const errs = validateForm()
-      console.log('ERRORROROS', errs)
       setErrors(errs)
     }
   }, [form])
@@ -296,10 +295,8 @@ const Register = () => {
       } else {
         toast.success('Verification email has been sent!', toastOptions)
       }
-      console.log('RESPONSE:', response)
     }
 
-    console.log('VALUES:', form, errs)
   }
   return (
     <Modal

@@ -40,7 +40,6 @@ const Sales = () => {
           (searchedSale ? "&search=" + searchedSale : "")
       )
       .then((res) => {
-        // console.log(res.data.data, "res.data.data");
         setCurrentPage(res.data.data.currentPage);
         setPaginatedData(res.data.data);
       })
@@ -52,7 +51,6 @@ const Sales = () => {
     http
       .get("/role?all=true")
       .then((res) => {
-        // console.log(res.data.data, "res.data.data");
         setRoles(res.data.data);
       })
       .catch((err) => {

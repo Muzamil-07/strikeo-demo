@@ -20,8 +20,6 @@ const Payment = ({ clientToken }) => {
   const { cardFields } = usePayPalHostedFields()
   // const cardHolderName = useRef(null);
 
-  // console.log(clientToken, "Client Token");
-
   const initialOptions = {
     clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID,
     dataClientToken: clientToken,
@@ -55,7 +53,6 @@ const Payment = ({ clientToken }) => {
   }
 
   const cardHandler = () => {
-    // console.log(cardFields, "Card Fields");
     if (typeof cardFields.submit !== 'function') return // validate that \`submit()\` exists before using it
     //if (errorMsg) showErrorMsg(false);
     cardFields
@@ -78,8 +75,6 @@ const Payment = ({ clientToken }) => {
     try {
       const res = await http.post('/payment/create-order')
 
-      // console.log(res.data.data);
-
       return res.data.data
     } catch (error) {
       console.error(error)
@@ -88,13 +83,11 @@ const Payment = ({ clientToken }) => {
   }
 
   const onApproveOrder = async (data, actions) => {
-    // console.log("Approving order", data, actions);
     try {
       const res = await http.post('/payment/capture/' + data.orderID, {
         ...billingDetails
       })
 
-      // console.log("Capture result", res.data.data);
       // Three cases to handle:
       //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
       //   (2) Other non-recoverable errors -> Show a failure message
@@ -119,7 +112,6 @@ const Payment = ({ clientToken }) => {
         navigate('/orders')
         toast.success('Payment successful!')
         // setMessage(`Transaction ${transaction.status}: ${transaction.id}. See console for all available details`);
-        // console.log("Capture result", res.data.data, JSON.stringify(res.data.data, null, 2));
       }
     } catch (error) {
       console.error(error)
@@ -237,10 +229,8 @@ const Payment = ({ clientToken }) => {
                     // 	actions.disable();
                     // }}
                     onInit={(data, actions) => {
-                      console.log('Paypal button is initialized')
                     }}
                     onClick={(data, actions) => {
-                      console.log('Paypal button is clicked')
                     }}
                     onError={err => console.log('Paypal error', err)}
                     onCancel={() => console.log('User cancelled the purchase!')}

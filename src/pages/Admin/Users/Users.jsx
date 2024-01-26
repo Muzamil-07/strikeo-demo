@@ -85,7 +85,6 @@ const Users = () => {
     }
   };
   const checkDisable = () => {
-    // console.log(selectedUser, "selectedUser");
     if (
       !selectedUser ||
       !selectedUser.username ||

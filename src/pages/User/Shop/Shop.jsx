@@ -64,7 +64,6 @@ const Shop = () => {
   };
 
   const handleCheckout = () => {
-    // console.log("Checkout:", items);
     setItems([]);
     setIsCartOpen(false);
   };

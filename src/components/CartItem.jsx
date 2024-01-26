@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { removeItemIcon } from '../assets'
 import { ClipLoader } from 'react-spinners'
 import { useState } from 'react'
+import { Badge } from 'flowbite-react'
 
 const ShoppingCartItem = ({ item, removeItem, key }) => {
   const navigate = useNavigate()
@@ -37,9 +38,14 @@ const ShoppingCartItem = ({ item, removeItem, key }) => {
               }
             })
           }
-          className='flex flex-col cursor-pointer'
+          className='flex flex-col cursor-pointer gap-1'
         >
-          <span>{item.product.name}</span>
+          <div className='flex gap-2 items-center'>
+            <span>{item.product.name}</span>
+            {item.product.amount === 0 && (
+              <Badge color='red'>Out of stock</Badge>
+            )}
+          </div>
           <div className='flex gap-4'>
             <span className='text-secondary'>{item.details.quantity}</span>
             <span className='text-secondary'>x</span>

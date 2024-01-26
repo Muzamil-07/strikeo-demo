@@ -19,7 +19,7 @@ export function BlueHelmet (props) {
       }}
       onClick={event => {
         event.stopPropagation()
-        console.log('---->', event.object)
+
         navigate('/products/category/gears', {
           state: {
             category: 'gears',

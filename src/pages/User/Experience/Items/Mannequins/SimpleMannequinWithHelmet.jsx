@@ -21,7 +21,7 @@ export function SimpleMannequinWithHelmet (props) {
       }}
       onClick={event => {
         event.stopPropagation()
-        console.log('---->', event.object)
+
         navigate('/products/category/apparel', {
           state: {
             category: 'apparel',

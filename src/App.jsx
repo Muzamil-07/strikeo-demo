@@ -1,27 +1,17 @@
 import { useEffect, useState } from 'react'
 import 'animate.css'
-import {
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-  useLocation
-} from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/User/Home'
 // import Register from "./pages/User/Register";
-import Shop from './pages/User/Shop'
 import Welcome from './pages/User/Welcome'
 import ProductDetails from './pages/User/ProductDetails'
 import Billing from './pages/User/Billing'
+import Shop from './pages/User/Shop'
+
 // import Login from "./pages/User/Login";
 import AdminLogin from './pages/Admin/Login'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
-import { setUser } from './redux/slices/User'
-import { setCart } from './redux/slices/Cart'
-import { refreshTheme } from './redux/slices/Theme'
-import UserService from './services/User'
-import CartService from './services/Cart'
 import Products from './pages/Vendor/Products'
 import Categories from './pages/Admin/Categories'
 import VendorOrders from './pages/Vendor/Orders'
@@ -32,7 +22,6 @@ import Reset from './pages/Reset'
 import OrderConfirmation from './pages/User/OrderConfirmation'
 import Profile from './pages/Profile'
 import Employees from './pages/Vendor/Employees'
-import { setCategories } from './redux/slices/Category'
 import http from './api'
 import Checkout from './pages/User/Checkout'
 import Vendors from './pages/Admin/Vendors'
@@ -40,7 +29,6 @@ import Sales from './pages/Admin/Sales'
 import CreatePassword from './pages/CreatePassword'
 import ActivityLogs from './pages/Vendor/ActivityLogs'
 import Agents from './pages/Admin/Agents'
-import { setBillingAddress } from './redux/slices/Billing'
 import ReviewProducts from './pages/Admin/ReviewProducts'
 import Insights from './pages/Vendor/Insights'
 import LandingPage from './pages/User/Landing'
@@ -56,14 +44,10 @@ import Experience from './pages/User/Experience/Experience'
 import Login from './pages/User/Login/Login'
 import Register from './pages/User/Register/Register'
 import ReviewUserProducts from './pages/User/ReviewProducts'
+import VideoComponent from './pages/User/components/Video/VideoComponent'
 
 function App () {
   const user = useSelector(state => state.user)
-  const theme = useSelector(state => state.theme)
-
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const location = useLocation()
 
   const allowedAdminRoles = ['StrikeO', 'admin', 'employee', 'Vendor']
   const [isAuthenticating, setIsAuthenticating] = useState(true)
@@ -165,10 +149,11 @@ function App () {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
+  // const [contentVisibility, setContentVisibility] = useState(false)
 
   return (
     <div
-      className={`w-screen flex flex-col overflow-x-hidden font-poppins text-sm md:text-base bg-[url('/loading.png')] h-screen bg-cover bg-no-repeat bg-center bg-fixed
+      className={`w-screen flex flex-col overflow-x-hidden font-poppins text-sm md:text-base bg-[url('/loading.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed
      `}
     >
       <Routes>

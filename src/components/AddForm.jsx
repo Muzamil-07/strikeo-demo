@@ -192,7 +192,6 @@ const AddForm = forwardRef(
         }
       }
 
-      // console.log(errors, "Errors while validating user");
       if (
         Object.keys(errors).length > 2 ||
         Object.keys(errors.contact).length > 0 ||

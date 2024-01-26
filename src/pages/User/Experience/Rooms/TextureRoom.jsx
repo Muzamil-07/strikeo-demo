@@ -6,7 +6,6 @@ import { RigidBody } from '@react-three/rapier'
 export function TextureRoom (props) {
   const { nodes, materials } = useGLTF('/models/Room/texture-room.glb')
 
-  console.log('NODES:', nodes)
   return (
     <group {...props} dispose={null}>
       <group

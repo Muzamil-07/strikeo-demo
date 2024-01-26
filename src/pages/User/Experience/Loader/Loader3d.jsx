@@ -1,10 +1,12 @@
 import { Html } from '@react-three/drei'
 import React from 'react'
+import styles from './loader3d.module.css'
 
 const Loader3d = () => {
   return (
     <Html
       as='div'
+      className={styles.loader}
       center
       style={{
         display: 'flex',
@@ -13,26 +15,59 @@ const Loader3d = () => {
         flexDirection: 'column'
       }}
     >
-      <div>
-        <p style={{ width: '150px', height: '100px' }}>
-          <img src='/loading.gif' alt='Loading' style={styles.loadingGif} />
-        </p>
+      <div className={styles.hexagon} aria-label='Animated hexagonal ripples'>
+        <div className={styles.hexagon__group}>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+        </div>
+        <div className={styles.hexagon__group}>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+        </div>
+        <div className={styles.hexagon__group}>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+        </div>
+        <div className={styles.hexagon__group}>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+        </div>
+        <div className={styles.hexagon__group}>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+        </div>
+        <div className={styles.hexagon__group}>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+          <div className={styles.hexagon__sector}></div>
+        </div>
       </div>
+      <p aria-label='Loading'>Loading</p>
     </Html>
   )
-}
-
-const styles = {
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh' // Adjust as needed
-  },
-  loadingGif: {
-    width: '100%',
-    height: 'auto' // Adjust the width of the loading GIF as needed
-  }
 }
 
 export default Loader3d

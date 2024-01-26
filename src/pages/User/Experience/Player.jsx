@@ -65,7 +65,8 @@ export const Player = ({
       .multiply(running ? speed.clone().multiplyScalar(2.5) : speed)
       .applyQuaternion(yaw)
 
-    api.current.applyImpulse(offset, true)
+    api.current.setLinvel(offset, true)
+    // api.current.applyImpulse(offset, true)
 
     const newPosition = new THREE.Vector3(
       position.x,
@@ -83,7 +84,7 @@ export const Player = ({
     <RigidBody
       ref={api}
       lockRotations
-      position={[0, 2, 30]}
+      position={[0, 2, 41]}
       friction={0.2}
       restitution={0.5}
       colliders='ball'

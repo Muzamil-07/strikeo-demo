@@ -19,7 +19,7 @@ export function Setup (props) {
       }}
       onClick={event => {
         event.stopPropagation()
-        console.log('---->', event.object)
+
         navigate('/products/category/Electronics', {
           state: {
             category: 'Electronics',

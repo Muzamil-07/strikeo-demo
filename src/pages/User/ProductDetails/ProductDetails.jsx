@@ -136,6 +136,7 @@ const QuantitySelector = ({ handleDecrement, quantity, handleIncrement }) => {
 const ProductDetails = () => {
   const { state } = useLocation()
   if (!state) <Navigate to='/experience' />
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -227,7 +228,7 @@ const ProductDetails = () => {
   return (
     <>
       <Header background={'black'} />
-      <div className="bg-[url('/strikeo.png')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
+      <div className="bg-[url('/strikeo.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
         <div className='fixed left-0 top-0 bg-black bg-opacity-60 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none'></div>
         <div className='fixed inset-0 z-[1065] h-full pt-[6rem] pb-[3rem]'>
           <div className='h-full w-11/12 mx-auto rounded-2xl bg-primary bg-opacity-70 pl-8 pr-6 py-8'>
@@ -276,7 +277,7 @@ const ProductDetails = () => {
                         <ImageContainer
                           width={350}
                           height={350}
-                          src='/apple-watch.png'
+                          src={productData.data.image}
                           // src={selectedImage}
                         />
                         <div className='grid grid-cols-4 gap-2'>
@@ -296,7 +297,7 @@ const ProductDetails = () => {
                                       //   "http://localhost:3000/",
                                       //   "http://localhost:8000/"
                                       // )}
-                                      src='/apple-watch.png'
+                                      src={otherImages}
                                       value={otherImages}
                                       alt={productData.data.name}
                                       className='h-auto max-w-full rounded-lg'
@@ -400,21 +401,28 @@ const ProductDetails = () => {
                             </button>
                           )}
                         </div>
-                        <Button
-                          gradientDuoTone='tealToLime'
-                          onClick={handleAddToCart}
-                          disabled={isAddToCartLoading}
-                          isProcessing={isAddToCartLoading}
-                        >
-                          Add to Cart
-                        </Button>
+                        {productData?.data?.amount === 0 ? (
+                          <Button gradientDuoTone='tealToLime' disabled={true}>
+                            Out of Stock
+                          </Button>
+                        ) : (
+                          <Button
+                            gradientDuoTone='tealToLime'
+                            onClick={handleAddToCart}
+                            disabled={isAddToCartLoading}
+                            isProcessing={isAddToCartLoading}
+                          >
+                            Add to Cart
+                          </Button>
+                        )}
                       </div>
                     </div>
                     <div className='mt-14'>
                       {/**********************************(START) REVIEW ********************/}
                       <Flowbite theme={{ theme }}>
-                        <Reviews />
+                        <Reviews reviews={productData.data.reviews} />
                         {/**********************************(END) REVIEW ********************/}
+
                         {/**********************************(START) RELATED PRODUCTS ********************/}
                         <RelatedProducts id={id} state={state} />
                         {/**********************************(END) RELATED PRODUCTS ********************/}

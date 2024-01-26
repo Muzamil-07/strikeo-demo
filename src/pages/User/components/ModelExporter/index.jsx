@@ -195,7 +195,8 @@ const ExportModel = ({ category, type }) => {
     category.toLowerCase() === 'apparel' ||
     category.toLowerCase() === 'clothing' ||
     category.toLowerCase() === 'fashion' ||
-    category.toLowerCase() === 'garments'
+    category.toLowerCase() === 'garments' ||
+    category.toLowerCase() === 'jacket'
   ) {
     if (type === 'mannequinwithhelmet')
       return (
@@ -209,6 +210,18 @@ const ExportModel = ({ category, type }) => {
           <SimpleMannequinWithBandana scale={4} position={[0, -3, 0]} />
         </ModelCanvas>
       )
+  } else if (category.toLowerCase() === 'gloves') {
+    return (
+      <ModelCanvas>
+        <RedGloves scale={0.28} position={[0, -1, 0]} />
+      </ModelCanvas>
+    )
+  } else if (category.toLowerCase() === 'backpack') {
+    return (
+      <ModelCanvas>
+        <BlueBag scale={47} />
+      </ModelCanvas>
+    )
   } else <></>
 }
 

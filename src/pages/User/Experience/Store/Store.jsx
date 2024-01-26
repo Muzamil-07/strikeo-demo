@@ -436,6 +436,7 @@ export function Store (props) {
         />
       </group>
 
+      {/******************************** SMART PHONES *****************/}
       <group
         onPointerEnter={() => {
           document.body.style.cursor = 'pointer'
@@ -1969,7 +1970,7 @@ export function Store (props) {
         }}
         onClick={event => {
           event.stopPropagation()
-          console.log('---->', event.object)
+
           navigate('/products/category/gears', {
             state: {
               category: 'gears',
@@ -3610,7 +3611,7 @@ export function Store (props) {
         }}
         onClick={event => {
           event.stopPropagation()
-          console.log('---->', event.object)
+
           navigate('/products/category/Electronics', {
             state: {
               category: 'Electronics',

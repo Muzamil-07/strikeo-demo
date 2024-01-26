@@ -100,7 +100,6 @@ const Stepper = ({ getVendors, setView }) => {
   const citiesAvailable = Object.values(states || {}).flatMap((stateCities) =>
     stateCities.map((city) => city)
   ).sort((a, b) => a.name.localeCompare(b.name));
-  // console.log(citiesAvailable, "citiesAvailable");
 
   const handleCompanyChange = (key, value) => {
     if (key.includes(".")) {
@@ -309,14 +308,12 @@ const Stepper = ({ getVendors, setView }) => {
         imgData = res.data;
       }
 
-      // console.log("imgData: ", imgData[0]?.[company?.file?.name]);
 
       const res = await http.post("company", {
         ...company,
         logo: company.file ? imgData[0]?.[company?.file?.name] : "",
       });
 
-      // console.log(res.data.data, "company created");
       toast.success("Company created successfully");
       setCompany(res.data.data);
       setStep(step + 1);

@@ -23,10 +23,12 @@ export function useMouseCapture () {
   const dragMove = e => {
     e.preventDefault()
     e.stopImmediatePropagation()
+    // if (e.target.tagName !== 'BUTTON') return
+
     const touch1 = e.targetTouches[0]
     const touch2 = e.targetTouches[1]
 
-    console.log('------OUTER---------', e.target.tagName, touch1, touch2)
+    // console.log('------OUTER---------', e.target.tagName, touch1, touch2)
 
     if (
       previousTouch1 &&
@@ -35,7 +37,7 @@ export function useMouseCapture () {
     ) {
       const touch1MovementX = touch1.pageX - previousTouch1.pageX
       const touch1MovementY = touch1.pageY - previousTouch1.pageY
-      console.log('------INNER---------', touch1.target.tagName)
+      // console.log('------INNER---------', touch1.target.tagName)
       mouse.x += Math.round(touch1MovementX * 0.005 * 100)
     }
     previousTouch1 = touch1

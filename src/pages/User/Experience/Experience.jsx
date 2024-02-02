@@ -254,7 +254,7 @@ const Experience = ({ setContentVisibility }) => {
         style={{
           // position: 'absolute',
           display: 'flex',
-          height: '94vh',
+          height: '88vh',
           justifyContent: 'center',
           alignItems: 'end',
           zIndex: 300000

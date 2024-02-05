@@ -3,6 +3,7 @@ import {
   AdaptiveDpr,
   AdaptiveEvents,
   BakeShadows,
+  DeviceOrientationControls,
   Environment,
   FirstPersonControls,
   Float,
@@ -16,7 +17,7 @@ import {
   Text,
   useGLTF
 } from '@react-three/drei'
-import { EcctrlAnimation, EcctrlJoystick } from 'ecctrl'
+import { EcctrlAnimation, EcctrlJoystick, useFollowCam } from 'ecctrl'
 import * as THREE from 'three'
 
 import { Perf } from 'r3f-perf'
@@ -62,10 +63,22 @@ function getInput (keyboard, mouse, joystick) {
   // Checking Joystick Movements
   if (joystick && joystick.type !== 'stop') {
     // console.log('JOYSTICK:', joystick)
-    if (joystick.direction === 'BACKWARD') z += 1.0 // Move backward
-    if (joystick.direction === 'FORWARD') z -= 1.0 // Move forward
-    if (joystick.direction === 'RIGHT') x += 6.0 // Move right
-    if (joystick.direction === 'LEFT') x -= 6.0 // Move left
+    if (joystick.direction === 'BACKWARD') {
+      z += 1.0
+      // mouse.x = 0
+    } // Move backward
+    if (joystick.direction === 'FORWARD') {
+      z -= 1.0
+      // mouse.x = 0
+    } // Move forward
+    if (joystick.direction === 'RIGHT') {
+      x += 6.0
+      // mouse.x = 0
+    } // Move right
+    if (joystick.direction === 'LEFT') {
+      x -= 6.0
+      // mouse.x = 0
+    } // Move left
   }
   // Checking keyboard inputs to determine movement direction
   if (keyboard['ArrowDown']) z += 1.0 // Move backward
@@ -73,6 +86,8 @@ function getInput (keyboard, mouse, joystick) {
   if (keyboard['ArrowRight']) x += 6.0 // Move right
   if (keyboard['ArrowLeft']) x -= 6.0 // Move left
   if (keyboard[' ']) y += 1.0 // Jump
+
+  // console.log('MOUSE', mouse)
 
   // Returning an object with the movement and look direction
   return {
@@ -160,6 +175,23 @@ const Scene = ({ joystickMovements }) => {
   const keyboard = useKeyboard() // Hook to get keyboard input
   const mouse = useMouseCapture() // Hook to get mouse input
 
+  const camInitDis = -5
+  const camMaxDis = -7
+  const camMinDis = -0.7
+  const camMoveSpeed = 1
+  const camZoomSpeed = 1
+  const camCollisionOffset = 0.7
+
+  const cameraSetups = {
+    camInitDis,
+    camMaxDis,
+    camMinDis,
+    camMoveSpeed,
+    camZoomSpeed,
+    camCollisionOffset
+  }
+
+  // useFollowCam(cameraSetups)
   // console.log('KEYBOARD:----------------', keyboard)
   return (
     <group>
@@ -179,6 +211,7 @@ const Scene = ({ joystickMovements }) => {
       >
         Click on Products to shop!
       </Text>
+
       <Player
         walk={5}
         jump={5}
@@ -254,7 +287,7 @@ const Experience = ({ setContentVisibility }) => {
         style={{
           // position: 'absolute',
           display: 'flex',
-          height: '82vh',
+          height: '78vh',
           justifyContent: 'center',
           alignItems: 'end',
           zIndex: 300000
@@ -285,7 +318,7 @@ const Experience = ({ setContentVisibility }) => {
         dpr={[1, 2]}
       >
         <Suspense fallback={<Loader3d />}>
-          {/* <Perf position='top-left' /> */}
+          <Perf position='top-left' />
           <Physics>
             <Scene joystickMovements={joystickMovements} />
             {/* <RoughPlane /> */}

@@ -70,7 +70,7 @@ export const Player = ({
 
     const newPosition = new THREE.Vector3(
       position.x,
-      position.y * 6,
+      position.y * 5,
       position.z
     )
     camera.position.lerp(

@@ -14,7 +14,6 @@ export function useMouseCapture () {
       document.pointerLockElement === document.body ||
       document.mozPointerLockElement === document.body
     ) {
-      // console.log(e.movementX)
       // Update the mouse coordinates with the movement values
       mouse.x += e.movementX
       mouse.y += e.movementY
@@ -23,29 +22,26 @@ export function useMouseCapture () {
   const dragMove = e => {
     e.preventDefault()
     e.stopImmediatePropagation()
-    // if (e.target.tagName !== 'BUTTON') return
+    if (e.target.tagName === 'BUTTON') return
 
     const touch1 = e.targetTouches[0]
     const touch2 = e.targetTouches[1]
 
-    // console.log('------OUTER---------', e.target.tagName, touch1, touch2)
-
-    if (
-      previousTouch1 &&
-      touch1.target.tagName !== 'BUTTON' &&
-      !previousTouch2
-    ) {
+    if (previousTouch1 && touch1.target.tagName !== 'BUTTON') {
       const touch1MovementX = touch1.pageX - previousTouch1.pageX
-      const touch1MovementY = touch1.pageY - previousTouch1.pageY
-      // console.log('------INNER---------', touch1.target.tagName)
+      // const touch1MovementY = touch1.pageY - previousTouch1.pageY
+      console.log('------INNER---------', touch1.target.tagName)
       mouse.x += Math.round(touch1MovementX * 0.005 * 100)
     }
+
     previousTouch1 = touch1
     previousTouch2 = touch2
   }
+
   const dragEnd = () => {
     previousTouch1 = null
     previousTouch2 = null
+    // mouse.x = 0
   }
 
   // Function to request pointer lock (capture mouse)
@@ -61,7 +57,7 @@ export function useMouseCapture () {
   useEffect(() => {
     // Add event listeners for mouse movement and click
     document.addEventListener('mousemove', mouseMove)
-    // document.addEventListener('touchmove', dragMove, { passive: false })
+    document.addEventListener('touchmove', dragMove, { passive: false })
     document.addEventListener('touchend', dragEnd)
     document.addEventListener('dblclick', capture)
 

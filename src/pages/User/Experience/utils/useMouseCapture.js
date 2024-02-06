@@ -30,7 +30,6 @@ export function useMouseCapture () {
     if (previousTouch1 && touch1.target.tagName !== 'BUTTON') {
       const touch1MovementX = touch1.pageX - previousTouch1.pageX
       // const touch1MovementY = touch1.pageY - previousTouch1.pageY
-      console.log('------INNER---------', touch1.target.tagName)
       mouse.x += Math.round(touch1MovementX * 0.005 * 100)
     }
 

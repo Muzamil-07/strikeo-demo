@@ -2,9 +2,14 @@
 import React, { useRef } from 'react'
 import { DeviceOrientationControls, useGLTF } from '@react-three/drei'
 import { RigidBody } from '@react-three/rapier'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { setContentVisibilty } from '../../../../redux/slices/ContentVisibility'
 
 export function OptimizeStore (props) {
   const { nodes, materials } = useGLTF('/final optimized room1.glb')
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   return (
     <group {...props} dispose={null}>
       <group
@@ -748,41 +753,126 @@ export function OptimizeStore (props) {
         rotation={[-Math.PI / 2, 0, -2.462]}
         scale={0.008}
       />
-      <mesh
-        geometry={nodes.s23Pluse_cream_mat_s23_cream_0001.geometry}
-        material={materials['mobile 2']}
-        position={[-0.153, 1.034, 0.127]}
-        rotation={[-Math.PI / 2, 0.392, Math.PI / 2]}
-        scale={1.064}
-      />
-      <mesh
-        geometry={nodes.s23Pluse_lavender_mat_s23_lavender_0001.geometry}
-        material={materials['mobile 1']}
-        position={[-0.152, 1.034, -0.065]}
-        rotation={[-Math.PI / 2, 0.392, Math.PI / 2]}
-        scale={1.064}
-      />
-      <mesh
-        geometry={nodes.GREEN_HELMET_1.geometry}
-        material={materials['helmet/gloves/can']}
-        position={[1.922, 1.495, 1.444]}
-        rotation={[-2.919, 0, -Math.PI]}
-        scale={0.239}
-      />
-      <mesh
-        geometry={nodes.GREEN_HELMET_1001.geometry}
-        material={materials['helmet/gloves/can']}
-        position={[1.951, 0.153, 2.161]}
-        rotation={[-2.919, 0, -Math.PI]}
-        scale={0.239}
-      />
-      <mesh
-        geometry={nodes.GREEN_HELMET_1002.geometry}
-        material={materials['helmet/gloves/can']}
-        position={[1.922, 1.495, 1.444]}
-        rotation={[-2.919, 0, -Math.PI]}
-        scale={0.239}
-      />
+      {/******************************** SMART PHONES *****************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+          dispatch(setContentVisibilty(false))
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'Electronics',
+              item: 'smartphones'
+            })
+          )
+
+          navigate('/products/category/Electronics', {
+            state: {
+              category: 'Electronics',
+              item: 'smartphones'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.s23Pluse_cream_mat_s23_cream_0001.geometry}
+          material={materials['mobile 2']}
+          position={[-0.153, 1.034, 0.127]}
+          rotation={[-Math.PI / 2, 0.392, Math.PI / 2]}
+          scale={1.064}
+        />
+        <mesh
+          geometry={nodes.s23Pluse_lavender_mat_s23_lavender_0001.geometry}
+          material={materials['mobile 1']}
+          position={[-0.152, 1.034, -0.065]}
+          rotation={[-Math.PI / 2, 0.392, Math.PI / 2]}
+          scale={1.064}
+        />
+      </group>
+      {/********************************* HELMETS *************************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'gears',
+              item: 'helmet'
+            })
+          )
+          navigate('/products/category/gears', {
+            state: {
+              category: 'gears',
+              item: 'helmet'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.GREEN_HELMET_1.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 1.444]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+
+        <mesh
+          geometry={nodes.GREEN_HELMET_1002.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 1.444]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+      </group>
+
+      {/********************************* LUBRICANTS *************************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'gears',
+              item: 'lubricants'
+            })
+          )
+          navigate('/products/category/gears', {
+            state: {
+              category: 'gears',
+              item: 'lubricants'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.GREEN_HELMET_1001.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.951, 0.153, 2.161]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+      </group>
+
       <mesh
         geometry={nodes.GREEN_HELMET_1003.geometry}
         material={materials['helmet/gloves/can']}

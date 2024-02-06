@@ -56,30 +56,31 @@ import Ecctrl from 'ecctrl'
 import RoughPlane from './RoughPlane'
 import { Joystick } from 'react-joystick-component'
 import { OptimizeStore } from './Store/OptimizeStore'
+import { MobileStore } from './Store/MobileStore'
 
 // Function to get player input from keyboard and mouse
-function getInput (keyboard, mouse, joystick) {
+function getInput (keyboard, mouse) {
   let [x, y, z] = [0, 0, 0]
   // Checking Joystick Movements
-  if (joystick && joystick.type !== 'stop') {
-    // console.log('JOYSTICK:', joystick)
-    if (joystick.direction === 'BACKWARD') {
-      z += 1.0
-      // mouse.x = 0
-    } // Move backward
-    if (joystick.direction === 'FORWARD') {
-      z -= 1.0
-      // mouse.x = 0
-    } // Move forward
-    if (joystick.direction === 'RIGHT') {
-      x += 6.0
-      // mouse.x = 0
-    } // Move right
-    if (joystick.direction === 'LEFT') {
-      x -= 6.0
-      // mouse.x = 0
-    } // Move left
-  }
+  // if (joystick && joystick.type !== 'stop') {
+  //   // console.log('JOYSTICK:', joystick)
+  //   if (joystick.direction === 'BACKWARD') {
+  //     z += 1.0
+  //     // mouse.x = 0
+  //   } // Move backward
+  //   if (joystick.direction === 'FORWARD') {
+  //     z -= 1.0
+  //     // mouse.x = 0
+  //   } // Move forward
+  //   if (joystick.direction === 'RIGHT') {
+  //     x += 6.0
+  //     // mouse.x = 0
+  //   } // Move right
+  //   if (joystick.direction === 'LEFT') {
+  //     x -= 6.0
+  //     // mouse.x = 0
+  //   } // Move left
+  // }
   // Checking keyboard inputs to determine movement direction
   if (keyboard['ArrowDown']) z += 1.0 // Move backward
   if (keyboard['ArrowUp']) z -= 1.0 // Move forward
@@ -199,7 +200,8 @@ const Scene = ({ joystickMovements }) => {
       <AdaptiveDpr pixelated />
       <AdaptiveEvents />
       {/* <BakedStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} /> */}
-      <OptimizeStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
+      {/* <OptimizeStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} /> */}
+      <MobileStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
       <Boundries />
       <Environment files={'gear_store_1k.hdr'} path='/' />
       {/* <Environment files={'thatch_chapel_1k.hdr'} path='/' /> */}
@@ -212,11 +214,7 @@ const Scene = ({ joystickMovements }) => {
         Click on Products to shop!
       </Text>
 
-      <Player
-        walk={5}
-        jump={5}
-        input={() => getInput(keyboard, mouse, joystickMovements)}
-      />
+      <Player walk={5} jump={5} input={() => getInput(keyboard, mouse)} />
       {/* <SolarPannels scale={5} position={[0, 12, 0]} /> */}
     </group>
   )
@@ -264,15 +262,15 @@ const Experience = ({ setContentVisibility }) => {
   }
   const handleMove = e => {
     // console.log(e)
-    setJoystickMovements(e)
+    // setJoystickMovements(e)
   }
   const handleStop = e => {
     // console.log(e)
-    setJoystickMovements(e)
+    // setJoystickMovements(e)
   }
   const handleStart = e => {
     // console.log(e)
-    setJoystickMovements(e)
+    // setJoystickMovements(e)
   }
   return (
     <>
@@ -283,7 +281,7 @@ const Experience = ({ setContentVisibility }) => {
           material: new THREE.MeshStandardMaterial({ color: 'grey' })
         }}
       ></EcctrlJoystick> */}
-      <div
+      {/* <div
         style={{
           // position: 'absolute',
           display: 'flex',
@@ -302,7 +300,7 @@ const Experience = ({ setContentVisibility }) => {
           stop={handleStop}
           start={handleStart}
         ></Joystick>
-      </div>
+      </div> */}
       <Canvas
         style={{
           width: '100vw',

@@ -1,25 +1,80 @@
-import { useMemo, useEffect } from 'react' // Import necessary hooks from the React library
+import { useMemo, useEffect } from 'react'
 
 export function useKeyboard () {
-  const keyboard = useMemo(() => ({}), []) // Create a memoized object to store keyboard state
+  const keyboard = useMemo(() => ({}), [])
 
-  // Event handler for keydown event
-  const keydown = e => (keyboard[e.key] = true) // Set the corresponding key in the keyboard object to true when pressed
+  let previousTouchX
+  let previousTouchY
 
-  // Event handler for keyup event
-  const keyup = e => (keyboard[e.key] = false) // Set the corresponding key in the keyboard object to false when released
+  const keydown = e => (keyboard[e.key] = true)
+  const keyup = e => (keyboard[e.key] = false)
+
+  function handleTouchMove (event) {
+    const currentTouchX = event.touches[0].clientX
+    const currentTouchY = event.touches[0].clientY
+
+    if (previousTouchX !== undefined && previousTouchY !== undefined) {
+      const deltaX = currentTouchX - previousTouchX
+      const deltaY = currentTouchY - previousTouchY
+
+      // Set a threshold value for direction change
+      const directionChangeThreshold = 5 // Adjust this value according to your preference
+
+      if (
+        Math.abs(deltaX) > directionChangeThreshold ||
+        Math.abs(deltaY) > directionChangeThreshold
+      ) {
+        // Determine the dominant direction
+        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+          // Horizontal movement
+          keyboard['ArrowRight'] = deltaX > 0
+          keyboard['ArrowLeft'] = deltaX < 0
+          keyboard['ArrowUp'] = false
+          keyboard['ArrowDown'] = false
+        } else {
+          // Vertical movement
+          keyboard['ArrowUp'] = deltaY < 0
+          keyboard['ArrowDown'] = deltaY > 0
+          keyboard['ArrowLeft'] = false
+          keyboard['ArrowRight'] = false
+        }
+      }
+    }
+
+    // Update previous touch positions
+    previousTouchX = currentTouchX
+    previousTouchY = currentTouchY
+  }
+
+  const touchEnd = () => {
+    keyboard['ArrowUp'] = false
+    keyboard['ArrowLeft'] = false
+    keyboard['ArrowRight'] = false
+    keyboard['ArrowDown'] = false
+  }
 
   useEffect(() => {
-    // Add event listeners for keydown and keyup events
     document.addEventListener('keydown', keydown)
     document.addEventListener('keyup', keyup)
 
-    // Clean up the event listeners when the component unmounts
+    const joystickBaseElement = document.querySelector(
+      '[data-testid="joystick-base"]'
+    )
+    if (joystickBaseElement) {
+      joystickBaseElement.addEventListener('touchmove', handleTouchMove)
+      joystickBaseElement.addEventListener('touchend', touchEnd)
+    }
+
     return () => {
       document.removeEventListener('keydown', keydown)
       document.removeEventListener('keyup', keyup)
-    }
-  })
 
-  return keyboard // Return the keyboard object with the current keyboard state
+      if (joystickBaseElement) {
+        joystickBaseElement.removeEventListener('touchmove', handleTouchMove)
+        joystickBaseElement.removeEventListener('touchend', touchEnd)
+      }
+    }
+  }, [keyboard])
+
+  return keyboard
 }

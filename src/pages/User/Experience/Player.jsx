@@ -65,8 +65,8 @@ export const Player = ({
       .multiply(running ? speed.clone().multiplyScalar(2.5) : speed)
       .applyQuaternion(yaw)
 
-    // api.current.setLinvel(offset, true)
-    api.current.applyImpulse(offset, true)
+    api.current.setLinvel(offset, true)
+    // api.current.applyImpulse(offset, true)
 
     const newPosition = new THREE.Vector3(
       position.x,

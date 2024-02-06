@@ -283,19 +283,22 @@ const Experience = ({ setContentVisibility }) => {
       ></EcctrlJoystick> */}
       <div
         style={{
-          // position: 'absolute',
-          display: 'flex',
-          height: '78vh',
-          justifyContent: 'center',
-          alignItems: 'end',
-          zIndex: 300000
+          position: 'absolute',
+          // display: 'flex',
+          // height: '78vh',
+          // justifyContent: 'center',
+          // alignItems: 'end',
+          zIndex: 300000,
+          bottom: '10%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
         }}
       >
         <Joystick
-          size={70}
+          size={90}
           throttle={1}
-          // baseColor='red'
-          // stickColor='blue'
+          baseColor='#c1c1c1b4'
+          stickColor='#ffffff'
           move={handleMove}
           stop={handleStop}
           start={handleStart}

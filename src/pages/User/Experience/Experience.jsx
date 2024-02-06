@@ -281,7 +281,7 @@ const Experience = ({ setContentVisibility }) => {
           material: new THREE.MeshStandardMaterial({ color: 'grey' })
         }}
       ></EcctrlJoystick> */}
-      {/* <div
+      <div
         style={{
           // position: 'absolute',
           display: 'flex',
@@ -300,7 +300,7 @@ const Experience = ({ setContentVisibility }) => {
           stop={handleStop}
           start={handleStart}
         ></Joystick>
-      </div> */}
+      </div>
       <Canvas
         style={{
           width: '100vw',

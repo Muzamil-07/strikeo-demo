@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { setContentVisibilty } from '../../../../redux/slices/ContentVisibility'
 
 export function OptimizeStore (props) {
-  const { nodes, materials } = useGLTF('/final optimized room1.glb')
+  const { nodes, materials } = useGLTF('/Desktop Version.glb')
   const navigate = useNavigate()
   const dispatch = useDispatch()
   return (
@@ -82,16 +82,12 @@ export function OptimizeStore (props) {
             material={materials.emission}
           />
         </group>
-        <group position={[0, 0.861, -3.257]} rotation={[0, 0, Math.PI]}>
-          <mesh
-            geometry={nodes.mount017.geometry}
-            material={nodes.mount017.material}
-          />
-          <mesh
-            geometry={nodes.mount017_1.geometry}
-            material={nodes.mount017_1.material}
-          />
-        </group>
+        <mesh
+          geometry={nodes.mount004.geometry}
+          material={nodes.mount004.material}
+          position={[0, 0.861, -3.257]}
+          rotation={[0, 0, Math.PI]}
+        />
         <mesh
           geometry={nodes.rubber_ring001.geometry}
           material={nodes.rubber_ring001.material}
@@ -123,40 +119,96 @@ export function OptimizeStore (props) {
           scale={1.057}
         />
       </group>
+      {/******************************** BLACK BAGS ***********************/}
       <group
-        position={[1.86, 0.614, 1.383]}
-        rotation={[Math.PI / 2, 0, 0.78]}
-        scale={0.039}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'backpack',
+              item: 'bags'
+            })
+          )
+          navigate('/products/category/backpack', {
+            state: {
+              category: 'backpack',
+              item: 'bags'
+            }
+          })
+        }}
       >
-        <mesh
-          geometry={nodes.pCube12.geometry}
-          material={materials['BAG BLACK ']}
-          position={[10.175, 8.053, 0.154]}
-          rotation={[0, 0, 0.78]}
-        />
+        <group
+          position={[1.86, 0.614, 1.383]}
+          rotation={[Math.PI / 2, 0, 0.78]}
+          scale={0.039}
+        >
+          <mesh
+            geometry={nodes.pCube12.geometry}
+            material={materials['BAG BLACK ']}
+            position={[10.175, 8.053, 0.154]}
+            rotation={[0, 0, 0.78]}
+          />
+        </group>
       </group>
+
+      {/************************************** BLUE BAG  ********************************/}
       <group
-        position={[1.853, 0.605, 1.9]}
-        rotation={[Math.PI / 2, 0, Math.PI / 4]}
-        scale={0.038}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'backpack',
+              item: 'bags'
+            })
+          )
+          navigate('/products/category/backpack', {
+            state: {
+              category: 'backpack',
+              item: 'bags'
+            }
+          })
+        }}
       >
-        <mesh
-          geometry={nodes.pCube12003.geometry}
-          material={materials['blue bag']}
-          position={[9.229, 8.245, 0.444]}
-          rotation={[0, 0, Math.PI / 4]}
-        />
-        <mesh
-          geometry={nodes.pCube3.geometry}
-          material={materials['Black Plastic.003']}
-          rotation={[0, 0, Math.PI / 4]}
-        />
-        <mesh
-          geometry={nodes.pCube8.geometry}
-          material={materials['Black Plastic.003']}
-          rotation={[0, 0, Math.PI / 4]}
-        />
+        <group
+          position={[1.853, 0.605, 1.9]}
+          rotation={[Math.PI / 2, 0, Math.PI / 4]}
+          scale={0.038}
+        >
+          <mesh
+            geometry={nodes.pCube12003.geometry}
+            material={materials['blue bag']}
+            position={[9.229, 8.245, 0.444]}
+            rotation={[0, 0, Math.PI / 4]}
+          />
+          <mesh
+            geometry={nodes.pCube3.geometry}
+            material={materials['Black Plastic.003']}
+            rotation={[0, 0, Math.PI / 4]}
+          />
+          <mesh
+            geometry={nodes.pCube8.geometry}
+            material={materials['Black Plastic.003']}
+            rotation={[0, 0, Math.PI / 4]}
+          />
+        </group>
       </group>
+
       <mesh
         geometry={nodes.Plane005.geometry}
         material={materials['wall/roof']}
@@ -183,7 +235,6 @@ export function OptimizeStore (props) {
           scale={[3.191, 3.228, 3.226]}
         />
       </RigidBody>
-
       <mesh
         geometry={nodes.strips.geometry}
         material={materials['ground strips s']}
@@ -204,62 +255,63 @@ export function OptimizeStore (props) {
         rotation={[Math.PI / 2, 0, Math.PI / 2]}
         scale={0.783}
       />
-      <mesh
-        geometry={nodes.buttons001.geometry}
-        material={nodes.buttons001.material}
-        position={[-0.108, 0.894, 1.757]}
-        rotation={[Math.PI / 2, 0, 2.387]}
-        scale={0.007}
-      />
-      <mesh
-        geometry={nodes.Lenses001.geometry}
-        material={materials.GLASSES}
-        position={[-0.107, 1.231, 1.753]}
-        rotation={[-3.116, -0.772, -3.107]}
-        scale={0.741}
-      />
+
+      {/******************************** TYRE RACK *****************************************/}
       <group
-        position={[-0.058, 1.147, 1.804]}
-        rotation={[-1.577, 0.003, -2.439]}
-        scale={0.001}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'gears',
+              item: 'tyrerack'
+            })
+          )
+          navigate('/products/category/gears', {
+            state: {
+              category: 'gears',
+              item: 'tyrerack'
+            }
+          })
+        }}
       >
         <mesh
-          geometry={nodes.Object_5004.geometry}
-          material={materials['bandana black.001']}
+          geometry={nodes.mp001.geometry}
+          material={materials['TYRE Baked']}
+          position={[-0.039, 0.696, 2.614]}
+          rotation={[0, 0, -0.276]}
+          scale={0.671}
         />
         <mesh
-          geometry={nodes.Object_5004_1.geometry}
-          material={materials['bandana white.001']}
+          geometry={nodes.mp002.geometry}
+          material={materials['TYRE Baked']}
+          position={[-0.096, 0.217, 2.614]}
+          rotation={[Math.PI, -1.159, -1.585]}
+          scale={0.671}
+        />
+        <mesh
+          geometry={nodes.mp004.geometry}
+          material={materials['TYRE Baked']}
+          position={[0.109, 0.696, 2.614]}
+          rotation={[0, 0, -0.276]}
+          scale={0.671}
+        />
+        <mesh
+          geometry={nodes.TireRack_low005.geometry}
+          material={materials['TYRE RACK S']}
+          position={[-0.098, 0.276, 2.613]}
+          rotation={[0, -1.571, 0]}
+          scale={[0.006, 0.005, 0.002]}
         />
       </group>
-      <mesh
-        geometry={nodes.mp001.geometry}
-        material={materials['TYRE Baked']}
-        position={[-0.039, 0.696, 2.614]}
-        rotation={[0, 0, -0.276]}
-        scale={0.671}
-      />
-      <mesh
-        geometry={nodes.mp002.geometry}
-        material={materials['TYRE Baked']}
-        position={[-0.096, 0.217, 2.614]}
-        rotation={[Math.PI, -1.159, -1.585]}
-        scale={0.671}
-      />
-      <mesh
-        geometry={nodes.mp004.geometry}
-        material={materials['TYRE Baked']}
-        position={[0.109, 0.696, 2.614]}
-        rotation={[0, 0, -0.276]}
-        scale={0.671}
-      />
-      <mesh
-        geometry={nodes.TireRack_low005.geometry}
-        material={materials['TYRE RACK S']}
-        position={[-0.098, 0.276, 2.613]}
-        rotation={[0, -1.571, 0]}
-        scale={[0.006, 0.005, 0.002]}
-      />
+
       <mesh
         geometry={nodes.Curve.geometry}
         material={nodes.Curve.material}
@@ -321,20 +373,69 @@ export function OptimizeStore (props) {
         rotation={[0, 0, Math.PI / 2]}
         scale={0.723}
       />
+      {/******************************* BOWLING *****************************/}
       <mesh
         geometry={nodes.AFootballV1001.geometry}
-        material={materials['balls baked']}
-        position={[2.013, 1.243, -2.81]}
+        material={materials.Bowling}
+        position={[1.901, 0.93, -2.78]}
         rotation={[0, 1.571, 0]}
         scale={0.128}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'bowling'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'bowling'
+            }
+          })
+        }}
       />
+      {/******************************* CRICKET GLOVES *****************************/}
       <mesh
         geometry={nodes.TennisRacketV1.geometry}
-        material={materials['ball/glove/cap baked']}
-        position={[1.901, 1.697, -2.782]}
-        rotation={[0.293, Math.PI / 2, 0]}
+        material={materials['ball/glove/cap ']}
+        position={[1.91, 1.281, -1.335]}
+        rotation={[0.293, 1.57, 0]}
         scale={0.307}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'gloves'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'gloves'
+            }
+          })
+        }}
       />
+
       <mesh
         geometry={nodes.Barres_métal003.geometry}
         material={materials['RACK baked']}
@@ -342,417 +443,558 @@ export function OptimizeStore (props) {
         rotation={[0, -Math.PI / 2, 0]}
         scale={0.953}
       />
-      <mesh
-        geometry={nodes.tires.geometry}
-        material={materials['TYRE BIKE S']}
-        position={[-0.882, 0.24, 0.135]}
-        rotation={[0.006, -0.003, 0]}
-        scale={0.779}
-      />
-      <mesh
-        geometry={nodes.BikerJacket_Leather_0002.geometry}
-        material={materials['manequins baked']}
-        position={[0.446, 0.953, 1.472]}
-        rotation={[3.139, 0.625, -3.108]}
-        scale={[0.009, 0.007, 0.007]}
-      />
-      <mesh
-        geometry={nodes.BikerJacket_Metals_0002.geometry}
-        material={materials['jacket button.001']}
-        position={[0.384, 0.876, 1.379]}
-        rotation={[3.139, 0.625, -3.108]}
-        scale={[0.009, 0.007, 0.007]}
-      />
-      <mesh
-        geometry={nodes.spoiler001.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.Vizer001.geometry}
-        material={materials.bake}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler002.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler003.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler004.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler005.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler006.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler007.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler008.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler009.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler010.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler011.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler012.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler013.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler014.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler015.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler016.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler017.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler018.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler019.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler020.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler021.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler022.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler023.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler024.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler025.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler026.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler027.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler028.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler029.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler030.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler033.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler034.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.spoiler053.geometry}
-        material={materials['PaletteMaterial003.001']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
+      {/******************************* MANNEQUINS *****************************/}
       <group
-        position={[-0.202, -0.008, -2.578]}
-        rotation={[Math.PI / 2, 0, 0]}
-        scale={0.838}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'jacket',
+              item: 'mannequinwithbandana'
+            })
+          )
+          navigate('/products/category/jacket', {
+            state: {
+              category: 'jacket',
+              item: 'mannequinwithbandana'
+            }
+          })
+        }}
       >
         <mesh
-          geometry={nodes.Object_2001_1.geometry}
-          material={materials['comp_desk_b.001']}
+          geometry={nodes.BikerJacket_Leather_0002.geometry}
+          material={materials['manequins baked']}
+          position={[0.446, 0.953, 1.472]}
+          rotation={[3.139, 0.625, -3.108]}
+          scale={[0.009, 0.007, 0.007]}
         />
         <mesh
-          geometry={nodes.Object_2001_2.geometry}
-          material={materials['comp_desk.001']}
+          geometry={nodes.BikerJacket_Metals_0002.geometry}
+          material={materials['jacket button.001']}
+          position={[0.384, 0.876, 1.379]}
+          rotation={[3.139, 0.625, -3.108]}
+          scale={[0.009, 0.007, 0.007]}
         />
         <mesh
-          geometry={nodes.Object_2001_3.geometry}
-          material={materials['comp_desk_a.001']}
+          geometry={nodes.buttons001.geometry}
+          material={nodes.buttons001.material}
+          position={[-0.108, 0.894, 1.757]}
+          rotation={[Math.PI / 2, 0, 2.387]}
+          scale={0.007}
         />
         <mesh
-          geometry={nodes.Object_2001_4.geometry}
-          material={materials['comp_desk_c.001']}
+          geometry={nodes.Lenses001.geometry}
+          material={materials.GLASSES}
+          position={[-0.107, 1.261, 1.753]}
+          rotation={[-3.116, -0.772, -3.107]}
+          scale={0.741}
+        />
+        <group
+          position={[-0.058, 1.147, 1.804]}
+          rotation={[-1.577, 0.003, -2.439]}
+          scale={0.001}
+        >
+          <mesh
+            geometry={nodes.Object_5004.geometry}
+            material={materials['bandana black.001']}
+          />
+          <mesh
+            geometry={nodes.Object_5004_1.geometry}
+            material={materials['bandana white.001']}
+          />
+        </group>
+
+        <mesh
+          geometry={nodes.Vizer002.geometry}
+          material={materials['gold helmet baked']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
         />
         <mesh
-          geometry={nodes.Object_2001_5.geometry}
-          material={materials['setup desk']}
+          geometry={nodes.Object_2009.geometry}
+          material={materials['shoe.003']}
+          position={[-0.052, 0.1, 1.818]}
+          rotation={[-Math.PI / 2, 0, -2.462]}
+          scale={0.008}
+        />
+        <mesh
+          geometry={nodes.Object_2003.geometry}
+          material={materials['shoes/bat/pads']}
+          position={[0.421, 0.099, 1.457]}
+          rotation={[-Math.PI / 2, 0, -2.294]}
+          scale={0.009}
         />
       </group>
-      <mesh
-        geometry={nodes.Object_7003.geometry}
-        material={materials.cpu}
-        position={[0.273, 0.785, -2.465]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={0.04}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0002.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0003.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0004.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0005.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0006.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0007.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0008.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0009.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0367.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.466]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0388.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.752, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
-      <mesh
-        geometry={nodes.Plane018_button__0395.geometry}
-        material={materials.wifi}
-        position={[-0.741, 0.751, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
-      />
+
+      {/************************ BIKE *************************/}
       <group
-        position={[-0.741, 0.746, -2.497]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={1.056}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'gears',
+              item: 'bike'
+            })
+          )
+          navigate('/products/category/gears', {
+            state: {
+              category: 'gears',
+              item: 'bike'
+            }
+          })
+        }}
       >
         <mesh
-          geometry={nodes.Plane018_button__0397.geometry}
-          material={materials['laptop s']}
+          geometry={nodes.tires.geometry}
+          material={materials['TYRE BIKE S']}
+          position={[-0.882, 0.24, 0.135]}
+          rotation={[0.006, -0.003, 0]}
+          scale={0.779}
         />
         <mesh
-          geometry={nodes.Plane018_button__0397_1.geometry}
-          material={materials['tv s']}
+          geometry={nodes.spoiler001.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.Vizer001.geometry}
+          material={materials.bake}
+          position={[-0.878, 0.378, 0.186]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler002.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler003.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler004.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler005.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler006.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler007.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler008.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler009.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler010.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler011.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler012.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler013.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler014.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler015.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler016.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler017.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler018.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler019.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler020.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler021.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler022.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler023.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler024.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler025.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler026.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler027.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler028.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler029.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler030.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler033.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler034.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
+        />
+        <mesh
+          geometry={nodes.spoiler053.geometry}
+          material={materials['PaletteMaterial003.001']}
+          position={[0.432, 1.213, 1.469]}
+          rotation={[Math.PI, -0.891, Math.PI]}
+          scale={0.21}
         />
       </group>
+
+      {/******************************* SETUP ******************************/}
       <group
-        position={[1.901, 1.697, -2.782]}
-        rotation={[0.293, Math.PI / 2, 0]}
-        scale={0.307}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'Electronics',
+              item: ''
+            })
+          )
+          navigate('/products/category/Electronics', {
+            state: {
+              category: 'Electronics',
+              item: ''
+            }
+          })
+        }}
       >
+        <group
+          position={[-0.202, -0.008, -2.578]}
+          rotation={[Math.PI / 2, 0, 0]}
+          scale={0.838}
+        >
+          <mesh
+            geometry={nodes.Object_2001_1.geometry}
+            material={materials['comp_desk_b.001']}
+          />
+          <mesh
+            geometry={nodes.Object_2001_2.geometry}
+            material={materials['comp_desk.001']}
+          />
+          <mesh
+            geometry={nodes.Object_2001_3.geometry}
+            material={materials['comp_desk_a.001']}
+          />
+          <mesh
+            geometry={nodes.Object_2001_4.geometry}
+            material={materials['comp_desk_c.001']}
+          />
+          <mesh
+            geometry={nodes.Object_2001_5.geometry}
+            material={materials['setup desk']}
+          />
+        </group>
         <mesh
-          geometry={nodes.V1TennisRacket002.geometry}
-          material={materials['basebat baked']}
+          geometry={nodes.Object_7003.geometry}
+          material={materials.cpu}
+          position={[0.273, 0.785, -2.465]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={0.04}
         />
         <mesh
-          geometry={nodes.V1TennisRacket002_1.geometry}
+          geometry={nodes.Plane018_button__0002.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0003.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0004.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0005.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0006.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0007.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0008.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0009.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0367.geometry}
+          material={materials.wifi}
+          position={[0.289, 1.052, -2.457]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0388.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.752, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <mesh
+          geometry={nodes.Plane018_button__0395.geometry}
+          material={materials.wifi}
+          position={[-0.741, 0.751, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        />
+        <group
+          position={[-0.741, 0.746, -2.497]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={1.056}
+        >
+          <mesh
+            geometry={nodes.Plane018_button__0397.geometry}
+            material={materials['laptop s']}
+          />
+          <mesh
+            geometry={nodes.Plane018_button__0397_1.geometry}
+            material={materials['tv s']}
+          />
+        </group>
+      </group>
+
+      {/******************************* RACKETS *****************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'racket'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'racket'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.TennisRacketV1002.geometry}
           material={materials['bake racket']}
+          position={[1.901, 1.697, -2.782]}
+          rotation={[0.293, 1.57, 0]}
+          scale={0.307}
         />
       </group>
-      <mesh
-        geometry={nodes.Vizer002.geometry}
-        material={materials['gold helmet baked']}
-        position={[0.432, 1.213, 1.469]}
-        rotation={[Math.PI, -0.891, Math.PI]}
-        scale={0.21}
-      />
-      <mesh
-        geometry={nodes.Object_2009.geometry}
-        material={materials['shoe.003']}
-        position={[-0.052, 0.1, 1.818]}
-        rotation={[-Math.PI / 2, 0, -2.462]}
-        scale={0.008}
-      />
+
       {/******************************** SMART PHONES *****************/}
       <group
         onPointerEnter={() => {
@@ -771,7 +1013,6 @@ export function OptimizeStore (props) {
               item: 'smartphones'
             })
           )
-
           navigate('/products/category/Electronics', {
             state: {
               category: 'Electronics',
@@ -793,48 +1034,6 @@ export function OptimizeStore (props) {
           position={[-0.152, 1.034, -0.065]}
           rotation={[-Math.PI / 2, 0.392, Math.PI / 2]}
           scale={1.064}
-        />
-      </group>
-      {/********************************* HELMETS *************************************/}
-      <group
-        onPointerEnter={() => {
-          document.body.style.cursor = 'pointer'
-        }}
-        onPointerLeave={() => {
-          document.body.style.cursor = 'default'
-        }}
-        onClick={event => {
-          event.stopPropagation()
-
-          localStorage.setItem(
-            'state',
-            JSON.stringify({
-              category: 'gears',
-              item: 'helmet'
-            })
-          )
-          navigate('/products/category/gears', {
-            state: {
-              category: 'gears',
-              item: 'helmet'
-            }
-          })
-        }}
-      >
-        <mesh
-          geometry={nodes.GREEN_HELMET_1.geometry}
-          material={materials['helmet/gloves/can']}
-          position={[1.922, 1.495, 1.444]}
-          rotation={[-2.919, 0, -Math.PI]}
-          scale={0.239}
-        />
-
-        <mesh
-          geometry={nodes.GREEN_HELMET_1002.geometry}
-          material={materials['helmet/gloves/can']}
-          position={[1.922, 1.495, 1.444]}
-          rotation={[-2.919, 0, -Math.PI]}
-          scale={0.239}
         />
       </group>
 
@@ -873,76 +1072,194 @@ export function OptimizeStore (props) {
         />
       </group>
 
-      <mesh
-        geometry={nodes.GREEN_HELMET_1003.geometry}
-        material={materials['helmet/gloves/can']}
-        position={[1.922, 1.495, 1.444]}
-        rotation={[-2.919, 0, -Math.PI]}
-        scale={0.239}
-      />
-      <mesh
-        geometry={nodes.GREEN_HELMET_1004.geometry}
-        material={materials['helmet/gloves/can']}
-        position={[1.922, 1.495, 1.938]}
-        rotation={[-2.919, 0, -Math.PI]}
-        scale={0.239}
-      />
-      <mesh
-        geometry={nodes.GREEN_HELMET_1005.geometry}
-        material={materials['helmet/gloves/can']}
-        position={[1.922, 1.495, 2.423]}
-        rotation={[-2.919, 0, -Math.PI]}
-        scale={0.239}
-      />
-      <mesh
-        geometry={nodes.GREEN_HELMET_1006.geometry}
-        material={materials['helmet/gloves/can']}
-        position={[1.922, 1.495, 2.908]}
-        rotation={[-2.919, 0, -Math.PI]}
-        scale={0.239}
-      />
-      <mesh
-        geometry={nodes.Object_2001.geometry}
-        material={materials['shoes/bat/pads baked']}
-        position={[1.934, 0.914, 1.419]}
-        rotation={[-Math.PI / 2, 0, -1.666]}
-        scale={0.009}
-      />
-      <mesh
-        geometry={nodes.Object_2003.geometry}
-        material={materials['shoes/bat/pads baked']}
-        position={[0.421, 0.099, 1.457]}
-        rotation={[-Math.PI / 2, 0, -2.294]}
-        scale={0.009}
-      />
-      <mesh
-        geometry={nodes.Object_2004.geometry}
-        material={materials['shoes/bat/pads baked']}
-        position={[1.934, 0.914, 1.879]}
-        rotation={[-Math.PI / 2, 0, -1.666]}
-        scale={0.009}
-      />
-      <mesh
-        geometry={nodes.Object_2005.geometry}
-        material={materials['shoes/bat/pads baked']}
-        position={[1.934, 0.914, 2.398]}
-        rotation={[-Math.PI / 2, 0, -1.666]}
-        scale={0.009}
-      />
-      <mesh
-        geometry={nodes.Object_2006.geometry}
-        material={materials['shoes/bat/pads baked']}
-        position={[1.934, 0.914, 2.839]}
-        rotation={[-Math.PI / 2, 0, -1.666]}
-        scale={0.009}
-      />
-      <mesh
-        geometry={nodes.Object_2007.geometry}
-        material={materials['shoes/bat/pads baked']}
-        position={[1.934, 0.914, 1.391]}
-        rotation={[-Math.PI / 2, 0, -1.666]}
-        scale={0.009}
-      />
+      {/********************************* HELMETS *************************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'gears',
+              item: 'helmet'
+            })
+          )
+          navigate('/products/category/gears', {
+            state: {
+              category: 'gears',
+              item: 'helmet'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.GREEN_HELMET_1.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 1.444]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+        <mesh
+          geometry={nodes.GREEN_HELMET_1002.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 1.444]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+      </group>
+      {/******************************** GLOVES *****************************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'gloves',
+              item: 'gloves'
+            })
+          )
+          navigate('/products/category/gloves', {
+            state: {
+              category: 'gloves',
+              item: 'gloves'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.GREEN_HELMET_1003.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 1.444]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+        <mesh
+          geometry={nodes.GREEN_HELMET_1004.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 1.938]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+        <mesh
+          geometry={nodes.GREEN_HELMET_1005.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 2.423]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+        <mesh
+          geometry={nodes.GREEN_HELMET_1006.geometry}
+          material={materials['helmet/gloves/can']}
+          position={[1.922, 1.495, 2.908]}
+          rotation={[-2.919, 0, -Math.PI]}
+          scale={0.239}
+        />
+      </group>
+
+      {/************************ CRICKET BAT  ***************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'bat'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'bat'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.Object_2001.geometry}
+          material={materials['shoes/bat/pads']}
+          position={[1.915, 0.08, -1.66]}
+          rotation={[-Math.PI / 2, 0, -1.666]}
+          scale={0.009}
+        />
+      </group>
+
+      {/************************* SHOES **********************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'gears',
+              item: 'shoes'
+            })
+          )
+          navigate('/products/category/gears', {
+            state: {
+              category: 'gears',
+              item: 'shoes'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.Object_2004.geometry}
+          material={materials['shoes/bat/pads']}
+          position={[1.934, 0.914, 1.879]}
+          rotation={[-Math.PI / 2, 0, -1.666]}
+          scale={0.009}
+        />
+        <mesh
+          geometry={nodes.Object_2005.geometry}
+          material={materials['shoes/bat/pads']}
+          position={[1.934, 0.914, 2.398]}
+          rotation={[-Math.PI / 2, 0, -1.666]}
+          scale={0.009}
+        />
+        <mesh
+          geometry={nodes.Object_2006.geometry}
+          material={materials['shoes/bat/pads']}
+          position={[1.934, 0.914, 2.839]}
+          rotation={[-Math.PI / 2, 0, -1.666]}
+          scale={0.009}
+        />
+        <mesh
+          geometry={nodes.Object_2007.geometry}
+          material={materials['shoes/bat/pads']}
+          position={[1.934, 0.914, 1.391]}
+          rotation={[-Math.PI / 2, 0, -1.666]}
+          scale={0.009}
+        />
+      </group>
+
       <mesh
         geometry={nodes.Object_2002.geometry}
         material={materials['mobile stand']}
@@ -967,8 +1284,323 @@ export function OptimizeStore (props) {
         position={[-0.165, 0.925, 0.455]}
         scale={0.001}
       />
+      {/******************************* FOOTBALL BLACK *****************************/}
+      <mesh
+        geometry={nodes.AFootballV1002.geometry}
+        material={materials.Bowling}
+        position={[1.913, 0.862, -2.106]}
+        rotation={[0, 1.571, 0]}
+        scale={0.128}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'football'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'football'
+            }
+          })
+        }}
+      />
+      {/******************************* BASKET BALLS *****************************/}
+      <mesh
+        geometry={nodes.AFootballV1003.geometry}
+        material={materials.Bowling}
+        position={[1.914, 0.701, -2.314]}
+        rotation={[0, 1.571, 0]}
+        scale={0.128}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'basketball'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'basketball'
+            }
+          })
+        }}
+      />
+      {/******************************* VOLLY BALLS *****************************/}
+      <mesh
+        geometry={nodes.AFootballV1004.geometry}
+        material={materials.Bowling}
+        position={[1.924, 0.689, -1.84]}
+        rotation={[0, 1.571, 0]}
+        scale={0.128}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'vollyball'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'vollyball'
+            }
+          })
+        }}
+      />
+      {/******************************* RUGGBY *****************************/}
+      <mesh
+        geometry={nodes.AFootballV1005.geometry}
+        material={materials.Bowling}
+        position={[2.013, 1.093, -2.594]}
+        rotation={[0, 1.571, 0]}
+        scale={0.128}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'ruggby'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'ruggby'
+            }
+          })
+        }}
+      />
+      {/******************************* BASEBALL BAT *****************************/}
+      <group
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'baseballbat'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'baseballbat'
+            }
+          })
+        }}
+      >
+        <mesh
+          geometry={nodes.TennisRacketV1001.geometry}
+          material={materials['Basebat / Racket']}
+          position={[1.921, 1.6, -2.288]}
+          rotation={[0.293, 1.57, 0]}
+          scale={0.307}
+        />
+      </group>
+
+      {/******************************* VARIETY BALLS *****************************/}
+      <mesh
+        geometry={nodes.TennisRacketV1003.geometry}
+        material={materials['ball/glove/cap ']}
+        position={[1.91, 1.201, -1.903]}
+        rotation={[0.293, 1.57, 0]}
+        scale={0.307}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'varietyballs'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'varietyballs'
+            }
+          })
+        }}
+      />
+      {/************************ CRICKET CAP  ***************************/}
+      <mesh
+        geometry={nodes.TennisRacketV1004.geometry}
+        material={materials['ball/glove/cap ']}
+        position={[1.936, 1.441, -1.86]}
+        rotation={[0.293, 1.57, 0]}
+        scale={0.307}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'cap'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'cap'
+            }
+          })
+        }}
+      />
+      {/************************ CRICKET HELMET  ***************************/}
+      <mesh
+        geometry={nodes.TennisRacketV1005.geometry}
+        material={materials['ball/glove/cap ']}
+        position={[1.927, 1.448, -1.3]}
+        rotation={[0.293, 1.57, 0]}
+        scale={0.307}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'helmet'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'helmet'
+            }
+          })
+        }}
+      />
+      {/******************************* FOOTBALL BLACK *****************************/}
+      <mesh
+        geometry={nodes.Object_2011.geometry}
+        material={materials['shoes/bat/pads']}
+        position={[1.898, 0.471, -1.347]}
+        rotation={[-Math.PI / 2, 0, -1.666]}
+        scale={0.009}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'football'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'football'
+            }
+          })
+        }}
+      />
+      {/************************ CRICKET PADS  ***************************/}
+      <mesh
+        geometry={nodes.Object_2013.geometry}
+        material={materials['shoes/bat/pads']}
+        position={[1.921, 0.203, -2.522]}
+        rotation={[-Math.PI / 2, 0, -1.666]}
+        scale={0.009}
+        onPointerEnter={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerLeave={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={event => {
+          event.stopPropagation()
+
+          localStorage.setItem(
+            'state',
+            JSON.stringify({
+              category: 'sports',
+              item: 'pads'
+            })
+          )
+          navigate('/products/category/sports', {
+            state: {
+              category: 'sports',
+              item: 'pads'
+            }
+          })
+        }}
+      />
     </group>
   )
 }
 
-useGLTF.preload('/final optimized room1.glb')
+useGLTF.preload('/Desktop Version.glb')
+// useGLTF.preload('/final optimized room1.glb')

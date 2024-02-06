@@ -84,7 +84,7 @@ export const Player = ({
     <RigidBody
       ref={api}
       lockRotations
-      position={[0, 2, 32]}
+      position={[0, 2, 41]}
       friction={0.2}
       restitution={0.5}
       colliders='ball'

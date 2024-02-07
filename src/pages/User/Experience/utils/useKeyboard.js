@@ -9,6 +9,42 @@ export function useKeyboard () {
   const keydown = e => (keyboard[e.key] = true)
   const keyup = e => (keyboard[e.key] = false)
 
+  // function handleTouchMove (event) {
+  //   const currentTouchX = event.touches[0].clientX
+  //   const currentTouchY = event.touches[0].clientY
+
+  //   if (previousTouchX !== undefined && previousTouchY !== undefined) {
+  //     const deltaX = currentTouchX - previousTouchX
+  //     const deltaY = currentTouchY - previousTouchY
+
+  //     // Set a threshold value for direction change
+  //     const directionChangeThreshold = 5 // Adjust this value according to your preference
+
+  //     if (
+  //       Math.abs(deltaX) > directionChangeThreshold ||
+  //       Math.abs(deltaY) > directionChangeThreshold
+  //     ) {
+  //       // Determine the dominant direction
+  //       if (Math.abs(deltaX) > Math.abs(deltaY)) {
+  //         // Horizontal movement
+  //         keyboard['ArrowRight'] = deltaX > 0
+  //         keyboard['ArrowLeft'] = deltaX < 0
+  //         keyboard['ArrowUp'] = false
+  //         keyboard['ArrowDown'] = false
+  //       } else {
+  //         // Vertical movement
+  //         keyboard['ArrowUp'] = deltaY < 0
+  //         keyboard['ArrowDown'] = deltaY > 0
+  //         keyboard['ArrowLeft'] = false
+  //         keyboard['ArrowRight'] = false
+  //       }
+  //     }
+  //   }
+
+  //   // Update previous touch positions
+  //   previousTouchX = currentTouchX
+  //   previousTouchY = currentTouchY
+  // }
   function handleTouchMove (event) {
     const currentTouchX = event.touches[0].clientX
     const currentTouchY = event.touches[0].clientY
@@ -20,24 +56,12 @@ export function useKeyboard () {
       // Set a threshold value for direction change
       const directionChangeThreshold = 5 // Adjust this value according to your preference
 
-      if (
-        Math.abs(deltaX) > directionChangeThreshold ||
-        Math.abs(deltaY) > directionChangeThreshold
-      ) {
-        // Determine the dominant direction
-        if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          // Horizontal movement
-          keyboard['ArrowRight'] = deltaX > 0
-          keyboard['ArrowLeft'] = deltaX < 0
-          keyboard['ArrowUp'] = false
-          keyboard['ArrowDown'] = false
-        } else {
-          // Vertical movement
-          keyboard['ArrowUp'] = deltaY < 0
-          keyboard['ArrowDown'] = deltaY > 0
-          keyboard['ArrowLeft'] = false
-          keyboard['ArrowRight'] = false
-        }
+      if (Math.abs(deltaX) < Math.abs(deltaY)) {
+        // Vertical movement
+        keyboard['ArrowUp'] = deltaY < 0
+        keyboard['ArrowDown'] = deltaY > 0
+        keyboard['ArrowLeft'] = false
+        keyboard['ArrowRight'] = false
       }
     }
 
@@ -60,19 +84,23 @@ export function useKeyboard () {
     const joystickBaseElement = document.querySelector(
       '[data-testid="joystick-base"]'
     )
-    if (joystickBaseElement) {
-      joystickBaseElement.addEventListener('touchmove', handleTouchMove)
-      joystickBaseElement.addEventListener('touchend', touchEnd)
-    }
+    // if (joystickBaseElement) {
+    //   joystickBaseElement.addEventListener('touchmove', handleTouchMove)
+    //   joystickBaseElement.addEventListener('touchend', touchEnd)
+    // }
 
+    document.addEventListener('touchmove', handleTouchMove)
+    document.addEventListener('touchend', touchEnd)
     return () => {
       document.removeEventListener('keydown', keydown)
       document.removeEventListener('keyup', keyup)
 
-      if (joystickBaseElement) {
-        joystickBaseElement.removeEventListener('touchmove', handleTouchMove)
-        joystickBaseElement.removeEventListener('touchend', touchEnd)
-      }
+      // if (joystickBaseElement) {
+      //   joystickBaseElement.removeEventListener('touchmove', handleTouchMove)
+      //   joystickBaseElement.removeEventListener('touchend', touchEnd)
+      // }
+      document.removeEventListener('touchmove', handleTouchMove)
+      document.removeEventListener('touchend', touchEnd)
     }
   }, [keyboard])
 

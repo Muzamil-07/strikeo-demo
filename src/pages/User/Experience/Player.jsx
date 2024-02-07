@@ -62,7 +62,11 @@ export const Player = ({
     offset
       .fromArray(move)
       .normalize()
-      .multiply(running ? speed.clone().multiplyScalar(2.5) : speed)
+      .multiply(
+        running
+          ? speed.clone().multiplyScalar(2.5)
+          : speed.clone().multiplyScalar(2.5)
+      )
       .applyQuaternion(yaw)
 
     api.current.setLinvel(offset, true)
@@ -70,7 +74,7 @@ export const Player = ({
 
     const newPosition = new THREE.Vector3(
       position.x,
-      position.y * 5,
+      position.y * 4,
       position.z
     )
     camera.position.lerp(

@@ -281,7 +281,7 @@ const Experience = ({ setContentVisibility }) => {
           material: new THREE.MeshStandardMaterial({ color: 'grey' })
         }}
       ></EcctrlJoystick> */}
-      <div
+      {/* <div
         style={{
           position: 'absolute',
           // display: 'flex',
@@ -303,7 +303,7 @@ const Experience = ({ setContentVisibility }) => {
           stop={handleStop}
           start={handleStart}
         ></Joystick>
-      </div>
+      </div> */}
       <Canvas
         style={{
           width: '100vw',
@@ -319,7 +319,7 @@ const Experience = ({ setContentVisibility }) => {
         dpr={[1, 2]}
       >
         <Suspense fallback={<Loader3d />}>
-          <Perf position='top-left' />
+          {/* <Perf position='top-left' /> */}
           <Physics>
             <Scene joystickMovements={joystickMovements} />
             {/* <RoughPlane /> */}

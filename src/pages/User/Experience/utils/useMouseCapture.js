@@ -29,8 +29,12 @@ export function useMouseCapture () {
 
     if (previousTouch1 && touch1.target.tagName !== 'BUTTON') {
       const touch1MovementX = touch1.pageX - previousTouch1.pageX
-      // const touch1MovementY = touch1.pageY - previousTouch1.pageY
-      mouse.x += Math.round(touch1MovementX * 0.005 * 100)
+      const touch1MovementY = touch1.pageY - previousTouch1.pageY
+
+      // Check if movement is more horizontal than vertical
+      if (Math.abs(touch1MovementX) > Math.abs(touch1MovementY)) {
+        mouse.x += Math.round(touch1MovementX * 0.005 * 100)
+      }
     }
 
     previousTouch1 = touch1

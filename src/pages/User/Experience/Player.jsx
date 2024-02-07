@@ -6,6 +6,7 @@ import { Vector3 } from 'three'
 import { Raycaster, Quaternion } from 'three'
 import { clamp, lerp } from 'three/src/math/MathUtils'
 import * as THREE from 'three'
+import { isMobileDevice } from './utils/trackDevice'
 
 export const Player = ({
   walk = 3,
@@ -58,19 +59,21 @@ export const Player = ({
     )
 
     raycaster.set(position, down)
-    // Calculate the offset vector for player movement based on user input, speed, and orientation.
     offset
       .fromArray(move)
       .normalize()
       .multiply(
-        running
-          ? speed.clone().multiplyScalar(2.5)
-          : speed.clone().multiplyScalar(5.5)
+        isMobileDevice()
+          ? speed.clone().multiplyScalar(2)
+          : speed.clone().multiplyScalar(2)
       )
       .applyQuaternion(yaw)
 
+    // if (isMobileDevice()) {
+    //   api.current.applyImpulse(offset, true)
+    // } else {
     api.current.setLinvel(offset, true)
-    // api.current.applyImpulse(offset, true)
+    // }
 
     const newPosition = new THREE.Vector3(
       position.x,
@@ -84,11 +87,13 @@ export const Player = ({
 
     camera.quaternion.copy(gaze)
   })
+
+  let playerPosition = isMobileDevice() ? [0, 2, 32] : [0, 2, 41]
   return (
     <RigidBody
       ref={api}
       lockRotations
-      position={[0, 2, 32]}
+      position={playerPosition}
       friction={0.2}
       restitution={0.5}
       colliders='ball'

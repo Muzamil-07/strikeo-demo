@@ -164,7 +164,7 @@ function App () {
         {user.isLoggedIn && (
           <Route path='/choose-category' element={<Home />} />
         )}
-        <Route path='' element={<LandingPage />} />
+        <Route path='' element={<Experience />} />
         <Route path='/experience' element={<Experience />} />
         {/* <Route path="/test" element={<Test />} /> */}
         <Route path='/about' element={<About />} />

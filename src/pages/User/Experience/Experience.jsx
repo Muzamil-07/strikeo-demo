@@ -57,6 +57,7 @@ import RoughPlane from './RoughPlane'
 import { Joystick } from 'react-joystick-component'
 import { OptimizeStore } from './Store/OptimizeStore'
 import { MobileStore } from './Store/MobileStore'
+import { isMobileDevice } from './utils/trackDevice'
 
 // Function to get player input from keyboard and mouse
 function getInput (keyboard, mouse) {
@@ -82,8 +83,8 @@ function getInput (keyboard, mouse) {
   //   } // Move left
   // }
   // Checking keyboard inputs to determine movement direction
-  if (keyboard['ArrowDown']) z += 40.0 // Move backward
-  if (keyboard['ArrowUp']) z -= 40.0 // Move forward
+  if (keyboard['ArrowDown']) z += 1.0 // Move backward
+  if (keyboard['ArrowUp']) z -= 1.0 // Move forward
   if (keyboard['ArrowRight']) x += 6.0 // Move right
   if (keyboard['ArrowLeft']) x -= 6.0 // Move left
   if (keyboard[' ']) y += 1.0 // Jump
@@ -171,6 +172,79 @@ const Boundries = () => {
     </>
   )
 }
+const MobileBoundries = () => {
+  return (
+    <>
+      {/* BACK */}
+      <Barriers
+        position={[0, 10, 33]}
+        transparent={true}
+        geometry={[80, 50]}
+        opacity={0}
+      />
+      {/* FRONT */}
+      <Barriers
+        position={[0, 10, -21]}
+        transparent={true}
+        geometry={[80, 50]}
+        opacity={0}
+      />
+      {/* LEFT */}
+      <Barriers
+        position={[-20, 10, 8]}
+        transparent={true}
+        geometry={[80, 100]}
+        opacity={0}
+        rotation={[0, Math.PI / 2, 0]}
+      />
+      {/* RIGHT */}
+      <Barriers
+        position={[22, 10, 8]}
+        transparent={true}
+        geometry={[80, 50]}
+        opacity={0}
+        rotation={[0, Math.PI / 2, 0]}
+      />
+
+      {/* DESK AND BIKE */}
+      <Barriers
+        position={[0, 0, 15]}
+        transparent={true}
+        geometry={[18, 5]}
+        opacity={0}
+      />
+      <Barriers
+        position={[0, 0, -4]}
+        transparent={true}
+        geometry={[18, 5]}
+        opacity={0}
+      />
+      <Barriers
+        position={[-9, 0, 5]}
+        transparent={true}
+        geometry={[18, 5]}
+        opacity={0}
+        rotation={[0, Math.PI / 2, 0]}
+      />
+      <Barriers
+        position={[9, 0, 5]}
+        transparent={true}
+        geometry={[18, 5]}
+        opacity={0}
+        rotation={[0, Math.PI / 2, 0]}
+      />
+
+      {/* MANNEQUINS */}
+      <Barriers
+        position={[15, 0, 1]}
+        transparent={true}
+        geometry={[5, 5]}
+        opacity={0}
+        rotation={[0, -0.8, 0]}
+      />
+    </>
+  )
+}
 
 const Scene = ({ joystickMovements }) => {
   const keyboard = useKeyboard() // Hook to get keyboard input
@@ -194,6 +268,7 @@ const Scene = ({ joystickMovements }) => {
 
   // useFollowCam(cameraSetups)
   // console.log('KEYBOARD:----------------', keyboard)
+  console.log('MOBILE:', isMobileDevice())
   return (
     <group>
       {/* <Lights /> */}
@@ -201,8 +276,13 @@ const Scene = ({ joystickMovements }) => {
       <AdaptiveEvents />
       {/* <BakedStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} /> */}
       {/* <OptimizeStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} /> */}
-      <MobileStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
-      <Boundries />
+      {isMobileDevice() ? (
+        <MobileStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
+      ) : (
+        <OptimizeStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
+      )}
+      {isMobileDevice() ? <MobileBoundries /> : <Boundries />}
+
       <Environment files={'gear_store_1k.hdr'} path='/' />
       {/* <Environment files={'thatch_chapel_1k.hdr'} path='/' /> */}
       <Text

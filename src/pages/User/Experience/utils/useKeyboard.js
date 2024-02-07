@@ -56,19 +56,29 @@ export function useKeyboard () {
       // Set a threshold value for direction change
       const directionChangeThreshold = 5 // Adjust this value according to your preference
 
-      if (
-        Math.abs(deltaX) < directionChangeThreshold &&
-        Math.abs(deltaY) >= directionChangeThreshold
-      ) {
-        // Vertical movement
+      // DRAG CONTROL
+      // if (
+      //   Math.abs(deltaX) < directionChangeThreshold &&
+      //   Math.abs(deltaY) >= directionChangeThreshold
+      // ) {
+      //   // Vertical movement
+      //   keyboard['ArrowUp'] = deltaY < 0
+      //   keyboard['ArrowDown'] = deltaY > 0
+      //   keyboard['ArrowLeft'] = false
+      //   keyboard['ArrowRight'] = false
+      // } else {
+      //   // No movement
+      //   keyboard['ArrowUp'] = false
+      //   keyboard['ArrowDown'] = false
+      //   keyboard['ArrowLeft'] = false
+      //   keyboard['ArrowRight'] = false
+      // }
+
+      // CONTINOUS CONTROL
+      if (Math.abs(deltaX) <= Math.abs(deltaY)) {
+        //         // Horizontal movement
         keyboard['ArrowUp'] = deltaY < 0
         keyboard['ArrowDown'] = deltaY > 0
-        keyboard['ArrowLeft'] = false
-        keyboard['ArrowRight'] = false
-      } else {
-        // No movement
-        keyboard['ArrowUp'] = false
-        keyboard['ArrowDown'] = false
         keyboard['ArrowLeft'] = false
         keyboard['ArrowRight'] = false
       }

@@ -82,8 +82,8 @@ function getInput (keyboard, mouse) {
   //   } // Move left
   // }
   // Checking keyboard inputs to determine movement direction
-  if (keyboard['ArrowDown']) z += 1.0 // Move backward
-  if (keyboard['ArrowUp']) z -= 1.0 // Move forward
+  if (keyboard['ArrowDown']) z += 40.0 // Move backward
+  if (keyboard['ArrowUp']) z -= 40.0 // Move forward
   if (keyboard['ArrowRight']) x += 6.0 // Move right
   if (keyboard['ArrowLeft']) x -= 6.0 // Move left
   if (keyboard[' ']) y += 1.0 // Jump

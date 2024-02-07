@@ -65,7 +65,7 @@ export const Player = ({
       .multiply(
         running
           ? speed.clone().multiplyScalar(2.5)
-          : speed.clone().multiplyScalar(2.5)
+          : speed.clone().multiplyScalar(5.5)
       )
       .applyQuaternion(yaw)
 

@@ -19,10 +19,11 @@ import {
 } from '@react-three/drei'
 import { EcctrlAnimation, EcctrlJoystick, useFollowCam } from 'ecctrl'
 import * as THREE from 'three'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Perf } from 'r3f-perf'
 import { Canvas } from '@react-three/fiber'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import Lights from './Lights'
 import { CuboidCollider, Physics } from '@react-three/rapier' // Components for handling physics.
 import { useMouseCapture } from './utils/useMouseCapture'
@@ -42,21 +43,21 @@ import {
   useRemoveItemFromFavouritesMutation
 } from '../../../services/nodeApi'
 import ShoppingCart from '../../../components/Cart'
-import { useDispatch, useSelector } from 'react-redux'
 import { setCart } from '../../../redux/slices/Cart'
 import Favourites from '../../../components/Favourites'
 import { setFavourites } from '../../../redux/slices/Favourite'
 import ReactPlayer from 'react-player'
 import { useNavigate } from 'react-router-dom'
-import { BakedStore } from './Store/BakedStore'
 import Controls from '../components/Controls/Controls'
 import { setContentVisibilty } from '../../../redux/slices/ContentVisibility'
 import { Character } from './Character'
 import Ecctrl from 'ecctrl'
 import RoughPlane from './RoughPlane'
 import { Joystick } from 'react-joystick-component'
+
 import { OptimizeStore } from './Store/OptimizeStore'
 import { MobileStore } from './Store/MobileStore'
+import { BakedStore } from './Store/BakedStore'
 import { isMobileDevice } from './utils/trackDevice'
 
 // Function to get player input from keyboard and mouse

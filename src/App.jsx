@@ -1,50 +1,47 @@
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState, lazy } from 'react'
 import 'animate.css'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import Home from './pages/User/Home'
-// import Register from "./pages/User/Register";
-import Welcome from './pages/User/Welcome'
-import ProductDetails from './pages/User/ProductDetails'
-import Billing from './pages/User/Billing'
-import Shop from './pages/User/Shop'
-
-// import Login from "./pages/User/Login";
-import AdminLogin from './pages/Admin/Login'
 import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
-import Products from './pages/Vendor/Products'
-import Categories from './pages/Admin/Categories'
-import VendorOrders from './pages/Vendor/Orders'
-import Roles from './pages/Admin/Roles'
-import Users from './pages/Admin/Users'
-import UserOrders from './pages/User/Orders'
-import Reset from './pages/Reset'
-import OrderConfirmation from './pages/User/OrderConfirmation'
-import Profile from './pages/Profile'
-import Employees from './pages/Vendor/Employees'
-import http from './api'
-import Checkout from './pages/User/Checkout'
-import Vendors from './pages/Admin/Vendors'
-import Sales from './pages/Admin/Sales'
-import CreatePassword from './pages/CreatePassword'
-import ActivityLogs from './pages/Vendor/ActivityLogs'
-import Agents from './pages/Admin/Agents'
-import ReviewProducts from './pages/Admin/ReviewProducts'
-import Insights from './pages/Vendor/Insights'
-import LandingPage from './pages/User/Landing'
-import About from './pages/About'
-import PrivacyPolicy from './pages/PrivacyPolicy'
-import RefundPolicy from './pages/RefundPolicy'
-import Faq from './pages/Faq'
-import JoinMarketplace from './pages/JoinMarketplace'
-import Cookies from './pages/Cookies'
-import Contact from './pages/Contact'
-import ProductsPage from './pages/User/Products'
-import Experience from './pages/User/Experience/Experience'
-import Login from './pages/User/Login/Login'
-import Register from './pages/User/Register/Register'
-import ReviewUserProducts from './pages/User/ReviewProducts'
-import VideoComponent from './pages/User/components/Video/VideoComponent'
+// Lazy load components
+const Home = lazy(() => import('./pages/User/Home'))
+const Welcome = lazy(() => import('./pages/User/Welcome'))
+const ProductDetails = lazy(() => import('./pages/User/ProductDetails'))
+const Billing = lazy(() => import('./pages/User/Billing'))
+const Shop = lazy(() => import('./pages/User/Shop'))
+const AdminLogin = lazy(() => import('./pages/Admin/Login'))
+const Products = lazy(() => import('./pages/Vendor/Products'))
+const Categories = lazy(() => import('./pages/Admin/Categories'))
+const VendorOrders = lazy(() => import('./pages/Vendor/Orders'))
+const Roles = lazy(() => import('./pages/Admin/Roles'))
+const Users = lazy(() => import('./pages/Admin/Users'))
+const UserOrders = lazy(() => import('./pages/User/Orders'))
+const Reset = lazy(() => import('./pages/Reset'))
+const OrderConfirmation = lazy(() => import('./pages/User/OrderConfirmation'))
+const Profile = lazy(() => import('./pages/Profile'))
+const Employees = lazy(() => import('./pages/Vendor/Employees'))
+const http = lazy(() => import('./api'))
+const Checkout = lazy(() => import('./pages/User/Checkout'))
+const Vendors = lazy(() => import('./pages/Admin/Vendors'))
+const Sales = lazy(() => import('./pages/Admin/Sales'))
+const CreatePassword = lazy(() => import('./pages/CreatePassword'))
+const ActivityLogs = lazy(() => import('./pages/Vendor/ActivityLogs'))
+const Agents = lazy(() => import('./pages/Admin/Agents'))
+const ReviewProducts = lazy(() => import('./pages/Admin/ReviewProducts'))
+const Insights = lazy(() => import('./pages/Vendor/Insights'))
+const LandingPage = lazy(() => import('./pages/User/Landing'))
+const About = lazy(() => import('./pages/About'))
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
+const RefundPolicy = lazy(() => import('./pages/RefundPolicy'))
+const Faq = lazy(() => import('./pages/Faq'))
+const JoinMarketplace = lazy(() => import('./pages/JoinMarketplace'))
+const Cookies = lazy(() => import('./pages/Cookies'))
+const Contact = lazy(() => import('./pages/Contact'))
+const ProductsPage = lazy(() => import('./pages/User/Products'))
+const Experience = lazy(() => import('./pages/User/Experience/Experience'))
+const Login = lazy(() => import('./pages/User/Login/Login'))
+const Register = lazy(() => import('./pages/User/Register/Register'))
+const ReviewUserProducts = lazy(() => import('./pages/User/ReviewProducts'))
 
 function App () {
   const user = useSelector(state => state.user)
@@ -156,74 +153,79 @@ function App () {
       className={`w-screen flex flex-col overflow-x-hidden font-poppins text-sm md:text-base bg-[url('/loading.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed
      `}
     >
-      <Routes>
-        <Route
-          path='/checkout'
-          element={<Checkout clientToken={clientToken} />}
-        />
-        {user.isLoggedIn && (
-          <Route path='/choose-category' element={<Home />} />
-        )}
-        <Route path='' element={<Experience />} />
-        <Route path='/experience' element={<Experience />} />
-        {/* <Route path="/test" element={<Test />} /> */}
-        <Route path='/about' element={<About />} />
-        <Route path='/contact' element={<Contact />} />
-        <Route path='/products/category/:category' element={<ProductsPage />} />
-        <Route path='/products/:id' element={<ProductDetails />} />
-        <Route path='/faq' element={<Faq />} />
-        <Route path='/cookies' element={<Cookies />} />
-        <Route path='/join-marketplace' element={<JoinMarketplace />} />
-        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
-        <Route path='/refund-policy' element={<RefundPolicy />} />
-        <Route path='/review-products' element={<ReviewUserProducts />} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route
+            path='/checkout'
+            element={<Checkout clientToken={clientToken} />}
+          />
+          {user.isLoggedIn && (
+            <Route path='/choose-category' element={<Home />} />
+          )}
+          <Route path='' element={<Experience />} />
+          <Route path='/experience' element={<Experience />} />
+          {/* <Route path="/test" element={<Test />} /> */}
+          <Route path='/about' element={<About />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route
+            path='/products/category/:category'
+            element={<ProductsPage />}
+          />
+          <Route path='/products/:id' element={<ProductDetails />} />
+          <Route path='/faq' element={<Faq />} />
+          <Route path='/cookies' element={<Cookies />} />
+          <Route path='/join-marketplace' element={<JoinMarketplace />} />
+          <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+          <Route path='/refund-policy' element={<RefundPolicy />} />
+          <Route path='/review-products' element={<ReviewUserProducts />} />
 
-        <Route path='/register' element={<Register />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/reset-password' element={<Reset />} />
-        <Route path='/create-password' element={<CreatePassword />} />
-        <Route path='/order' element={<OrderConfirmation />} />
-        {user.isLoggedIn && (
-          <>
-            <Route path='/welcome' element={<Welcome />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/shop' element={<Shop />} />
-            <Route path='/orders' element={<UserOrders />} />
-            {/* <Route
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/reset-password' element={<Reset />} />
+          <Route path='/create-password' element={<CreatePassword />} />
+          <Route path='/order' element={<OrderConfirmation />} />
+          {user.isLoggedIn && (
+            <>
+              <Route path='/welcome' element={<Welcome />} />
+              <Route path='/profile' element={<Profile />} />
+              <Route path='/shop' element={<Shop />} />
+              <Route path='/orders' element={<UserOrders />} />
+              {/* <Route
               path="/checkout"
               element={<Checkout clientToken={clientToken} />}
             /> */}
-            <Route path='/billing/details' element={<Billing />} />
-          </>
-        )}
-        {user.isLoggedIn &&
-          allowedAdminRoles.includes(user.details?.role?.type) && (
-            <>
-              {/* Admin Routes */}
-              <Route
-                path='/admin/review-products'
-                element={<ReviewProducts />}
-              />
-              <Route path='/admin/categories' element={<Categories />} />
-              <Route path='/admin/roles' element={<Roles />} />
-              <Route path='/admin/users' element={<Users />} />
-              <Route path='/admin/vendors' element={<Vendors />} />
-              <Route path='/admin/agents' element={<Agents />} />
-              <Route path='/admin/analytics' element={<>Analytics</>} />
-              {/* Vendor Routes */}
-              <Route path='/vendor/products' element={<Products />} />
-              <Route path='/vendor/employees' element={<Employees />} />
-              <Route path='/vendor/orders' element={<VendorOrders />} />
-              <Route path='/admin/sales' element={<Sales />} />
-              <Route path='/vendor/logs' element={<ActivityLogs />} />
-              <Route path='/vendor/insights' element={<Insights />} />
+              <Route path='/billing/details' element={<Billing />} />
             </>
           )}
-        <Route path='/admin/login' element={<AdminLogin />} />
-        {!isAuthenticating && (
-          <Route path='*' element={<Navigate to='/register' replace />} />
-        )}
-      </Routes>
+          {user.isLoggedIn &&
+            allowedAdminRoles.includes(user.details?.role?.type) && (
+              <>
+                {/* Admin Routes */}
+                <Route
+                  path='/admin/review-products'
+                  element={<ReviewProducts />}
+                />
+                <Route path='/admin/categories' element={<Categories />} />
+                <Route path='/admin/roles' element={<Roles />} />
+                <Route path='/admin/users' element={<Users />} />
+                <Route path='/admin/vendors' element={<Vendors />} />
+                <Route path='/admin/agents' element={<Agents />} />
+                <Route path='/admin/analytics' element={<>Analytics</>} />
+                {/* Vendor Routes */}
+                <Route path='/vendor/products' element={<Products />} />
+                <Route path='/vendor/employees' element={<Employees />} />
+                <Route path='/vendor/orders' element={<VendorOrders />} />
+                <Route path='/admin/sales' element={<Sales />} />
+                <Route path='/vendor/logs' element={<ActivityLogs />} />
+                <Route path='/vendor/insights' element={<Insights />} />
+              </>
+            )}
+          <Route path='/admin/login' element={<AdminLogin />} />
+          {!isAuthenticating && (
+            <Route path='*' element={<Navigate to='/register' replace />} />
+          )}
+        </Routes>
+      </Suspense>
       <ToastContainer
         position='bottom-center'
         autoClose={3500}

@@ -3,6 +3,7 @@ import 'animate.css'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
+import Landing from './pages/User/Landing'
 // Lazy load components
 const Home = lazy(() => import('./pages/User/Home'))
 const Welcome = lazy(() => import('./pages/User/Welcome'))
@@ -162,7 +163,7 @@ function App () {
           {user.isLoggedIn && (
             <Route path='/choose-category' element={<Home />} />
           )}
-          <Route path='' element={<Experience />} />
+          <Route path='' element={<Landing />} />
           <Route path='/experience' element={<Experience />} />
           {/* <Route path="/test" element={<Test />} /> */}
           <Route path='/about' element={<About />} />

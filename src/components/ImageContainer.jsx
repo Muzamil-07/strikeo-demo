@@ -8,9 +8,11 @@ export default function ImageContainer({ height, width, src }) {
         overflow: "hidden",
         position: "relative",
         backgroundColor: "transparent",
+        margin:'auto'
       }}
     >
       <img
+      loading="lazy"
         src={src}
         alt="image"
         style={{

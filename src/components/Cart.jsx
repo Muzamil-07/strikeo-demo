@@ -50,7 +50,7 @@ const ShoppingCart = ({ removeItem, onClose, setIsCartOpen }) => {
               {cart.items.length > 0 ? (
                 cart.items.map(item => (
                   <ShoppingCartItem
-                    key={item.id}
+                    key={item.product.id}
                     item={item}
                     removeItem={removeItem}
                   />
@@ -72,9 +72,9 @@ const ShoppingCart = ({ removeItem, onClose, setIsCartOpen }) => {
               {cart.items.length > 0 ? (
                 <div className='flex justify-center'>
                   <Button
+                    className='bg-[#dd8560]'
                     disabled={isCheckoutDisabled}
                     onClick={() => navigate('/checkout')}
-                    gradientDuoTone='pinkToOrange'
                   >
                     Checkout
                   </Button>
@@ -82,12 +82,11 @@ const ShoppingCart = ({ removeItem, onClose, setIsCartOpen }) => {
               ) : (
                 <div className='flex justify-center'>
                   <Button
-                    className=''
+                    className='bg-[#dd8560]'
                     onClick={() => {
                       setIsCartOpen(false)
-                      navigate('/experience')
+                      navigate('/')
                     }}
-                    gradientDuoTone='tealToLime'
                   >
                     Add Products
                   </Button>

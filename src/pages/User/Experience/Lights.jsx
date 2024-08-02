@@ -69,9 +69,9 @@ const PointLights = () => {
   // useHelper(pointLight4, PointLightHelper, 2, 'orange')
   useHelper(pointLight5, PointLightHelper, 2, 'blue')
   // useHelper(pointLight6, PointLightHelper, 2, 'cyan')
-  // useHelper(pointLight7, PointLightHelper, 2, 'blue')
-  // useHelper(pointLight8, PointLightHelper, 2, 'cyan')
-  // useHelper(pointLight9, PointLightHelper, 2, 'green')
+  useHelper(pointLight7, PointLightHelper, 2, 'blue')
+  useHelper(pointLight8, PointLightHelper, 2, 'cyan')
+  useHelper(pointLight9, PointLightHelper, 2, 'green')
 
   return (
     <>
@@ -80,10 +80,10 @@ const PointLights = () => {
         castShadow={settings.pointLight.castShadow}
         ref={pointLight5}
         // position={[-27.5, 16, -17.5]}
-        position={[-17, 18, 8]}
+        position={[-20, 30, 8]}
         color={'#FFDB90'}
-        distance={55}
-        intensity={3}
+        distance={100}
+        intensity={1}
       />
 
       {/* <pointLight
@@ -99,10 +99,10 @@ const PointLights = () => {
         castShadow={settings.pointLight.castShadow}
         ref={pointLight2}
         // position={[27, 16, -17.5]}
-        position={[17, 18, 8]}
+        position={[20, 30, 8]}
         color={'#FFDB90'}
-        distance={55}
-        intensity={3}
+        distance={100}
+        intensity={1}
       />
 
       {/* <pointLight
@@ -132,28 +132,28 @@ const PointLights = () => {
       /> */}
 
       {/* BACK LIGHTS */}
-      {/* <pointLight
+      <pointLight
         ref={pointLight7}
-        position={[-23, 17, 22]}
+        position={[-23, 30, 85]}
         color='#FFDB90'
-        intensity={8}
-        distance={30}
+        intensity={1}
+        distance={100}
       />
 
       <pointLight
         ref={pointLight8}
-        position={[22.5, 17, 22]}
+        position={[22.5, 30, 85]}
         color='#FFDB90'
-        intensity={8}
-        distance={30}
+        intensity={1}
+        distance={100}
       />
       <pointLight
         ref={pointLight9}
-        position={[0, 17, 22]}
+        position={[0, 30, 85]}
         color='#FFDB90'
-        intensity={8}
-        distance={30}
-      /> */}
+        intensity={1}
+        distance={100}
+      />
     </>
   )
 }
@@ -165,29 +165,29 @@ const DirectionalLights = () => {
   const dirLight4 = useRef(null)
   const dirLight5 = useRef(null)
 
-  useHelper(dirLight1, DirectionalLightHelper, 3, 'blue')
-  useHelper(dirLight2, DirectionalLightHelper, 3, 'yellow')
-  useHelper(dirLight3, DirectionalLightHelper, 3, 'green')
-  useHelper(dirLight4, DirectionalLightHelper, 3, 'orange')
-  useHelper(dirLight5, DirectionalLightHelper, 3, 'cyan')
+  // useHelper(dirLight1, DirectionalLightHelper, 3, 'blue')
+  // useHelper(dirLight2, DirectionalLightHelper, 3, 'yellow')
+  // useHelper(dirLight3, DirectionalLightHelper, 3, 'green')
+  // useHelper(dirLight4, DirectionalLightHelper, 3, 'orange')
+  // useHelper(dirLight5, DirectionalLightHelper, 3, 'cyan')
 
-  useLayoutEffect(() => {
-    dirLight2.current.target.position.set(0, 0, -70)
-    dirLight2.current.target.updateMatrixWorld()
-  }, [])
+  // useLayoutEffect(() => {
+  //   dirLight2.current.target.position.set(0, 0, -70)
+  //   dirLight2.current.target.updateMatrixWorld()
+  // }, [])
   return (
     <>
-      {/* <directionalLight
-  ref={dirLight1}
-  position={[0, 40, 0]}
-  color='white'
-  intensity={settings.directionalLight.intensity}
-/> */}
+      <directionalLight
+        ref={dirLight1}
+        position={[0, 40, 0]}
+        color='#FFDB90'
+        intensity={11}
+      />
       {/* <directionalLight
         ref={dirLight2}
         position={[0, 10, 0]}
         color='#FFDB90'
-        intensity={0.5}
+        intensity={0}
       /> */}
       {/* <directionalLight
         ref={dirLight3}

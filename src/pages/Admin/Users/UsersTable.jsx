@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { toast } from "react-toastify";
 import http from "../../../api";
-import Pagination from "../../../components/Pagination";
+import {TablePagination} from "../../../components/TablePagination/TablePagination";
+
 
 export default function UsersTable({
   paginatedData,
@@ -30,12 +31,10 @@ export default function UsersTable({
     http
       .post("/admin/user/block/" + id)
       .then(() => {
-        // console.log(res.data, "user activation");
         toast.success("User blocked successfully.");
         getUsers(currentPage);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast.error("Something went wrong.");
       });
   };
@@ -43,12 +42,10 @@ export default function UsersTable({
     http
       .post("/admin/user/unblock/" + id)
       .then(() => {
-        // console.log(res.data, "user activation");
         toast.success("User unblocked successfully.");
         getUsers(currentPage);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast.error("Something went wrong.");
       });
   };
@@ -188,27 +185,15 @@ export default function UsersTable({
           )}
         </table>
       </div>
-      {paginatedData && paginatedData.totalPages > 1 && (
-        <nav
-          className="flex items-center flex-wrap md:gap-0 gap-4 justify-between pt-4"
-          aria-label="Table navigation"
-        >
-          <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-            Showing{" "}
-            <span className="font-semibold ">
-              {(currentPage - 1) * itemsPerPage + 1}-
-              {Math.min(currentPage * itemsPerPage, paginatedData.totalUsers)}
-            </span>{" "}
-            of{" "}
-            <span className="font-semibold ">{paginatedData.totalUsers}</span>
-          </span>
-          <Pagination
-            totalItems={paginatedData.totalUsers}
-            itemsPerPage={itemsPerPage}
-            onPageChange={handlePageChange}
-          />
-        </nav>
-      )}
+     
+         <TablePagination
+          handlePageChange={handlePageChange}
+          totalItems={paginatedData.totalUsers || 0}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          isLoading={false}
+        />
+       
     </>
   );
 }

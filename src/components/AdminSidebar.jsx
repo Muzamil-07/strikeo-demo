@@ -29,7 +29,7 @@ const AdminSidebar = () => {
   const location = useLocation();
   const [activeLink, setActiveLink] = useState("");
   const [showNotice, setShowNotice] = useState(true);
-  const closeNotice = ()=> setShowNotice(false);
+  const closeNotice = () => setShowNotice(false);
   const user = useSelector((state) => state.user);
   const vendorView = useSelector((state) => state.vendorView);
 
@@ -46,7 +46,7 @@ const AdminSidebar = () => {
   useEffect(() => {
     setActiveLink(location.pathname.split("/")[2]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location]);
 
   return (
     <div className="flex flex-col items-center fixed h-full inset-x-0 top-0 z-[99] bg-primary w-[250px] flex-shrink-0">
@@ -246,7 +246,7 @@ const AdminSidebar = () => {
             user?.details?.role?.name === "SuperAdmin" && (
               <Link
                 to="/admin/agents"
-                className={`cursor-pointer flex items-center rounded-md px-3 py-2 hover:bg-gray-700 ${
+                className={`cursor-pointer overflow-hidden flex items-center rounded-md px-3 py-2 hover:bg-gray-700 ${
                   activeLink === "agents" ? "bg-gray-700" : ""
                 }`}
               >
@@ -334,7 +334,7 @@ const AdminSidebar = () => {
                 <div className="w-6 mr-4 inline-block">
                   <MdRateReview className=" text-3xl" size={"1.5rem"} />
                 </div>
-                Review Products
+                Products
               </Link>
             )}
 
@@ -396,7 +396,7 @@ const AdminSidebar = () => {
               </span>
               <button
                 type="button"
-                class="ms-auto -mx-1.5 -my-1.5 bg-primary inline-flex justify-center items-center w-6 h-6 text-white-900 rounded-lg focus:ring-1 focus:ring-gray-400 p-1 hover:bg-gray-500 h-6 w-6  "
+                class="ms-auto -mx-1.5 -my-1.5 bg-primary inline-flex justify-center items-center w-6 h-6 text-white-900 rounded-lg focus:ring-1 focus:ring-gray-400 p-1 hover:bg-gray-500"
                 onClick={closeNotice}
                 aria-label="Close"
               >
@@ -435,7 +435,9 @@ const AdminSidebar = () => {
           <div className="flex items-center mt-8 bg-gray-800 py-3 px-3 gap-3">
             <IoPersonCircleOutline className="inline-block text-3xl" />
             <div>
-              <p className="text-sm">{`${user?.details?.firstName} ${user?.details?.lastName ?? ""}`}</p>
+              <p className="text-sm">{`${user?.details?.firstName} ${
+                user?.details?.lastName ?? ""
+              }`}</p>
               <p className="text-xs">
                 {user?.details?.role?.type === "StrikeO"
                   ? user?.details?.email

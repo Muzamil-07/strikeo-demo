@@ -82,7 +82,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, pageNeighbours = 1
 	return (
 		<>
 			<nav aria-label="Pagination">
-				<ul className="inline-flex -space-x-px text-sm h-8">
+				<ul className="inline-flex space-x-2 text-sm h-8">
 					<li>
 						<button
 							disabled={currentPage === 1}
@@ -99,7 +99,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, pageNeighbours = 1
 								return (
 									<li key={index}>
 										<button
-											className="flex items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-700"
+											className="flex rounded-md items-center justify-center px-3 h-8 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-700"
 											onClick={handleMoveLeft}>
 											{page}
 										</button>
@@ -110,7 +110,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, pageNeighbours = 1
 								return (
 									<li key={index}>
 										<button
-											className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white hover:bg-gray-100 bg-white"
+											className="flex rounded-md items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white hover:bg-gray-100 bg-white"
 											onClick={handleMoveRight}>
 											{page}
 										</button>
@@ -121,7 +121,7 @@ const Pagination = ({ totalItems, itemsPerPage, onPageChange, pageNeighbours = 1
 							return (
 								<li key={index}>
 									<button
-										className={`flex items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+										className={`flex rounded-md items-center justify-center px-3 h-8 leading-tight text-gray-500 border border-gray-300 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
 											currentPage === page ? "bg-blue-500 text-white hover:bg-opacity-70" : "hover:bg-gray-100 bg-white"
 										}`}
 										onClick={(e) => handleClick(page)}>

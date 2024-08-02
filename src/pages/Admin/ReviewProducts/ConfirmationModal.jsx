@@ -11,7 +11,7 @@ const ConfirmationModal = ({ closeModal, rejectProduct, selectedProduct }) => {
       const res = await rejectProduct(selectedProduct?.id);
       closeModal();
     } catch (error) {
-      console.log(error);
+      //
     }
     setIsRejecting(false);
   };

@@ -1,40 +1,17 @@
-/* eslint-disable react/no-unknown-property */
-
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
-import { useNavigate } from 'react-router-dom'
 
 export function Racket (props) {
   const { nodes, materials } = useGLTF('/models/Sports/racket.glb')
-  const navigate = useNavigate()
-
   return (
-    <group
-      {...props}
-      dispose={null}
-      onPointerEnter={() => {
-        document.body.style.cursor = 'pointer'
-      }}
-      onPointerLeave={() => {
-        document.body.style.cursor = 'default'
-      }}
-      onClick={event => {
-        event.stopPropagation()
-
-        navigate('/products/category/sports', {
-          state: {
-            category: 'sports',
-            item: 'racket'
-          }
-        })
-      }}
-    >
+    <group {...props} dispose={null}>
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.TennisRacketV1.geometry}
-        material={materials.TennisRacketV1Mat}
-        scale={2.7}
+        geometry={nodes.Racket.geometry}
+        material={materials['basebat baked']}
+        rotation={[0.293, Math.PI / 2, 0]}
+        scale={0.189}
       />
     </group>
   )

@@ -1,1 +1,1 @@
-export {default} from './Cookies.jsx'
+export {default} from './CookiesPage.jsx'

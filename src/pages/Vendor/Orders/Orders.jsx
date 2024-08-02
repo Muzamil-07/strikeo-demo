@@ -1,5 +1,4 @@
 import { useState } from "react";
-import AdminSidebar from "../../../components/AdminSidebar";
 import http from "../../../api";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
@@ -8,13 +7,7 @@ import { useDebounce } from "use-debounce";
 import OrdersTable from "../../../components/Orders";
 
 const Orders = () => {
-  const statusOptions = [
-    "Pending",
-    "Processing",
-    "Shipped",
-    "Delivered",
-    "Cancelled",
-  ];
+  const statusOptions = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
 
   const [currentPage, setCurrentPage] = useState(1);
   const [paginatedData, setPaginatedData] = useState({});
@@ -32,7 +25,7 @@ const Orders = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [actionLoader, setActionLoader] = useState(false);
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector(state => state.user);
 
   const handleOpen = (mode, order) => {
     setSelectedOrder(order);
@@ -42,7 +35,7 @@ const Orders = () => {
     }
   };
 
-  const handleClose = (mode) => {
+  const handleClose = mode => {
     setSelectedOrder();
     if (mode === "status") {
       setIsStatusModalOpen(false);
@@ -53,7 +46,7 @@ const Orders = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleMenuClick = (index) => {
+  const handleMenuClick = index => {
     if (openMenuIndex === index) {
       setOpenMenuIndex(null);
     } else {
@@ -61,11 +54,11 @@ const Orders = () => {
     }
   };
 
-  const handleStatusChange = (e) => {
+  const handleStatusChange = e => {
     setStatusFilter(e.target.value);
   };
 
-  const formatNumber = (number) => {
+  const formatNumber = number => {
     if (typeof number !== "number" || isNaN(number)) {
       return "";
     }
@@ -87,30 +80,27 @@ const Orders = () => {
     return formattedDate;
   }
 
-  const getOrders = async (page) => {
+  const getOrders = async page => {
     try {
       const res = await http.get(
         `/order/all?search=${searchTextValue}&page=${page}&status=${statusFilter}`
       );
-      // console.log(res.data.data);
       setCurrentPage(res.data.data.currentPage);
       setPaginatedData(res.data.data);
     } catch (error) {
-      console.log(error);
+      //
     }
   };
 
-  const changeStatus = async (order) => {
+  const changeStatus = async order => {
     setActionLoader(true);
     try {
       const res = await http.post(`/order/status/${order.id}`, { status });
-      // console.log(res.data.data);
-
       toast.success("Status changed successfully");
       handleClose("status");
       getOrders(currentPage);
     } catch (error) {
-      console.log(error);
+      //
     } finally {
       setActionLoader(false);
     }
@@ -119,7 +109,7 @@ const Orders = () => {
   const getPageData = async () => {
     setIsLoading(true);
     await Promise.all([getOrders(currentPage)])
-      .catch((err) => console.log(err))
+      .catch(err => console.log(err))
       .finally(() => setIsLoading(false));
   };
 
@@ -132,17 +122,10 @@ const Orders = () => {
   // }, []);
 
   return (
-    <div
-      className="w-full flex h-screen flex-grow bg-white text-gray-500"
-      style={{ paddingLeft: "220px" }}
-    >
-      <div className="flex flex-grow">
-        <AdminSidebar />
-        <div className="flex-grow px-5 md:px-24 py-4">
-          <OrdersTable company={user?.details?.company} />
-        </div>
+    <>
+      <div className="flex-grow px-5 md:px-24 py-4">
+        <OrdersTable company={user?.details?.company} />
       </div>
-      {/* <Footer /> */}
 
       {isStatusModalOpen && (
         <>
@@ -174,20 +157,18 @@ const Orders = () => {
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
-              <h3 className="text-2xl font-medium text-center text-black">
-                Change Order Status
-              </h3>
+              <h3 className="text-2xl font-medium text-center text-black">Change Order Status</h3>
               <div className="mt-4 pb-4 text-black">Choose Status: </div>
 
               <select
                 required
                 defaultValue={status}
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={e => setStatus(e.target.value)}
                 className="w-full outline-none border border-gray-400 rounded-md text-black bg-white px-3 py-3 w-ful"
                 aria-label="Default select example"
               >
                 {statusOptions &&
-                  statusOptions.map((statusOption) => (
+                  statusOptions.map(statusOption => (
                     <option key={statusOption} value={statusOption}>
                       {statusOption}
                     </option>
@@ -214,7 +195,7 @@ const Orders = () => {
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

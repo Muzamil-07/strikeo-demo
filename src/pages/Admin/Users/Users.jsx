@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AdminSidebar from "../../../components/AdminSidebar";
 import { useNavigate } from "react-router-dom";
 import http from "../../../api";
 import { toast } from "react-toastify";
@@ -65,7 +64,7 @@ const Users = () => {
   //       }
   //     }
   //   };
-  const closeModal = (mode) => {
+  const closeModal = mode => {
     setSelectedUser({
       username: "",
       email: "",
@@ -99,7 +98,6 @@ const Users = () => {
       return true;
   };
   const checkDisableEdited = () => {
-    // console.log(selectedUser, "selectedUser");
     if (
       !selectedUser ||
       !selectedUser.username ||
@@ -111,20 +109,17 @@ const Users = () => {
     )
       return true;
   };
-  const getUsers = (page) => {
+  const getUsers = page => {
     http
       .get(
-        "/user/all?page=" +
-          (page ? page : "1") +
-          (searchedUser ? "&search=" + searchedUser : "")
+        "/user/all?page=" + (page ? page : "1") + (searchedUser ? "&search=" + searchedUser : "")
       )
-      .then((res) => {
-        // console.log(res.data.data, "res.data.data");
+      .then(res => {
         setCurrentPage(res.data.data.currentPage);
         setPaginatedData(res.data.data);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        //
       });
   };
 
@@ -144,13 +139,11 @@ const Users = () => {
     http
       .post("/admin/user", selectedUser)
       .then(() => {
-        // console.log(res.data, "res.data");
         toast.success("User added successfully.");
         getUsers(currentPage);
         closeModal();
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(err => {
         if (err.response?.data?.message === "Email taken!") {
           toast.error("Email already taken.");
         } else if (err.response?.data?.message === "Username taken!") {
@@ -170,28 +163,24 @@ const Users = () => {
     http
       .put("/admin/user/" + selectedUser.id, selectedUser)
       .then(() => {
-        // console.log(res.data, "res.data");
         toast.success("User updated successfully.");
         getUsers(currentPage);
         closeModal("edit");
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast.error("Something went wrong.");
       });
   };
 
-  const deleteUser = (id) => {
+  const deleteUser = id => {
     http
       .delete("/admin/user/" + id)
       .then(() => {
-        // console.log(res.data, "res.data");
         toast.success("User deleted successfully.");
         closeModal("delete");
         getUsers(currentPage);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
         toast.error("Something went wrong.");
       });
   };
@@ -199,7 +188,7 @@ const Users = () => {
   const getPageData = async () => {
     setIsLoading(true);
     await Promise.all([getUsers(currentPage)])
-      .catch((err) => console.log(err))
+      .catch(err => console.log(err))
       .finally(() => setIsLoading(false));
   };
 
@@ -215,69 +204,60 @@ const Users = () => {
 
   return (
     <>
-      <div
-        className="w-full flex flex-col flex-grow bg-white text-black-500"
-        style={{ paddingLeft: "220px" }}
-      >
-        <div className="flex flex-grow">
-          <AdminSidebar />
-          <div className="flex-grow px-5 md:px-16 py-4">
-            {isLoading || !paginatedData.users ? (
-              <div className="flex justify-center items-center h-full">
-                <ClipLoader size={60} color="#201F20" />
-              </div>
-            ) : view === "list" ? (
-              <>
-                <caption className="pt-4 pb-4 text-xl font-semibold text-left text-black-900 bg-white dark:text-white dark:bg-gray-800 flex justify-between">
-                  <div className="flex justify-between w-full">
-                    <div>
-                      Manage Users
-                      <p className="mt-1 text-sm font-normal text-black-500 dark:text-black-400">
-                        Effortlessly control user accounts in one central hub.
-                      </p>
-                    </div>
-                    {/* <button
+      <div className="flex-grow px-5 md:px-16 py-4">
+        {isLoading || !paginatedData.users ? (
+          <div className="flex justify-center items-center h-full">
+            <ClipLoader size={60} color="#201F20" />
+          </div>
+        ) : view === "list" ? (
+          <>
+            <caption className="pt-4 pb-4 text-xl font-semibold text-left text-black-900 bg-white dark:text-white dark:bg-gray-800 flex justify-between">
+              <div className="flex justify-between w-full">
+                <div>
+                  Manage Users
+                  <p className="mt-1 text-sm font-normal text-black-500 dark:text-black-400">
+                    Effortlessly control user accounts in one central hub.
+                  </p>
+                </div>
+                {/* <button
 									className="text-white bg-primary text-sm px-3 py-1 rounded-md h-12"
 									onClick={() => openModal("add")}>
 									Add New User
 								</button> */}
-                  </div>
-                </caption>
-                <UsersTable
-                  paginatedData={paginatedData}
-                  getUsers={getUsers}
-                  currentPage={currentPage}
-                  updateView={updateView}
-                  searchText={searchText}
-                  setSearchText={setSearchText}
-                />
-              </>
-            ) : view === "single-user" ? (
-              <div className="py-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <HiArrowNarrowLeft
-                      className="text-black-500 cursor-pointer hover:text-black-900 dark:text-black-400 dark:hover:text-white text-4xl pl-2"
-                      onClick={() => updateView("list")}
-                    />
-                    {selectedUser?.username}
-                  </div>
-                </div>
-                <div className="px-2 mt-8">
-                  <UserTabs
-                    getUsers={getUsers}
-                    currentPage={currentPage}
-                    setSelectedUser={setSelectedUser}
-                    selectedUser={selectedUser}
-                  />
-                </div>
               </div>
-            ) : (
-              <></>
-            )}
+            </caption>
+            <UsersTable
+              paginatedData={paginatedData}
+              getUsers={getUsers}
+              currentPage={currentPage}
+              updateView={updateView}
+              searchText={searchText}
+              setSearchText={setSearchText}
+            />
+          </>
+        ) : view === "single-user" ? (
+          <div className="py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <HiArrowNarrowLeft
+                  className="text-black-500 cursor-pointer hover:text-black-900 dark:text-black-400 dark:hover:text-white text-4xl pl-2"
+                  onClick={() => updateView("list")}
+                />
+                {selectedUser?.username}
+              </div>
+            </div>
+            <div className="px-2 mt-8">
+              <UserTabs
+                getUsers={getUsers}
+                currentPage={currentPage}
+                setSelectedUser={setSelectedUser}
+                selectedUser={selectedUser}
+              />
+            </div>
           </div>
-        </div>
-        {/* <Footer /> */}
+        ) : (
+          <></>
+        )}
       </div>
       {/* Modal for adding User */}
       {isModalOpen && (
@@ -310,12 +290,10 @@ const Users = () => {
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
-              <h3 className="text-2xl font-medium text-center pb-4">
-                Add User
-              </h3>
+              <h3 className="text-2xl font-medium text-center pb-4">Add User</h3>
               <form
                 className="overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={e => e.preventDefault()}
               >
                 <div className="flex flex-col gap-4 pr-2">
                   <label>Email*</label>
@@ -323,7 +301,7 @@ const Users = () => {
                     required
                     type="text"
                     value={selectedUser?.email}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         email: e.target.value,
@@ -336,7 +314,7 @@ const Users = () => {
                     required
                     type="text"
                     value={selectedUser?.username}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         username: e.target.value,
@@ -349,7 +327,7 @@ const Users = () => {
                     required
                     type="text"
                     value={selectedUser?.password}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         password: e.target.value,
@@ -363,7 +341,7 @@ const Users = () => {
                   <select
                     required
                     defaultValue={roles && roles[0]?.id}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         roleId: e.target.value,
@@ -373,7 +351,7 @@ const Users = () => {
                     aria-label="Select Role"
                   >
                     {roles &&
-                      roles.map((role) => (
+                      roles.map(role => (
                         <option key={role.id} value={role.id}>
                           {role.name}
                         </option>
@@ -404,12 +382,10 @@ const Users = () => {
           ></div>
           <div className="fixed max-w-[550px] m-auto  inset-0 flex items-center justify-center z-[1065]">
             <div className="p-7 bg-white text-black relative shadow-lg h-{} rounded-2xl shadow-primary-500/50 w-full">
-              <h3 className="text-2xl font-medium text-center pb-4">
-                Edit User
-              </h3>
+              <h3 className="text-2xl font-medium text-center pb-4">Edit User</h3>
               <form
                 className="overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={e => e.preventDefault()}
               >
                 <button
                   type="button"
@@ -439,7 +415,7 @@ const Users = () => {
                     required
                     type="text"
                     value={selectedUser?.email}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         email: e.target.value,
@@ -452,7 +428,7 @@ const Users = () => {
                     required
                     type="text"
                     value={selectedUser?.username}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         username: e.target.value,
@@ -466,7 +442,7 @@ const Users = () => {
                     type="text"
                     placeholder="Enter new password"
                     value={selectedUser?.password}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         password: e.target.value,
@@ -480,7 +456,7 @@ const Users = () => {
                   <select
                     required
                     defaultValue={selectedUser?.roleDetails?.id}
-                    onChange={(e) =>
+                    onChange={e =>
                       setSelectedUser({
                         ...selectedUser,
                         roleId: e.target.value,
@@ -490,7 +466,7 @@ const Users = () => {
                     aria-label="Select Role"
                   >
                     {roles &&
-                      roles.map((role) => (
+                      roles.map(role => (
                         <option key={role.id} value={role.id}>
                           {role.name}
                         </option>
@@ -543,17 +519,14 @@ const Users = () => {
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
-              <h3 className="text-2xl font-medium text-center mb-4">
-                View Role
-              </h3>
+              <h3 className="text-2xl font-medium text-center mb-4">View Role</h3>
               <form
                 className="overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={e => e.preventDefault()}
               >
                 <div className="flex flex-col gap-4 pr-2">
                   <div>
-                    Name Of Role :{" "}
-                    <span className="font-medium">{selectedUser?.name}</span>
+                    Name Of Role : <span className="font-medium">{selectedUser?.name}</span>
                   </div>
 
                   <div>Permissions:</div>
@@ -607,9 +580,7 @@ const Users = () => {
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
-              <h3 className="text-2xl font-medium text-center text-black">
-                Delete User
-              </h3>
+              <h3 className="text-2xl font-medium text-center text-black">Delete User</h3>
               <div className="mt-4 pb-4 text-black-400">
                 Are you sure you want to delete this user?
               </div>
@@ -664,9 +635,7 @@ const Users = () => {
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
-              <h3 className="text-2xl font-medium text-center text-black">
-                Add Role
-              </h3>
+              <h3 className="text-2xl font-medium text-center text-black">Add Role</h3>
               <div className="mt-4 pb-4 text-black-400">
                 No role found. Please add role first to start adding users!
               </div>

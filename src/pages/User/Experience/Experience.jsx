@@ -2,95 +2,53 @@
 import {
   AdaptiveDpr,
   AdaptiveEvents,
-  BakeShadows,
-  DeviceOrientationControls,
   Environment,
-  FirstPersonControls,
-  Float,
-  FlyControls,
-  Html,
-  KeyboardControls,
-  OrbitControls,
-  PointerLockControls,
   Preload,
-  SoftShadows,
-  Text,
-  useGLTF
+  SpotLight
 } from '@react-three/drei'
-import { EcctrlAnimation, EcctrlJoystick, useFollowCam } from 'ecctrl'
-import * as THREE from 'three'
-import { useDispatch, useSelector } from 'react-redux'
-
-import { Perf } from 'r3f-perf'
-import { Canvas } from '@react-three/fiber'
-import React, { Suspense, lazy, useEffect, useState } from 'react'
-import Lights from './Lights'
-import { CuboidCollider, Physics } from '@react-three/rapier' // Components for handling physics.
+import { useDispatch } from 'react-redux'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Suspense, useEffect, lazy, useRef } from 'react'
+import { Physics } from '@react-three/rapier' // Components for handling physics.
 import { useMouseCapture } from './utils/useMouseCapture'
 import { useKeyboard } from './utils/useKeyboard'
 import { Player } from './Player'
+import ReactHowler from 'react-howler'
 
-import Loader3d from './Loader/Loader3d'
-import { SolarPannels } from './Items/SolarPannels/SolarPannels'
 import Barriers from './Barriers'
-import Header from '../components/Header/Header'
-import Footer from '../components/Footer/Footer'
-import {
-  useGetAllCategoriesQuery,
-  useGetCartQuery,
-  useGetFavouritesQuery,
-  useRemoveItemFromCartMutation,
-  useRemoveItemFromFavouritesMutation
-} from '../../../services/nodeApi'
-import ShoppingCart from '../../../components/Cart'
-import { setCart } from '../../../redux/slices/Cart'
-import Favourites from '../../../components/Favourites'
-import { setFavourites } from '../../../redux/slices/Favourite'
-import ReactPlayer from 'react-player'
-import { useNavigate } from 'react-router-dom'
-import Controls from '../components/Controls/Controls'
 import { setContentVisibilty } from '../../../redux/slices/ContentVisibility'
-import { Character } from './Character'
-import Ecctrl from 'ecctrl'
-import RoughPlane from './RoughPlane'
-import { Joystick } from 'react-joystick-component'
 
-import { OptimizeStore } from './Store/OptimizeStore'
-import { MobileStore } from './Store/MobileStore'
-import { BakedStore } from './Store/BakedStore'
+const MobileStore = lazy(() => import('./Store/MobileStore'))
 import { isMobileDevice } from './utils/trackDevice'
+import Controls from '../components/Controls/Controls'
+import Navbar from '../mobile/components/Navbar/Navbar'
+import Loader3d from './Loader/Loader3d'
+import { LinearToneMapping, Object3D, Vector3 } from 'three'
+import Lights from './Lights'
+// import { TestStore } from './Store/TestStore'
+// const DesktopStore = lazy(() => import('./Store/DesktopStore'))
+// const TestStore = lazy(() => import('./Store/TestStore'))
+// const DracoPlaza = lazy(() => import('./Store/DracoPlaza'))
+// const DracoPlaza2 = lazy(() => import('./Store/DracoPlaza2'))
+// const DracoPlaza3 = lazy(() => import('./Store/DracoPlaza3'))
+// const DracoPlaza4 = lazy(() => import('./Store/DracoPlaza4'))
+// const DracoPlaza5 = lazy(() => import('./Store/DracoPlaza5'))
+// const DracoPlazaComplete = lazy(() => import('./Store/DracoPlazaComplete'))
+// const AtlasStore = lazy(() => import('./Store/AtlassStore'))
+// const UnOptStore = lazy(() => import('./Store/AtlassUnOptStore'))
+// const PlazaNormal = lazy(() => import('./Store/PlazaNormal'))
+// const FinalPlaza = lazy(() => import('./Store/FinalPlaza'))
+const FinalPlazaTest = lazy(() => import('./Store/FinalPlazaTest'))
 
 // Function to get player input from keyboard and mouse
 function getInput (keyboard, mouse) {
   let [x, y, z] = [0, 0, 0]
-  // Checking Joystick Movements
-  // if (joystick && joystick.type !== 'stop') {
-  //   // console.log('JOYSTICK:', joystick)
-  //   if (joystick.direction === 'BACKWARD') {
-  //     z += 1.0
-  //     // mouse.x = 0
-  //   } // Move backward
-  //   if (joystick.direction === 'FORWARD') {
-  //     z -= 1.0
-  //     // mouse.x = 0
-  //   } // Move forward
-  //   if (joystick.direction === 'RIGHT') {
-  //     x += 6.0
-  //     // mouse.x = 0
-  //   } // Move right
-  //   if (joystick.direction === 'LEFT') {
-  //     x -= 6.0
-  //     // mouse.x = 0
-  //   } // Move left
-  // }
   // Checking keyboard inputs to determine movement direction
   if (keyboard['ArrowDown']) z += 1.0 // Move backward
   if (keyboard['ArrowUp']) z -= 1.0 // Move forward
   if (keyboard['ArrowRight']) x += 6.0 // Move right
   if (keyboard['ArrowLeft']) x -= 6.0 // Move left
   if (keyboard[' ']) y += 1.0 // Jump
-
-  // console.log('MOUSE', mouse)
 
   // Returning an object with the movement and look direction
   return {
@@ -105,7 +63,7 @@ const Boundries = () => {
     <>
       {/* BACK */}
       <Barriers
-        position={[0, 10, 42]}
+        position={[0, 10, 80]}
         transparent={true}
         geometry={[80, 50]}
         opacity={0}
@@ -121,7 +79,7 @@ const Boundries = () => {
       <Barriers
         position={[-27, 10, 8]}
         transparent={true}
-        geometry={[80, 100]}
+        geometry={[150, 100]}
         opacity={0}
         rotation={[0, Math.PI / 2, 0]}
       />
@@ -129,7 +87,7 @@ const Boundries = () => {
       <Barriers
         position={[26, 10, 8]}
         transparent={true}
-        geometry={[80, 50]}
+        geometry={[150, 50]}
         opacity={0}
         rotation={[0, Math.PI / 2, 0]}
       />
@@ -178,9 +136,9 @@ const MobileBoundries = () => {
     <>
       {/* BACK */}
       <Barriers
-        position={[0, 10, 33]}
+        position={[0, 10, 70]}
         transparent={true}
-        geometry={[80, 50]}
+        geometry={[80, 100]}
         opacity={0}
       />
       {/* FRONT */}
@@ -194,7 +152,7 @@ const MobileBoundries = () => {
       <Barriers
         position={[-20, 10, 8]}
         transparent={true}
-        geometry={[80, 100]}
+        geometry={[150, 100]}
         opacity={0}
         rotation={[0, Math.PI / 2, 0]}
       />
@@ -202,7 +160,7 @@ const MobileBoundries = () => {
       <Barriers
         position={[22, 10, 8]}
         transparent={true}
-        geometry={[80, 50]}
+        geometry={[150, 50]}
         opacity={0}
         rotation={[0, Math.PI / 2, 0]}
       />
@@ -247,61 +205,64 @@ const MobileBoundries = () => {
   )
 }
 
-const Scene = ({ joystickMovements }) => {
+const Scene = () => {
   const keyboard = useKeyboard() // Hook to get keyboard input
   const mouse = useMouseCapture() // Hook to get mouse input
 
-  const camInitDis = -5
-  const camMaxDis = -7
-  const camMinDis = -0.7
-  const camMoveSpeed = 1
-  const camZoomSpeed = 1
-  const camCollisionOffset = 0.7
-
-  const cameraSetups = {
-    camInitDis,
-    camMaxDis,
-    camMinDis,
-    camMoveSpeed,
-    camZoomSpeed,
-    camCollisionOffset
-  }
-
   // useFollowCam(cameraSetups)
-  // console.log('KEYBOARD:----------------', keyboard)
-  console.log('MOBILE:', isMobileDevice())
   return (
     <group>
-      {/* <Lights /> */}
       <AdaptiveDpr pixelated />
       <AdaptiveEvents />
-      {/* <BakedStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} /> */}
-      {/* <OptimizeStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} /> */}
       {isMobileDevice() ? (
-        <MobileStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
+        <MobileStore scale={[18, 10, 10]} rotation-y={Math.PI / 2} />
       ) : (
-        <OptimizeStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
+        // <DesktopStore scale={[12, 10, 10]} rotation-y={Math.PI / 2} />
+        // <TestStore scale={[10, 10, 10]} rotation-y={Math.PI / 2} />
+        // <DracoPlaza5 scale={[10, 10, 10]} rotation-y={Math.PI} />
+        // <AtlasStore scale={[10, 10, 10]} rotation-y={Math.PI} />
+        <FinalPlazaTest scale={[10, 10, 10]} rotation-y={Math.PI} />
       )}
-      {isMobileDevice() ? <MobileBoundries /> : <Boundries />}
+      {/* {isMobileDevice() ? <MobileBoundries /> : <Boundries />} */}
 
-      <Environment files={'gear_store_1k.hdr'} path='/' />
-      {/* <Environment files={'thatch_chapel_1k.hdr'} path='/' /> */}
-      <Text
-        position={[0, 9.3, 3]}
-        font='/fonts/bangers-v20-latin-regular.woff'
-        fontSize={1}
-        color='white'
-      >
-        Click on Products to shop!
-      </Text>
+      {/* <Environment files={'gear_store_1k.hdr'} path='/' /> */}
+      {/* <Environment
+        files={'thatch_chapel_1k.hdr'}
+        path='/'
+        background={true}
+        blur={0.2}
+      /> */}
+      <Environment
+        files={'metro_noord_2k.hdr'}
+        path='/'
+        background={true}
+        blur={0.2}
+      />
+      {/* <Environment
+        files={
+          'above_the_clouds_sunny_evening_1K_cdbe8ff6-4b58-4f38-9553-29c67700133a (1).hdr'
+        }
+        path='/'
+        background={true}
+        blur={0.2}
+      /> */}
+      {/* <SpotLight
+        color={'white'}
+        position={[0, 25, 10]}
+        distance={60}
+        angle={Math.PI}
+        attenuation={35}
+        anglePower={5} // Diffuse-cone anglePower (default: 5)
+      /> */}
 
+      {/* <Lights /> */}
       <Player walk={5} jump={5} input={() => getInput(keyboard, mouse)} />
       {/* <SolarPannels scale={5} position={[0, 12, 0]} /> */}
     </group>
   )
 }
 
-const Experience = ({ setContentVisibility }) => {
+const Experience = ({ setLoad }) => {
   // setContentVisibility(false)
   const dispatch = useDispatch()
   // localStorage.setItem('contentvisibilty', true)
@@ -309,130 +270,143 @@ const Experience = ({ setContentVisibility }) => {
     dispatch(setContentVisibilty(false))
   }, [])
 
-  const [joystickMovements, setJoystickMovements] = useState(null)
+  useEffect(() => {
+    // const cursor = document.querySelector('.cursor')
 
-  const keyboardMap = [
-    { name: 'forward', keys: ['ArrowUp', 'KeyW'] },
-    { name: 'backward', keys: ['ArrowDown', 'KeyS'] },
-    { name: 'leftward', keys: ['ArrowLeft', 'KeyA'] },
-    { name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
-    { name: 'jump', keys: ['Space'] },
-    { name: 'run', keys: ['Shift'] },
-    // Optional animation key map
-    { name: 'action1', keys: ['1'] },
-    { name: 'action2', keys: ['2'] },
-    { name: 'action3', keys: ['3'] },
-    { name: 'action4', keys: ['KeyF'] }
-  ]
-  const characterURL = '/Floating Character.glb'
+    // document.addEventListener('mousemove', e => {
+    //   cursor.setAttribute(
+    //     'style',
+    //     'top: ' + (e.pageY - 10) + 'px; left: ' + (e.pageX - 10) + 'px;'
+    //   )
+    // })
 
-  // Prepare and rename your character animations here
-  const animationSet = {
-    idle: 'Idle',
-    walk: 'Walk',
-    run: 'Run',
-    jump: 'Jump_Start',
-    jumpIdle: 'Jump_Idle',
-    jumpLand: 'Jump_Land',
-    fall: 'Climbing', // This is for falling from high sky
-    // Currently support four additional animations
-    action1: 'Wave',
-    action2: 'Dance',
-    action3: 'Cheer',
-    action4: 'Attack(1h)' // This is special action which can be trigger while walking or running
-  }
-  const handleMove = e => {
-    // console.log(e)
-    // setJoystickMovements(e)
-  }
-  const handleStop = e => {
-    // console.log(e)
-    // setJoystickMovements(e)
-  }
-  const handleStart = e => {
-    // console.log(e)
-    // setJoystickMovements(e)
-  }
+    // document.addEventListener('click', () => {
+    //   cursor.classList.add('expand')
+
+    //   setTimeout(() => {
+    //     cursor.classList.remove('expand')
+    //   }, 500)
+    // })
+
+    const coords = { x: 0, y: 0 }
+    const circles = document.querySelectorAll('.circle')
+
+    const colors = [
+      '#ffb56b',
+      '#fdaf69',
+      '#f89d63',
+      '#f59761',
+      '#ef865e',
+      '#ec805d',
+      '#e36e5c',
+      '#df685c',
+      '#d5585c',
+      '#d1525c',
+      '#c5415d',
+      '#c03b5d',
+      '#b22c5e',
+      '#ac265e',
+      '#9c155f',
+      '#950f5f',
+      '#830060',
+      '#7c0060',
+      '#680060',
+      '#60005f',
+      '#48005f',
+      '#3d005e'
+    ]
+
+    circles.forEach(function (circle, index) {
+      circle.x = 0
+      circle.y = 0
+      circle.style.backgroundColor = colors[index % colors.length]
+    })
+
+    window.addEventListener('mousemove', function (e) {
+      coords.x = e.clientX
+      coords.y = e.clientY
+    })
+
+    function animateCircles () {
+      let x = coords.x
+      let y = coords.y
+
+      circles.forEach(function (circle, index) {
+        circle.style.left = x - 12 + 'px'
+        circle.style.top = y - 12 + 'px'
+
+        circle.style.scale = (circles.length - index) / circles.length
+
+        circle.x = x
+        circle.y = y
+
+        const nextCircle = circles[index + 1] || circles[0]
+        x += (nextCircle.x - x) * 0.3
+        y += (nextCircle.y - y) * 0.3
+      })
+
+      requestAnimationFrame(animateCircles)
+    }
+
+    animateCircles()
+  }, [])
   return (
     <>
-      <Header />
-      {/* <EcctrlJoystick
-        joystickBaseProps={{
-          receiveShadow: true,
-          material: new THREE.MeshStandardMaterial({ color: 'grey' })
-        }}
-      ></EcctrlJoystick> */}
-      {/* <div
-        style={{
-          position: 'absolute',
-          // display: 'flex',
-          // height: '78vh',
-          // justifyContent: 'center',
-          // alignItems: 'end',
-          zIndex: 300000,
-          bottom: '10%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}
-      >
-        <Joystick
-          size={90}
-          throttle={1}
-          baseColor='#c1c1c1b4'
-          stickColor='#ffffff'
-          move={handleMove}
-          stop={handleStop}
-          start={handleStart}
-        ></Joystick>
-      </div> */}
+      <Navbar bgLight />
+      <ReactHowler
+        src='/music/shopping-mall-theme.mpeg'
+        playing={true}
+        loop={true}
+      />
+      {/* <div className='cursor'></div> */}
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
+      <div class='circle'></div>
       <Canvas
+        id='storeCanvas'
         style={{
           width: '100vw',
           height: '100vh',
-          position: 'fixed'
+          position: 'fixed',
+          cursor: 'url(/pointer.png), auto'
+          // cursor:
+          //   'url(https://img.icons8.com/?size=50&id=PvxjhbARk0sD&format=png&color=000000/), auto'
         }}
         camera={{
           fov: 35,
-          near: 0.1,
-          far: 1000,
+          // near: 0.1,
+          // far: 1000,
           position: [0, 0, 35]
         }}
         dpr={[1, 2]}
+        // gl={{ toneMapping: LinearToneMapping }}
       >
-        <Suspense fallback={<Loader3d />}>
-          {/* <Perf position='top-left' /> */}
+        {/* <Perf position='top-left' /> */}
+        <Suspense fallback={<Loader3d load={setLoad} />}>
           <Physics>
-            <Scene joystickMovements={joystickMovements} />
-            {/* <RoughPlane /> */}
-            {/* <KeyboardControls map={keyboardMap}>
-              <Ecctrl
-                maxVelLimit={5}
-                jumpVel={4}
-                position={[0, 20, 35]}
-                // floatHeight={3}
-                // capsuleRadius={3}
-                // capsuleHalfHeight={2}
-                characterInitDir={3.14159}
-                camInitDir={{ x: 0, y: 3.14159, z: 0 }}
-                // springK={3}
-                dampingC={0.5}
-                mode='PointToMove'
-              >
-                <EcctrlAnimation
-                  characterURL={characterURL} // Must have property
-                  animationSet={animationSet} // Must have property
-                >
-                  <Character />
-                </EcctrlAnimation>
-              </Ecctrl>
-            </KeyboardControls> */}
+            <Scene />
           </Physics>
           <Preload all />
         </Suspense>
       </Canvas>
-
-      {/* <Controls /> */}
-      {/* <Footer /> */}
+      <Controls />
     </>
   )
 }

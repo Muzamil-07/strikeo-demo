@@ -1,8 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import Header from '../../../components/Header'
-import Footer from '../../../components/Footer'
 import { Button } from 'flowbite-react'
+import Navbar from "./../mobile/components/Navbar"
 import Payment from '../../../components/Payment'
 import { setBillingAddress } from '../../../redux/slices/Billing'
 import countries from '.././../../data/countries.json'
@@ -10,7 +9,6 @@ import cities from '.././../../data/cities.json'
 import React, { useEffect, useState } from 'react'
 import { useUpdateUserMutation } from '../../../services/nodeApi'
 import { setUser } from '../../../redux/slices/User'
-import { ClipLoader } from 'react-spinners'
 import validator from 'validator'
 
 const CheckoutProductCard = ({ item }) => {
@@ -182,10 +180,12 @@ const Checkout = ({ clientToken }) => {
   }, [billingDetails])
 
   return (
+    <>
+    <Navbar bgLight/>
     <div className="bg-[url('/strikeo.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
       <div className='fixed left-0 top-0 bg-black bg-opacity-60 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none' />
       <div className='fixed inset-0 z-[1065] h-full py-16'>
-        <div className='h-full w-11/12 mx-auto rounded-2xl bg-primary bg-opacity-70 px-20 pt-12'>
+        <div className='h-full w-11/12 mx-auto rounded-2xl bg-primary bg-opacity-70 px-20 mt-8 pt-10'>
           <div>
             <p className='text-4xl mb-5'>Checkout</p>
           </div>
@@ -553,6 +553,7 @@ const Checkout = ({ clientToken }) => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 

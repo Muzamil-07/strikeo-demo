@@ -66,7 +66,7 @@ const VideoComponent = () => {
           position: 'absolute',
           zIndex: 30000000
         }}
-        className="bg-[url('/simplebg.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed"
+        className="bg-[url('/strikeo.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed"
       >
         <ReactPlayer
           url={videoUrl}

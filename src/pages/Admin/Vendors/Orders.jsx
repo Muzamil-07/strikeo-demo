@@ -49,7 +49,7 @@ const Orders = ({ user, company }) => {
 			setCurrentPage(res.data.data.currentPage);
 			setPaginatedData(res.data.data);
 		} catch (error) {
-			console.log("Failed to fetch user orders: ", error);
+			//
 		}
 	};
 	const getPageData = async () => {

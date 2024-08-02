@@ -318,7 +318,6 @@ const Stepper = ({ getVendors, setView }) => {
       setCompany(res.data.data);
       setStep(step + 1);
     } catch (error) {
-      console.log(error);
       const errorMessage = error.response?.data?.message;
       toast.error(errorMessage || "Failed to create company");
     }
@@ -343,9 +342,6 @@ const Stepper = ({ getVendors, setView }) => {
         );
         imgData = res.data;
       }
-
-      // console.log("imgData: ", imgData[0]?.[company?.file?.name]);
-
       const res = await http.put("company/" + company.id, {
         ...company,
         logo: company.file
@@ -354,13 +350,10 @@ const Stepper = ({ getVendors, setView }) => {
           ? company.logo
           : "",
       });
-
-      // console.log(res.data.data, "company updated");
       toast.success("Company updated successfully");
       setCompany(res.data.data);
       setStep(step + 1);
     } catch (error) {
-      console.log(error);
       toast.error("Failed to update company");
     }
     setActionLoader({ ...actionLoader, company: false });
@@ -369,17 +362,6 @@ const Stepper = ({ getVendors, setView }) => {
   const prevStep = () => {
     setStep(step - 1);
   };
-
-  const handleChange = (input) => (e) => {
-    setFormData({ ...formData, [input]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // Submit your form to server or any desired action
-  };
-
   return step === 2 ? (
     <div className="grid grid-cols-10">
       <div className="col-span-2 flex flex-col pt-[25vh] gap-4 px-5">

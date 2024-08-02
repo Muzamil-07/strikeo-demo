@@ -24,7 +24,6 @@ export const UserSlice = createSlice({
 			http.refreshToken();
 		},
 		setUser: (state, action) => {
-			console.log("setting user", action.payload);
 			state.isLoggedIn = true;
 			state.details = action.payload;
 		},

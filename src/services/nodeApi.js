@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import Cookies from 'js-cookie'
 import { environment } from '../constants'
 
-const baseUrl = 'https://strikeo.com/api'
+const baseUrl = environment.api_url
 export const nodeAPI = createApi({
   reducerPath: 'nodeAPI',
   baseQuery: fetchBaseQuery({ baseUrl }),
@@ -186,6 +186,19 @@ export const nodeAPI = createApi({
       providesTags: ['Order']
     }),
 
+    //***** Place Order
+    createOrder: builder.mutation({
+      query: body => ({
+        url: "/order",
+        method: 'POST',
+        body,
+        headers: {
+          authorization: `Bearer ${Cookies.get('jwt')}`
+        }
+      }),
+      invalidatesTags: ["Cart"]
+    }),
+
     //***** Create Shipping
     createShipping: builder.mutation({
       query: body => ({
@@ -253,6 +266,7 @@ export const {
   useAddItemToCartMutation,
   useGetCartQuery,
   useRemoveItemFromCartMutation,
+  useCreateOrderMutation,
   useGetFavouritesQuery,
   useAddItemToFavouritesMutation,
   useRemoveItemFromFavouritesMutation,

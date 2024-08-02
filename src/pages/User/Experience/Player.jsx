@@ -65,19 +65,19 @@ export const Player = ({
       .multiply(
         isMobileDevice()
           ? speed.clone().multiplyScalar(2)
-          : speed.clone().multiplyScalar(2)
+          : speed.clone().multiplyScalar(4)
       )
       .applyQuaternion(yaw)
 
     // if (isMobileDevice()) {
-    //   api.current.applyImpulse(offset, true)
+    // api.current.applyImpulse(offset, true)
     // } else {
     api.current.setLinvel(offset, true)
     // }
 
     const newPosition = new THREE.Vector3(
       position.x,
-      position.y * 4,
+      position.y * 14,
       position.z
     )
     camera.position.lerp(
@@ -88,7 +88,7 @@ export const Player = ({
     camera.quaternion.copy(gaze)
   })
 
-  let playerPosition = isMobileDevice() ? [0, 2, 32] : [0, 2, 41]
+  let playerPosition = isMobileDevice() ? [0, 2, 68] : [2, 0, 270]
   return (
     <RigidBody
       ref={api}

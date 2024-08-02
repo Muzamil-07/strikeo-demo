@@ -6,8 +6,6 @@ import { ClipLoader } from 'react-spinners'
 import ImageContainer from '../../../components/ImageContainer'
 
 export default function RelatedProducts ({ id, state }) {
-  const domain = window.location.origin
-
   const { data, isLoading: isRelatedProductsLoading } =
     useGetRelatedProductsQuery({ id })
   if (isRelatedProductsLoading)
@@ -42,12 +40,8 @@ export default function RelatedProducts ({ id, state }) {
                       item: state.item
                     }}
                   >
-                    <Card className='w-[8rem] h-[10rem] m-3 bg-gradient-to-r from-teal-200 to-lime-200'>
-                      <ImageContainer
-                        src={item.image}
-                        width={80}
-                        height={80}
-                      />
+                    <Card className='w-[8rem] h-[10rem] m-3 bg-gradient-to-r opacity-90'>
+                      <ImageContainer src={item.image} width={80} height={80} />
                       <div className='flex flex-col text-center'>
                         <div className='text-xs text-black font-bold'>
                           {item.name}

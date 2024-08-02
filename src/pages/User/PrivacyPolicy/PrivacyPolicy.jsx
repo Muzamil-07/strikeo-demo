@@ -1,7 +1,6 @@
 import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { Modal } from "flowbite-react";
+import Navbar from "../mobile/components/Navbar";
 
 const PrivacyPolicy = () => {
   const themeOptions = {
@@ -13,7 +12,7 @@ const PrivacyPolicy = () => {
   };
   return (
     <div>
-      <Header />
+      <Navbar bgLight />
       <Modal
         theme={themeOptions}
         show={true}
@@ -150,7 +149,6 @@ const PrivacyPolicy = () => {
           </div>
         </Modal.Body>
       </Modal>
-      <Footer />
     </div>
   );
 };

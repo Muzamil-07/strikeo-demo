@@ -46,7 +46,7 @@ const Orders = ({ user, company }) => {
 				},
 			});
 		} catch (error) {
-			console.log(error, "error");
+			//
 		}
 	};
 	const handlePageChange = (page) => {
@@ -66,12 +66,14 @@ const Orders = ({ user, company }) => {
 			setCurrentPage(res.data.data.currentPage);
 			setPaginatedData(res.data.data);
 		} catch (error) {
-			console.log("Failed to fetch user orders: ", error);
+			//
 		}
 	};
 	const getPageData = async () => {
 		await Promise.all([getOrders(currentPage)])
-			.catch((err) => console.log(err))
+			.catch((err) => {
+				//
+			})
 			.finally(() => setIsLoading(false));
 	};
 

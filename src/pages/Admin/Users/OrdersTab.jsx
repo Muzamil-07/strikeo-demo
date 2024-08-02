@@ -35,7 +35,6 @@ const OrdersTab = ({ user }) => {
 	};
 	const getOrders = async (page) => {
 		try {
-			// console.log("completed-----------",status === "All" )
 			const res = await http.get(
 				"order?limit=5&page=" +
 					(page ? page : "1") +
@@ -51,7 +50,9 @@ const OrdersTab = ({ user }) => {
 	};
 	const getPageData = async () => {
 		await Promise.all([getOrders(currentPage)])
-			.catch((err) => console.log(err))
+			.catch(() => {
+				//
+			})
 			.finally(() => setIsLoading(false));
 	};
 	useEffect(() => {

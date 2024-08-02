@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const ContentVisibilitySlice = createSlice({
   name: 'contentvisibilty',
-  initialState: false,
+  initialState: true,
   reducers: {
     setContentVisibilty: (state, action) => {
       return action.payload

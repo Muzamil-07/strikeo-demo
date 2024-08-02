@@ -35,17 +35,16 @@ const OrderTabs = ({ orderId }) => {
 	const formik = useFormik({
 		initialValues: initialValues,
 		enableReinitialize: true,
-		onSubmit: async (values, { resetForm }) => {
+		onSubmit: async (values) => {
 			const { status, agent } = values;
 			const selectedAgent = agentList.find((agt) => agt.id === agent);
 			setActionLoader({ ...actionLoader, profile: true });
 			try {
-				const res = await http.patch(`order/${orderId}`, { status, agent, selectedAgent, order });
+				await http.patch(`order/${orderId}`, { status, agent, selectedAgent, order });
 				toast.success("Order updated successfully!");
 				setMode("view");
 				getOrder();
 			} catch (error) {
-				console.log(error);
 				toast.error("Failed to update order!");
 			}
 			setActionLoader({ ...actionLoader, profile: false });
@@ -57,7 +56,7 @@ const OrderTabs = ({ orderId }) => {
 			const res = await http.get(`/agent?country=${country}&city=${city}`);
 			setAgentList(res.data.data.agents);
 		} catch (error) {
-			console.log(error);
+			//
 		}
 	};
 

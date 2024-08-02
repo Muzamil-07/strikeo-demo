@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import AddSaleDialog from "./AddSaleDialog";
-import Pagination from "../../../components/Pagination";
+import { TablePagination } from "../../../components/TablePagination/TablePagination";
+
 
 export default function SalesTable({ paginatedData, getSales, currentPage, updateView, searchText, setSearchText }) {
 	const [isAddOpen, setIsAddOpen] = useState(false);
@@ -106,22 +107,16 @@ export default function SalesTable({ paginatedData, getSales, currentPage, updat
 					)}
 				</table>
 			</div>
-			{paginatedData && paginatedData.totalPages > 1 && (
-				<nav className="flex items-center flex-wrap md:gap-0 gap-4 justify-between pt-4" aria-label="Table navigation">
-					<span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-						Showing{" "}
-						<span className="font-semibold ">
-							{(currentPage - 1) * itemsPerPage + 1}-{Math.min(currentPage * itemsPerPage, paginatedData.totalUsers)}
-						</span>{" "}
-						of <span className="font-semibold ">{paginatedData.totalUsers}</span>
-					</span>
-					<Pagination
-						totalItems={paginatedData.totalOrders}
-						itemsPerPage={itemsPerPage}
-						onPageChange={handlePageChange}
-					/>
-				</nav>
-			)}
+			
+					
+					 <TablePagination
+                  handlePageChange={handlePageChange}
+                  totalItems={paginatedData.totalUsers || 0}
+                  itemsPerPage={itemsPerPage}
+                  currentPage={currentPage}
+                  isLoading={false}
+                />
+				
 		</>
 	);
 }

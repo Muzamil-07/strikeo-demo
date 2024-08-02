@@ -9,7 +9,6 @@ import {
 } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React, { Suspense, useEffect, useState } from 'react'
-import * as THREE from 'three'
 import CanvasLoader from './CanvasLoader'
 
 const ModelCanvas = ({ children, autoRotate = true }) => {
@@ -26,7 +25,7 @@ const ModelCanvas = ({ children, autoRotate = true }) => {
         position: [-4, 6, 6]
       }}
     >
-      <SoftShadows size={4} samples={20} focus={1} />
+      {/* <SoftShadows size={4} samples={20} focus={1} /> */}
 
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
@@ -46,10 +45,10 @@ const ModelCanvas = ({ children, autoRotate = true }) => {
           {children}
         </mesh>
 
-        <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position-y={-1.8}>
+        {/* <mesh receiveShadow rotation={[-Math.PI / 2, 0, 0]} position-y={-1.8}>
           <planeGeometry args={[170, 170]} />
           <shadowMaterial transparent opacity={0.4} />
-        </mesh>
+        </mesh> */}
         <Preload all />
       </Suspense>
     </Canvas>

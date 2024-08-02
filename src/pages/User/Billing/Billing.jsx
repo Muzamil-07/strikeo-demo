@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Header from "../../../components/Header";
-import Footer from "../../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 // import CartService from "../../services/Cart";
@@ -8,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { setBillingAddress } from "../../../redux/slices/Billing";
 import { toast } from "react-toastify";
 import validator from "validator";
+import Navbar from "../mobile/components/Navbar";
 import countries from ".././../../data/countries.json";
 import cities from ".././../../data/cities.json";
 
@@ -61,7 +60,6 @@ const Billing = () => {
 	// 		const res = await CartService.getCart(user.details.id);
 	// 		dispatch(setCart(res.data.data));
 	// 	} catch (error) {
-	// 		console.log(error);
 	// 	}
 	// };
 
@@ -123,7 +121,7 @@ const Billing = () => {
 
 	return (
 		<div className="w-full flex flex-col h-full bg-primary">
-			<Header />
+			<Navbar bgLight/>
 			<div className="flex justify-between flex-col gap-3 md:gap-0 md:flex-row h-[75%] px-8 md:px-16 my-2 md:my-4 md:overflow-y-hidden">
 				<div className="flex flex-col gap-3 md:pl-20 md:pr-4 w-full md:w-2/5 h-[80%] md:h-auto overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
 					<h3 className="text-2xl font-medium">Billing Details</h3>
@@ -319,7 +317,6 @@ const Billing = () => {
 					</div>
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };

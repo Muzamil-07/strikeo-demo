@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { Stage, useTexture } from '@react-three/drei'
 import React from 'react'
-import * as THREE from 'three'
 
 const Floor = () => {
   const base = useTexture('/models/Floor/base.png')

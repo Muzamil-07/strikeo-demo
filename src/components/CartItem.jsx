@@ -4,7 +4,7 @@ import { ClipLoader } from 'react-spinners'
 import { useState } from 'react'
 import { Badge } from 'flowbite-react'
 
-const ShoppingCartItem = ({ item, removeItem, key }) => {
+const ShoppingCartItem = ({ item, removeItem }) => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -16,7 +16,6 @@ const ShoppingCartItem = ({ item, removeItem, key }) => {
 
   return (
     <div
-      key={key}
       className='grid grid-cols-[max-content_1fr] gap-5 p-2 text-black'
     >
       <div className='flex justify-center items-center bg-secondary bg-opacity-50 w-10'>

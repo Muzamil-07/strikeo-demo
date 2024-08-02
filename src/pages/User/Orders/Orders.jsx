@@ -5,8 +5,7 @@ import { Flowbite, Table } from 'flowbite-react'
 import ClipLoader from 'react-spinners/ClipLoader'
 import format from '../../../utils/format'
 import Pagination from '../../../components/Pagination'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Navbar from '../mobile/components/Navbar'
 import { useGetOrdersQuery } from '../../../services/nodeApi'
 
 const theme = {
@@ -71,7 +70,7 @@ const Orders = () => {
     `inline-flex items-center rounded-md bg-${statusColor[status][0]}-50 px-2 py-1 text-xs font-medium text-${statusColor[status][0]}-700 ring-1 ring-inset ring-${statusColor[status][0]}-${statusColor[status][1]}`
   return (
     <div>
-      <Header background='black' />
+      <Navbar bgLight />
       <div className="bg-[url('/strikeo.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
         <div className='fixed left-0 top-0 bg-black bg-opacity-60 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none'></div>
       </div>
@@ -261,7 +260,6 @@ const Orders = () => {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   )
 }

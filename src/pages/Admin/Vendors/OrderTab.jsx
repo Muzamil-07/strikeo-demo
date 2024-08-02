@@ -43,7 +43,6 @@ const OrderTab = ({ orderId, companyName }) => {
 	const getOrder = async () => {
 		const res = await http.get(`order/${orderId}`);
 		if (res.status === 200) {
-			// console.log(res.data.data);
 			setOrder(res.data.data);
 		}
 	};

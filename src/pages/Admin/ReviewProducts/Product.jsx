@@ -1,342 +1,955 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { HiArrowNarrowLeft } from "react-icons/hi";
-import ClipLoader from "react-spinners/ClipLoader";
-import { AiOutlineTag } from "react-icons/ai";
-import { FaRuler } from "react-icons/fa";
-import { toast } from "react-toastify";
-import http from "../../../api";
+import { useState, useEffect } from 'react'
+import { HiArrowNarrowLeft } from 'react-icons/hi'
+import ClipLoader from 'react-spinners/ClipLoader'
+import { AiOutlineTag } from 'react-icons/ai'
+import { FaRuler } from 'react-icons/fa'
+import { toast } from 'react-toastify'
+import http from '../../../api'
+import { RxCrossCircled } from 'react-icons/rx'
+import { IoCloudUploadOutline } from 'react-icons/io5'
 
 const Product = ({
   updateView,
-  categories,
   getProducts,
   selectedProduct,
   setSelectedProduct,
+  categoryTree,
+  tabIndex
 }) => {
-  const [product, setProduct] = useState(selectedProduct);
+  const [product, setProduct] = useState(selectedProduct)
   const errorsBody = {
-    salePrice: null,
-  };
-  const [errors, setErrors] = useState(errorsBody);
-  const [isPublishing, setIsPublishing] = useState(false);
+    salePrice: null
+  }
+  const [errors, setErrors] = useState(errorsBody)
+  const [isPublishing, setIsPublishing] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState(selectedProduct.category)
+  const [selectedSubCategory, setSelectedSubCategory] = useState(selectedProduct.subCategory)
+  const [selectedSubSubCategory, setSelectedSubSubCategory] = useState(selectedProduct.subSubCategory)
 
   const publishProduct = async () => {
+    if (!product.status) {
+      setErrors({ ...errors, status: 'Status is required' })
+      return
+    }    
     if (!product.salePrice) {
-      setErrors({ ...errors, salePrice: "Sale price is required" });
-      return;
+      setErrors({ ...errors, salePrice: 'Sale price is required' })
+      return
+    }    
+    if (!selectedCategory) {
+      setErrors({ ...errors, category: 'Sale price is required' })
+      return
     }
-    setErrors(errorsBody);
+    if (!selectedSubCategory) {
+      setErrors({ ...errors, subCategory: 'Sale price is required' })
+      return
+    }
+    if (!selectedSubSubCategory) {
+      setErrors({ ...errors, subSubCategory: 'Sale price is required' })
+      return
+    }
+    setErrors(errorsBody)
     try {
-      setIsPublishing(true);
-      const res = await http.put(`/product/approve/${product.id}`, product);
-      updateView("list");
-      getProducts();
-      setSelectedProduct();
-      toast.success("Product published successfully");
+      setIsPublishing(true)
+      product.category = selectedCategory.id
+      product.subCategory = selectedSubCategory.id
+      product.subSubCategory = selectedSubSubCategory.id
+      await http.put(`/product/approve/${product.id}`, product)
+      updateView('list')
+      getProducts()
+      setSelectedProduct()
+      toast.success('Product published successfully')
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong.");
+    }
+    setIsPublishing(false)
+  }
+
+  const updateProduct = async () => {
+    try {
+      let productBody = {
+        ...product,
+      };
+      let formData = new FormData();
+      let updatedMainImage = productBody?.image !== selectedProduct?.image;
+      if (updatedMainImage) {
+        formData.append("file", product.file);
+      }
+      let changedSubImages = [];
+      productBody.subImages.forEach((subImage, index) => {
+        if (typeof subImage !== "string") {
+          formData.append("file", subImage.file);
+          changedSubImages.push(index);
+        }
+      });
+
+      if (changedSubImages.length > 0 || updatedMainImage) {
+        let imgData;
+        const res = await http.post(
+          environment.file_url + "/upload",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          }
+        );
+        imgData = res.data;
+
+        let mainImage = updatedMainImage
+          ? imgData[0]?.[product?.file?.name]
+          : productBody?.image;
+        let subImages = [...product.subImages];
+        if (changedSubImages.length > 0) {
+          changedSubImages.forEach((index) => {
+            let foundImage = imgData.find(
+              (image) =>
+                image[product?.subImages[index]?.file?.name] !== undefined
+            );
+            subImages[index] =
+              foundImage[product?.subImages[index]?.file?.name];
+          });
+        }
+        subImages = subImages.filter(
+          (subImage) => typeof subImage === "string"
+        );
+        productBody = {
+          ...productBody,
+          image: mainImage,
+          subImages,
+        };
+      }
+
+      // eslint-disable-next-line no-unused-vars
+      setIsPublishing(true);
+      const result = await http.put("/product/" + productBody.id, productBody);
+      getProducts()
+      toast.success("Product updated successfully!");
+      setErrors(errorsBody)
+      
+      updateView('list')
+    } catch (error) {
+      toast.error("Failed to update product!");
     }
     setIsPublishing(false);
   };
+  const validateProduct = () => {
+    if (!product) return;
 
+    const newErrors = {};
+    if (!product.status) {
+      newErrors.status = "Status cannot be empty.";
+    }  
+    if (product.name?.trim() === "") {
+      newErrors.name = "Name cannot be empty.";
+    }
+    if (!product.gender?.trim()) {
+      newErrors.gender = "Gender is required.";
+    }
+    if (product.brand?.trim() === "") {
+      newErrors.brand = "Brand cannot be empty.";
+    }
+
+    if (!selectedCategory) {
+      setErrors({ ...errors, category: "Sale price is required" });
+      return;
+    }
+    if (!selectedSubCategory) {
+      setErrors({ ...errors, subCategory: "Sale price is required" });
+      return;
+    }
+    if (!selectedSubSubCategory) {
+      setErrors({ ...errors, subSubCategory: "Sale price is required" });
+      return;
+    }
+
+    if (product.description?.trim() === "") {
+      newErrors.description = "Description cannot be empty.";
+    }
+    if (product.image?.trim() === "") {
+      newErrors.image = "Please select a main image.";
+    }
+    if (product.image === "") {
+      newErrors.image = "Please select a main image.";
+    }
+    if (product.image && product.file && product.file.size > 10 * 1024 * 1024) {
+      newErrors.image = "Please select image less than 10MB.";
+    }
+    if (
+      product.subImages[0].image &&
+      product.subImages[0].file &&
+      product.subImages[0].file.size > 10 * 1024 * 1024
+    ) {
+      newErrors.image = "Please select image less than 10MB.";
+    }
+    if (
+      product.subImages[1].image &&
+      product.subImages[1].file &&
+      product.subImages[1].file.size > 10 * 1024 * 1024
+    ) {
+      newErrors.image = "Please select image less than 10MB.";
+    }
+    if (
+      product.subImages[2].image &&
+      product.subImages[2].file &&
+      product.subImages[2].file.size > 10 * 1024 * 1024
+    ) {
+      newErrors.image = "Please select image less than 10MB.";
+    }
+    if (
+      product.subImages[3].image &&
+      product.subImages[3].file &&
+      product.subImages[3].file.size > 10 * 1024 * 1024
+    ) {
+      newErrors.image = "Please select image less than 10MB.";
+    }
+
+    if (product.costPrice === 0 || product.costPrice === NaN) {
+      newErrors.costPrice = "Price cannot be empty.";
+    } else if (product.costPrice < 0) {
+      newErrors.costPrice = "Price cannot be negative.";
+    }
+    if (product.amount === "" || isNaN(product.amount)) {
+      newErrors.amount = "Amount cannot be empty.";
+    } else if (product.amount < 0) {
+      newErrors.amount = "Amount cannot be negative.";
+    }
+    if (product.sizes?.length === 0) {
+      newErrors.sizes = "Please add at least one size.";
+    }
+    if (product.colors?.length === 0) {
+      newErrors.colors = "Please add at least one color.";
+    }
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) return;
+
+    if(selectedCategory?.id) product.category = selectedCategory.id;
+   if(selectedSubCategory?.id) product.subCategory = selectedSubCategory.id;
+   if(selectedSubSubCategory.id) product.subSubCategory = selectedSubSubCategory.id;
+   
+
+    
+      updateProduct();
+    
+  };
+
+  const handleSelectCategory = (e)=> {
+    const categoryId = e.target.value;
+    if(!categoryId && !categoryTree[categoryId]){
+      setSelectedCategory(null)
+      return
+    }
+
+    const _selectedCategory = {
+      name: categoryTree[categoryId].name,
+      id: categoryId
+    }
+    setSelectedCategory(_selectedCategory)
+  }
+
+  const handleSelectSubCategory = (e)=> {
+    const subCategoryId = e.target.value;
+    if(!subCategoryId && !categoryTree[selectedCategory.id][subCategoryId]){
+      setSelectedSubCategory(null)
+      return
+    }
+
+    const _selectedSubCategory = {
+      name: categoryTree[selectedCategory.id][subCategoryId].name,
+      id: subCategoryId
+    }
+    setSelectedSubCategory(_selectedSubCategory)
+  }
+
+  const handleSelectSubSubCategory = (e)=> {
+    const subSubCategoryId = e.target.value;
+    if(!subSubCategoryId && !categoryTree[selectedCategory.id][selectedSubCategory.id][subSubCategoryId]){
+      setSelectedSubSubCategory(null)
+      return
+    }
+
+    const _selectedSubSubCategory = {
+      name: categoryTree[selectedCategory.id][selectedSubCategory.id][subSubCategoryId].name,
+      id: subSubCategoryId
+    }
+    setSelectedSubSubCategory(_selectedSubSubCategory)
+  }
+
+  const handleSalePrice = (e) =>{
+  setProduct({
+    ...product,
+    salePrice:
+      e.target.value === '' ? 0 : Number(e.target.value)
+  })
+}
+  const handleDiscount = (e) =>{
+  setProduct({
+    ...product,
+    discount:
+      e.target.value === '' ? 0 : Number(e.target.value)
+  })  
+}
+  const handleProductName = (e) =>{
+  setProduct({
+    ...product,
+    name:
+      e.target.value 
+  })  
+}
+  const handleBrandName = (e) =>{
+  setProduct({
+    ...product,
+    brand:
+      e.target.value 
+  })  
+}
+  const handleDescription = (e) =>{
+  setProduct({
+    ...product,
+    description:
+      e.target.value 
+  })  
+}
+const handleCostPrice = (e) =>{
+  setProduct({
+    ...product,
+    costPrice:
+      e.target.value === '' ? 0 : Number(e.target.value)
+  })
+}
+const handleSize = (e) => {
+  if (
+    e.key === "-" ||
+    e.key === "e" ||
+    e.key === "E" ||
+    parseInt(e.key) < 0 ||
+    e.key === "."
+  ) {
+    e.preventDefault();
+  }
+  if (
+    (e.key === "0" && e.target.value === "0") ||
+    (e.key === "0" && e.target.value === "")
+  ) {
+    e.preventDefault();
+  }
+  if (e.key === "Enter") {
+    if (e.target.value !== "" && !product.sizes.includes(e.target.value)) {
+      setProduct({
+        ...product,
+        sizes: [...product.sizes, e.target.value],
+      });
+      e.target.value = "";
+    }
+    e.preventDefault();
+  }
+};
+const handleRemoveSize = (size) => {
+  setProduct({
+    ...product,
+    sizes: product.sizes.filter((s) => s !== size),
+  });
+};
+
+const handleTag = (e) => {
+  if (e.key === "Enter") {
+    if (e.target.value !== "" && !product.tags.includes(e.target.value)) {
+      setProduct({
+        ...product,
+        tags: [...product.tags, e.target.value],
+      });
+      e.target.value = "";
+    }
+    e.preventDefault();
+  }
+};
+const handleRemoveTag = (index) => {
+  setProduct({
+    ...product,
+    tags: product.tags.filter((s, i) => i !== index),
+  });
+};
+const handleRemoveColor = (index) => {
+  setProduct({
+    ...product,
+    colors: product.colors.filter((s, i) => i !== index),
+  });
+};
+
+const onImageChange = (e, index) => {
+  const file = e.target.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      if (index === undefined) {
+        setProduct({ ...product, image: reader.result, file });
+      } else {
+        const subImages = [...product.subImages];
+        subImages[index] = {
+          image: reader.result,
+          file,
+        };
+        setProduct({
+          ...product,
+          subImages,
+        });
+      }
+    };
+
+    reader.readAsDataURL(file);
+  }
+};
+const handleRemoveImage = (index) => {
+  if (index === undefined) {
+    setProduct({
+      ...product,
+      image: "",
+      file: null,
+    });
+    return;
+  }
+  const subImages = [...product.subImages];
+  // if (mode === "add-product") {
+  //   subImages[index] = {
+  //     image: "",
+  //     file: null,
+  //   };
+  // } else if (mode === "edit-product") {
+    subImages[index] = "";
+  // }
+  setProduct({
+    ...product,
+    subImages,
+  });
+};
+console.log(product)
   return (
-    <div className="px-10">
-      <div className="flex items-center justify-between pt-4">
-        <div className="flex items-center gap-4">
+    <div className='px-10'>
+      <div className='flex items-center justify-between pt-4'>
+        <div className='flex items-center gap-4'>
           <HiArrowNarrowLeft
-            className="text-gray-500 cursor-pointer hover:text-gray-900 dark:text-gray-400 dark:hover:text-white text-4xl"
-            onClick={() => updateView("list")}
+            className='text-gray-500 cursor-pointer hover:text-gray-900 dark:text-gray-400 dark:hover:text-white text-4xl'
+            onClick={() => updateView('list')}
           />
           {selectedProduct?.name}
         </div>
       </div>
 
-      <div className="flex gap-4 py-4 my-2 bg-sky-100 border border-blue-400 rounded-lg px-4">
-        <div className="w-6 h-6 rounded-full bg-blue-600 text-white self-start flex items-center justify-center">
+      <div className='flex gap-4 py-4 my-2 bg-sky-100 border border-blue-400 rounded-lg px-4'>
+        <div className='w-6 h-6 rounded-full bg-blue-600 text-white self-start flex items-center justify-center'>
           i
         </div>
-        <div className="flex flex-col text-primary">
-          <div className="font-medium">Note</div>
-          <div className="text-sm">
+        <div className='flex flex-col text-primary'>
+          <div className='font-medium'>Note</div>
+          <div className='text-sm'>
             Enter Sale Price and Discount to publish product.
           </div>
         </div>
       </div>
 
-      <form onSubmit={(e) => e.preventDefault()} className="pt-4">
-        <div className="grid grid-cols-12 gap-10">
-          <div className="col-span-6">
-            <div className="flex flex-col gap-4">
-              <h3 className="text-lg font-semibold text-primary">
+      <form onSubmit={e => e.preventDefault()} className='pt-4'>
+        <div className='grid grid-cols-12 gap-10'>
+          <div className='col-span-6'>
+            <div className='flex flex-col gap-4'>
+              <h3 className='text-lg font-semibold text-primary'>
                 General Information
               </h3>
-              <div className="p-4 border border-gray-200 rounded-lg flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
+              <div className='p-4 border border-gray-200 rounded-lg flex flex-col gap-4'>
+              <div className='flex flex-col gap-2'>
                   <label>Category</label>
-
                   <select
                     required
-                    disabled
-                    value={product?.category?.id || product?.category}
-                    className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    aria-label="Default select example"
+                    value={selectedCategory && selectedCategory.id}
+                    onChange={handleSelectCategory}
+                    className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                    aria-label='Default select example'
                   >
-                    <option value="">Select Category</option>
-                    {categories &&
-                      categories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
+                    <option value=''>Select Category</option>
+                    { categoryTree &&
+                      Object.keys(categoryTree).map(id => (
+                        <option key={id} value={id}>
+                          {categoryTree[id].name}
                         </option>
                       ))}
                   </select>
+                  {errors && errors.category && (
+                        <div className='text-red-500 text-sm'>
+                          {errors.category}
+                        </div>
+                      )}
                 </div>
-                <div className="flex flex-col gap-2">
+              <div className='flex flex-col gap-2'>
+                      <label>Sub Category</label>
+                      <select
+                        required
+                        disabled={!selectedCategory}
+                        value={ selectedSubCategory && selectedSubCategory.id }
+                        onChange={handleSelectSubCategory}
+                        className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                        aria-label='Default select example'
+                      >
+                        <option value=''>Select Sub-Category</option>
+                        { selectedCategory && categoryTree[selectedCategory.id] &&
+                          Object.keys(categoryTree[selectedCategory.id]).map(id => {
+                            if(id==='name') return
+                            return ( <option key={id} value={id}>
+                              {categoryTree[selectedCategory.id][id].name}
+                            </option>)
+                        })}
+                      </select>
+                      {errors && errors.subCategory && (
+                        <div className='text-red-500 text-sm'>
+                          {errors.subCategory}
+                        </div>
+                      )}
+                </div>
+                <div className='flex flex-col gap-2'>
+                      <label>Sub SubCategory</label>
+                      <select
+                        required
+                        disabled={!selectedSubCategory || !selectedCategory}
+                        value={ selectedSubSubCategory && selectedSubSubCategory.id }
+                        onChange={handleSelectSubSubCategory}
+                        className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                        aria-label='Default select example'
+                      >
+                        <option value=''>Select Sub-Category</option>
+                        { selectedCategory && selectedSubCategory && categoryTree[selectedCategory.id][selectedSubCategory.id] &&
+                          Object.keys(categoryTree[selectedCategory.id][selectedSubCategory.id]).map(id => {
+                            if(id==='name') return
+                            return ( <option key={id} value={id}>
+                              {categoryTree[selectedCategory.id][selectedSubCategory.id][id].name}
+                            </option>)
+                        })}
+                      </select>
+                      {errors && errors.subSubCategory && (
+                        <div className='text-red-500 text-sm'>
+                          {errors.subSubCategory}
+                        </div>
+                      )}
+                </div>
+          {tabIndex===1&& <div className='flex flex-col gap-2'>
+                      <label>Status</label>
+                      <select
+                        
+                        disabled={!selectedCategory}
+                        value={ product?.status }
+                        onChange={(e)=>{setProduct({...product,status:e.target.value})}}
+                        className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+                        aria-label='Default select example'
+                      >
+                        <option value='Published'>Published</option>
+                        <option value='Pending'>Pending</option>
+                       
+                       
+                      </select>
+                      {errors && errors.status && (
+                        <div className='text-red-500 text-sm'>
+                          {errors.status}
+                        </div>
+                      )}
+                </div>}
+                
+                <div className='flex flex-col gap-2'>
                   <label>Product Name</label>
                   <input
                     required
-                    disabled
-                    type="text"
+                    onChange={handleProductName}
+                    type='text'
                     value={product?.name}
-                    className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className='flex flex-col gap-2'>
                   <label>Brand Name</label>
                   <input
                     required
-                    disabled
-                    type="text"
+                    onChange={handleBrandName}
+                    type='text'
                     value={product?.brand}
-                    className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className='flex flex-col gap-2'>
                   <label>Description</label>
                   <textarea
                     required
-                    disabled
+                    onChange={handleDescription}
                     rows={4}
                     value={product?.description}
-                    className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   ></textarea>
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className='flex flex-col gap-2'>
                   <label>Sizes</label>
                   {product?.sizes?.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {product?.sizes.map((size, index) => (
-                        <span
-                          key={index + size}
-                          className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex gap-1 items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 relative"
-                        >
-                          <FaRuler />
-                          {size}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                {product?.tags?.length > 0 && (
-                  <div className="flex flex-col gap-2">
-                    <label>Tags</label>
-                    <div className="flex gap-2 flex-wrap">
-                      {product?.tags.map((tag, index) => (
-                        <span
-                          key={index + tag}
-                          className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex gap-1 items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 relative"
-                        >
-                          <AiOutlineTag />
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                <div className="flex flex-col gap-2">
-                  {product?.colors?.length > 0 && (
-                    <div className="flex items-center gap-4 flex-wrap">
-                      {product?.colors.map((color, index) => (
-                        <div className="relative" key={index + color}>
-                          <div
-                            style={{
-                              backgroundColor: color,
-                            }}
-                            className="w-[50px] h-[50px] p-[2px] border-none rounded-[15px] invert"
-                          >
-                            <input
-                              type="color"
-                              defaultValue={color}
-                              id="colorPicker"
-                              className="w-full h-full bg-transparent color-input cursor-pointer"
-                              name="colorPicker"
-                            />
-                          </div>
+                        <div className="flex flex-wrap gap-2">
+                          {product?.sizes.map((size, index) => (
+                            <span
+                              key={index + size}
+                              className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex gap-1 items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 relative"
+                            >
+                              
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemoveSize(size)}
+                                  className="absolute top-[-6px] right-[-6px] text-red-500 text-lg rounded-full bg-white"
+                                >
+                                  <RxCrossCircled />
+                                </button>
+                              
+                              <FaRuler />
+                              {size}
+                            </span>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  )}
+                      )}
+                      
+                        <input
+                          type="number"
+                          onKeyDown={(e) => handleSize(e)}
+                          placeholder="Enter size & press enter"
+                          className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                      
                 </div>
+                <div className="flex flex-col gap-2">
+                      <label>Tags</label>
+                      {product?.tags?.length > 0 && (
+                        <div className="flex gap-2 flex-wrap">
+                          {product?.tags.map((tag, index) => (
+                            <span
+                              key={index + tag}
+                              className="bg-blue-100 text-blue-800 text-xs font-medium inline-flex gap-1 items-center px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 relative"
+                            >
+                             
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemoveTag(index)}
+                                  className="absolute top-[-6px] right-[-6px] text-red-500 text-lg rounded-full bg-white"
+                                >
+                                  <RxCrossCircled />
+                                </button>
+                              
+                              <AiOutlineTag />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      
+                        <input
+                          type="text"
+                          placeholder="Enter tag & press enter"
+                          onKeyDown={(e) => handleTag(e)}
+                          className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        />
+                      
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      {product?.colors?.length > 0 && (
+                        <div className="flex items-center gap-4 flex-wrap">
+                          {product?.colors.map((color, index) => (
+                            <div className="relative">
+                             
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemoveColor(index)}
+                                  className="absolute top-[-6px] right-[-6px] text-red-500 text-lg rounded-full bg-white"
+                                >
+                                  <RxCrossCircled />
+                                </button>
+                              
+                              <input
+                                type="color"
+                               
+                                key={index + color}
+                                defaultValue={color}
+                                onBlur={(e) => {
+                                  setProduct({
+                                    ...product,
+                                    colors: product?.colors.map((c, i) =>
+                                      i === index ? e.target.value : c
+                                    ),
+                                  });
+                                }}
+                                id="colorPicker"
+                                className="product-color w-[50px] h-[50px] border-[1.1px] border-gray-500"
+                                // className="w-[50px] h-[50px] border-[1.1px] border-gray-500 rounded-[15px] bg-transparent color-input cursor-pointer"
+                                name="colorPicker"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                     
+                        <div
+                          className="border text-white bg-primary hover:opacity-90 rounded-lg py-2 text-center cursor-pointer"
+                          onClick={() =>
+                            setProduct({
+                              ...product,
+                              colors: [...product?.colors, "#000000"],
+                            })
+                          }
+                        >
+                          Add More Colors
+                        </div>
+                      
+
+                      {errors && errors.colors && (
+                        <div className="text-red-500 text-sm">
+                          {errors.colors}
+                        </div>
+                      )}
+                    </div>
               </div>
             </div>
           </div>
-          <div className="col-span-6">
-            <div className="flex flex-col gap-4">
-              <div>
-                <h3 className="text-lg font-semibold text-primary">
-                  Product Images
-                </h3>
-              </div>
-              <div className="p-4 border border-gray-200 rounded-lg grid grid-cols-8 gap-4 h-64">
-                {product.image ? (
-                  <div className="col-span-4 rounded-lg relative overflow-hidden">
-                    <img
-                      src={product.image}
-                      className="w-full h-full object-contain"
-                      alt="main-image"
-                    />
+          <div className='col-span-6'>
+            <div className='flex flex-col gap-4'>
+            <div>
+                    <h3 className="text-lg font-semibold text-primary">
+                      Product Images
+                    </h3>
+                    {errors && errors.image && (
+                      <div className="text-red-500 text-sm">{errors.image}</div>
+                    )}
                   </div>
-                ) : (
-                  <></>
-                )}
-                <div className="col-span-4 grid grid-cols-2 grid-rows-2 gap-4">
-                  {product.subImages.map((subImage, index) =>
-                    subImage?.image ||
-                    (typeof subImage === "string" && subImage) ? (
-                      <div
-                        key={index}
-                        className="rounded-lg relative overflow-hidden"
-                      >
-                        <div className="h-[100px] w-full">
-                          <img
-                            src={
-                              typeof subImage === "string"
-                                ? subImage
-                                : subImage?.image
-                            }
-                            className="h-full w-full object-contain"
-                            alt="main-image"
-                          />
-                        </div>
+                  <div className="p-3 border border-gray-200 rounded-lg grid grid-cols-8 gap-4 min-h-64">
+                    {product.image && (
+                      <div className="col-span-4 rounded-lg relative overflow-hidden">
+                        <img
+                          src={product.image}
+                          className="w-full h-full object-contain"
+                          alt="main-image"
+                        />
+                       
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveImage()}
+                            className="absolute top-[2px] right-[3px] text-red-500 text-lg rounded-full bg-white"
+                          >
+                            <RxCrossCircled />
+                          </button>
+                       
                       </div>
-                    ) : (
-                      <></>
-                    )
-                  )}
-                </div>
-              </div>
-              <h3 className="text-lg font-semibold text-primary">Pricing</h3>
-              <div className="p-4 border border-gray-200 rounded-lg flex flex-col gap-4">
-                <div className="flex flex-col self-start gap-2">
+                    ) }
+                      <div className="col-span-4 border-dashed border-2 rounded-lg border-gray-200">
+                        <label
+                          htmlFor="main-image"
+                          className="h-full flex flex-col gap-2 justify-center items-center cursor-pointer text-sm"
+                        >
+                          <IoCloudUploadOutline className="text-2xl" />
+                          <span>Click to upload image</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            name="main-image"
+                            id="main-image"
+                            className="hidden"
+                            onChange={(e) => onImageChange(e)}
+                          />
+                        </label>
+                      </div>
+                    {product?.subImages?.length >0 &&
+                    <div className="col-span-4 grid grid-cols-2 grid-rows-2 gap-4">
+                      {product.subImages.map((subImage, index) =>
+                        subImage?.image ||
+                        (typeof subImage === "string" && subImage) ? (
+                          <div
+                            className="rounded-lg relative overflow-hidden"
+                            key={index}
+                          >
+                            <div className="h-[100px] w-full">
+                              <img
+                                src={
+                                  typeof subImage === "string"
+                                    ? subImage
+                                    : subImage?.image
+                                }
+                                className="h-full w-full object-contain"
+                                alt="main-image"
+                              />
+                            </div>
+                            
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveImage(index)}
+                                className="absolute top-[2px] right-[3px] text-red-500 text-lg rounded-full bg-white"
+                              >
+                                <RxCrossCircled />
+                              </button>
+                          
+                          </div>
+                        ) : selectedProduct?.id &&
+                          typeof subImage === "string" &&
+                          !subImage ? (
+                          <></>
+                        ) : (
+                          <div className="border-dashed border-2 rounded-lg border-gray-200">
+                            <label
+                              htmlFor="image-0"
+                              className="h-full flex flex-col gap-2 justify-center items-center cursor-pointer text-xs"
+                            >
+                              <IoCloudUploadOutline className="text-2xl" />
+                              <span>Upload image</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                name="image-0"
+                                id="image-0"
+                                className="hidden"
+                                onChange={(e) => onImageChange(e, index)}
+                              />
+                            </label>
+                          </div>
+                        )
+                      )}
+                    </div>
+                    }
+                  </div>
+              <h3 className='text-lg font-semibold text-primary'>Pricing</h3>
+              <div className='p-4 border border-gray-200 rounded-lg flex flex-col gap-4'>
+                <div className='flex flex-col self-start gap-2'>
                   <label>Cost Price</label>
                   <input
                     required
-                    disabled
-                    type="number"
-                    value={product?.costPrice === 0 ? "" : product?.costPrice}
-                    className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    onChange={handleCostPrice}
+                    type='number'
+                    value={product?.costPrice === 0 ? '' : product?.costPrice}
+                    className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   />
                 </div>
-                <div className="flex justify-between gap-2">
+                <div className='flex justify-between gap-2'>
                   <div>
-                    <label className="inline-block mb-2">Sale Price</label>
+                    <label className='inline-block mb-2'>Sale Price</label>
                     <input
-                      type="number"
-                      placeholder="By default 0"
-                      value={product?.salePrice === 0 ? "" : product?.salePrice}
-                      onChange={(e) =>
-                        setProduct({
-                          ...product,
-                          salePrice:
-                            e.target.value === "" ? 0 : Number(e.target.value),
-                        })
-                      }
-                      onKeyDown={(e) => {
+                      type='number'
+                      placeholder='By default 0'
+                      value={product?.salePrice === 0 ? '' : product?.salePrice}
+                      onChange={handleSalePrice}
+                      onKeyDown={e => {
                         if (
-                          e.key === "-" ||
-                          e.key === "e" ||
-                          e.key === "E" ||
+                          e.key === '-' ||
+                          e.key === 'e' ||
+                          e.key === 'E' ||
                           parseInt(e.key) < 0
                         ) {
-                          e.preventDefault();
+                          e.preventDefault()
                         }
                       }}
-                      className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                     />
                     {errors.salePrice && (
-                      <span className="text-red-500 text-xs">
+                      <span className='text-red-500 text-xs'>
                         {errors.salePrice}
                       </span>
                     )}
                   </div>
                   <div>
-                    <label className="inline-block mb-2">
+                    <label className='inline-block mb-2'>
                       Discount (Optional)
                     </label>
                     <input
-                      type="number"
-                      placeholder="By default 0"
-                      value={product?.discount === 0 ? "" : product?.discount}
-                      onChange={(e) =>
-                        setProduct({
-                          ...product,
-                          discount:
-                            e.target.value === "" ? 0 : Number(e.target.value),
-                        })
-                      }
-                      onKeyDown={(e) => {
+                      type='number'
+                      placeholder='By default 0'
+                      value={product?.discount === 0 ? '' : product?.discount}
+                      onChange={handleDiscount}
+                      onKeyDown={e => {
                         if (
-                          e.key === "-" ||
-                          e.key === "e" ||
-                          e.key === "E" ||
+                          e.key === '-' ||
+                          e.key === 'e' ||
+                          e.key === 'E' ||
                           parseInt(e.key) < 0
                         ) {
-                          e.preventDefault();
+                          e.preventDefault()
                         }
                       }}
-                      className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                     />
                   </div>
                 </div>
               </div>
-              <h3 className="text-lg font-semibold text-primary">Inventory</h3>
-              <div className="p-4 border border-gray-200 rounded-lg flex justify-center gap-4">
-                <div className="flex flex-col gap-2">
+              <h3 className='text-lg font-semibold text-primary'>Inventory</h3>
+              <div className='p-4 border border-gray-200 rounded-lg flex justify-center gap-4'>
+                <div className='flex flex-col gap-2'>
                   <label>Amount</label>
                   <input
                     required
-                    disabled
-                    type="number"
+                    onChange={(e) => {
+                      setProduct({
+                        ...product,
+                        amount:
+                          e.target.value === ""
+                            ? ""
+                            : Number(e.target.value),
+                      });
+                    }}
+                    type='number'
                     value={product?.amount}
-                    className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   />
                 </div>
-                <div className="flex flex-col gap-2">
+                <div className='flex flex-col gap-2'>
                   <label>SKU (Optional)</label>
                   <input
-                    disabled
-                    type="text"
+                    required
+                    onChange={(e) =>
+                      setProduct({
+                        ...product,
+                        sku: e.target.value,
+                      })
+                    }
+                    type='text'
                     value={product?.sku}
-                    className="block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className='block px-4 py-2 text-sm text-primary border-[1.3px] border-gray-300 rounded-lg bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   />
                 </div>
               </div>
-              <div className="flex justify-end">
-                <button
+             <div className="flex gap-2">
+                      
+                        <button
+                          
+                          className="text-white bg-secondary text-sm px-6 py-2 rounded-md"
+                          onClick={()=>{
+                            updateView('list')
+                          }}
+                        >
+                          Cancel
+                        </button>
+                        {tabIndex===0 &&  <button
                   disabled={isPublishing}
-                  className="flex items-center justify-center gap-4 px-6 py-2 bg-primary hover:opacity-90 text-white rounded-lg disabled:bg-opacity-30 disabled:cursor-not-allowed"
+                  className='flex items-center justify-center gap-4 px-6 py-2 bg-primary hover:opacity-90 text-white rounded-lg disabled:bg-opacity-30 disabled:cursor-not-allowed'
                   onClick={() => publishProduct()}
                 >
-                  {isPublishing && <ClipLoader size={20} color="#201F20" />}
+                  {/* {isPublishing && <ClipLoader size={20} color='#201F20' />} */}
                   Publish Product
                 </button>
-              </div>
+                        
+
+               
+                        }
+                        <button
+                          disabled={isPublishing}
+                          className="flex items-center justify-center gap-4 px-6 py-2 bg-primary hover:opacity-90 text-white rounded-lg disabled:bg-opacity-30 disabled:cursor-not-allowed"
+                          onClick={validateProduct}
+                        >
+                          
+                          Save
+                        </button>
+                      </div> 
+              
+              
+                     
+                    
             </div>
           </div>
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Product;
+export default Product

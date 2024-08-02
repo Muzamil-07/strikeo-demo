@@ -1,8 +1,7 @@
-import Header from '../components/Header'
-import Footer from '../components/Footer'
 import { Tabs, Flowbite } from 'flowbite-react'
 import History from './History'
 import ToReview from './ToReview'
+import Navbar from '../mobile/components/Navbar'
 
 const theme = {
   tabs: {
@@ -69,7 +68,7 @@ const theme = {
 const ReviewProducts = () => {
   return (
     <div>
-      <Header background='black' />
+      <Navbar bgLight />
       <div className="bg-[url('/strikeo.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
         <div className='fixed left-0 top-0 bg-black bg-opacity-60 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none'></div>
       </div>
@@ -87,7 +86,6 @@ const ReviewProducts = () => {
           </Flowbite>
         </div>
       </div>
-      <Footer />
     </div>
   )
 }

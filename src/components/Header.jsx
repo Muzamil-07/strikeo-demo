@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { logo } from "../assets";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, setUser } from "../redux/slices/User";
 import { toggleTheme } from "../redux/slices/Theme";
 import { toast } from "react-toastify";
-import { CgProfile } from "react-icons/cg";
 import http from "../api";
 import { IoIosArrowDown } from "react-icons/io";
 import { setSelectedCategory } from "../redux/slices/Category";
@@ -131,7 +130,7 @@ const Header = () => {
 
       prevData[0].orders = res.data.data;
     } catch (error) {
-      console.log(error);
+      //
     } finally {
       prevData[0].isLoading = false;
       setTabsData([...prevData]);
@@ -147,7 +146,7 @@ const Header = () => {
 
       prevData[1].orders = res.data.data;
     } catch (error) {
-      console.log(error);
+      //
     } finally {
       prevData[1].isLoading = false;
       setTabsData([...prevData]);
@@ -180,7 +179,7 @@ const Header = () => {
       setProductToReview();
       getPengingReviews();
     } catch (error) {
-      console.log(error);
+      //
     } finally {
       setIsSubmittingReview(false);
     }
@@ -240,8 +239,6 @@ const Header = () => {
       });
       toast.success("Profile updated successfully!");
     } catch (error) {
-      console.log(error);
-
       const errorMessage = "username: is invalid";
       const errorMessage1 = "Username already taken!";
       const isUsernameTaken =

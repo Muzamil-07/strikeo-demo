@@ -50,10 +50,12 @@ const Landing = () => {
           <LandingHeader toggleModal={toggleModal} />
         </div>
         <div className='row-span-3 flex flex-col justify-end items-start gap-4'>
-          <h2 className='text-7xl font-bold'>STRIKE O</h2>
-          <p className='text-xl'>
-            Join our pack of free spirits, where community rules and <br />{' '}
-            innovation meets the road!
+          <h2 className='md:text-7xl text-5xl text-center font-bold'>
+            STRIKE O
+          </h2>
+          <p className='md:text-xl'>
+            Join our pack of free spirits, where community rules and innovation
+            meets the road!
           </p>
           <button
             onClick={toggleModal}

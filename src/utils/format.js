@@ -11,15 +11,14 @@ const formatDate = function (date) {
   return `${day}-${month}-${year}`;
 };
 
-const formatMoney = function(money) {
-    if(!money)
-      return "0";
-    return `${money.toLocaleString()} Tk`
-}
+const formatMoney = function (money) {
+  if (!money) return "0 Tk";
+  return `${money.toLocaleString()} Tk`;
+};
 
 const format = {
   formatDate,
-  formatMoney
+  formatMoney,
 };
 
 export default format;

@@ -49,7 +49,11 @@ export function useKeyboard () {
     const currentTouchX = event.touches[0].clientX
     const currentTouchY = event.touches[0].clientY
 
-    if (previousTouchX !== undefined && previousTouchY !== undefined) {
+    if (
+      previousTouchX !== undefined &&
+      previousTouchY !== undefined &&
+      event.target.tagName === 'CANVAS'
+    ) {
       const deltaX = currentTouchX - previousTouchX
       const deltaY = currentTouchY - previousTouchY
 
@@ -107,9 +111,10 @@ export function useKeyboard () {
     //   joystickBaseElement.addEventListener('touchmove', handleTouchMove)
     //   joystickBaseElement.addEventListener('touchend', touchEnd)
     // }
+    const storeCanvas = document.getElementById('storeCanvas')
 
-    document.addEventListener('touchmove', handleTouchMove)
-    document.addEventListener('touchend', touchEnd)
+    storeCanvas.addEventListener('touchmove', handleTouchMove)
+    storeCanvas.addEventListener('touchend', touchEnd)
     return () => {
       document.removeEventListener('keydown', keydown)
       document.removeEventListener('keyup', keyup)
@@ -118,8 +123,8 @@ export function useKeyboard () {
       //   joystickBaseElement.removeEventListener('touchmove', handleTouchMove)
       //   joystickBaseElement.removeEventListener('touchend', touchEnd)
       // }
-      document.removeEventListener('touchmove', handleTouchMove)
-      document.removeEventListener('touchend', touchEnd)
+      storeCanvas.removeEventListener('touchmove', handleTouchMove)
+      storeCanvas.removeEventListener('touchend', touchEnd)
     }
   }, [keyboard])
 

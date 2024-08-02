@@ -10,7 +10,18 @@ import { environment } from "../constants";
 // eslint-disable-next-line react/display-name
 const AddForm = forwardRef(
   (
-    { updateView, getUsers, roles, company, userType, setActionLoader },
+    {
+      updateView,
+      getUsers,
+      roles,
+      setVendor,
+      company,
+      userType,
+      setActionLoader,
+      step,
+      setStep,
+      vendor,
+    },
     ref
   ) => {
     const defaultSelectedUser = {
@@ -53,7 +64,10 @@ const AddForm = forwardRef(
       profileImage: null,
       roleId: null,
     };
-    const [selectedUser, setSelectedUser] = useState(defaultSelectedUser);
+    const [selectedUser, setSelectedUser] = useState(
+      vendor || defaultSelectedUser
+    );
+
     const [errors, setErrors] = useState(errorsBody);
     const [isAddingUser, setIsAddingUser] = useState(false);
 
@@ -66,9 +80,9 @@ const AddForm = forwardRef(
           "-" +
           selectedCountry?.isoCode
       ];
-    const citiesAvailable = Object.values(states || {}).flatMap((stateCities) =>
-      stateCities.map((city) => city)
-    ).sort((a, b) => a.name.localeCompare(b.name));
+    const citiesAvailable = Object.values(states || {})
+      .flatMap((stateCities) => stateCities.map((city) => city))
+      .sort((a, b) => a.name.localeCompare(b.name));
 
     const handleImageChange = (e) => {
       const file = e.target.files[0];
@@ -144,11 +158,17 @@ const AddForm = forwardRef(
         errors.contact.secondaryPhone = "Secondary phone number is invalid";
       }
 
-      if(selectedUser.emergencyContact.name && !selectedUser.emergencyContact.phone.trim()) {
+      if (
+        selectedUser.emergencyContact.name &&
+        !selectedUser.emergencyContact.phone.trim()
+      ) {
         errors.emergencyContact.phone = "Emergency phone is required with name";
       }
 
-      if (selectedUser.emergencyContact.phone && !selectedUser.emergencyContact.name.trim()) {
+      if (
+        selectedUser.emergencyContact.phone &&
+        !selectedUser.emergencyContact.name.trim()
+      ) {
         errors.emergencyContact.name = "Emergency name is required with phone";
       }
 
@@ -159,15 +179,20 @@ const AddForm = forwardRef(
         errors.emergencyContact.phone = "Emergency phone number is invalid";
       }
 
-		if (userType!=="agent" && !selectedUser.contact.email.trim()) {
-			errors.contact.email = "Email is required";
-		}
+      if (userType !== "agent" && !selectedUser.contact.email.trim()) {
+        errors.contact.email = "Email is required";
+      } else if (
+        !selectedUser.contact.email.includes("@") ||
+        !selectedUser.contact.email.includes(".com")
+      ) {
+        errors.contact.email = "Enter valid email";
+      }
 
       if (!selectedUser.contact.address.trim()) {
         errors.contact.address = "Address is required";
       }
 
-      if (!selectedUser.file) {
+      if (!selectedUser.profileImage) {
         errors.profileImage = "Profile image is required";
       }
 
@@ -179,8 +204,9 @@ const AddForm = forwardRef(
       }
       if (userType === "vendor") {
         if (!company?.id) {
-          toast.error("Company is required");
-          return;
+          company.id = null;
+          // toast.error("Company is required");
+          // return;
         }
       }
       if (userType === "agent") {
@@ -201,7 +227,65 @@ const AddForm = forwardRef(
         return;
       } else {
         setErrors(errorsBody);
-        addUser();
+        if (selectedUser?.id) {
+          updateUser();
+        } else {
+          addUser();
+        }
+      }
+    };
+
+    const updateUser = async () => {
+      setIsAddingUser(true);
+      if (userType === "vendor") {
+        setActionLoader((prevLoader) => ({ ...prevLoader, vendor: true }));
+      } else {
+        setIsAddingUser(true);
+      }
+      try {
+        let file = selectedUser.file;
+        let formData = new FormData();
+        formData.append("file", file);
+
+        let imgData;
+        if (selectedUser.file) {
+          const res = await http.post(
+            environment.file_url + "/upload",
+            formData,
+            {
+              headers: { "Content-Type": "multipart/form-data" },
+            }
+          );
+          imgData = res.data;
+        }
+
+        // eslint-disable-next-line no-unused-vars
+        const res = await http.put("vendor/" + selectedUser?.id, {
+          ...selectedUser,
+          profileImage: imgData
+            ? imgData[0]?.[selectedUser?.file?.name]
+            : selectedUser?.profileImage,
+        });
+
+        if (userType === "vendor") {
+          setVendor(res?.data?.data);
+          setStep(step + 1);
+        }
+        const successMsg =
+          userType === "vendor"
+            ? "Vendor updated successfully!"
+            : userType === "agent"
+            ? "Agent updated successfully!"
+            : "Employee updated successfully!";
+        toast.success(successMsg);
+      } catch (error) {
+        toast.error("Failed to update vendor!");
+      }
+      setIsAddingUser(false);
+      if (userType === "vendor") {
+        setActionLoader((prevLoader) => ({ ...prevLoader, vendor: false }));
+      } else {
+        setIsAddingUser(false);
       }
     };
 
@@ -253,6 +337,10 @@ const AddForm = forwardRef(
           delete apiData.roleId;
         }
         const res = await http.post(apiUrl, apiData);
+        if (userType === "vendor") {
+          setVendor(res?.data?.data);
+          setStep(step + 1);
+        }
         const successMsg =
           userType === "vendor"
             ? "Vendor added successfully!"
@@ -260,10 +348,7 @@ const AddForm = forwardRef(
             ? "Agent added successfully!"
             : "Employee added successfully!";
         toast.success(successMsg);
-        getUsers();
-        updateView("list");
       } catch (error) {
-        console.log(error);
         const errorMessage =
           error.response?.data?.message ?? "Something went wrong.";
         toast.error(errorMessage);
@@ -281,12 +366,8 @@ const AddForm = forwardRef(
     }));
 
     return (
-      <div className="py-4">
-        <div className="my-5">
-          <p className="text-xl text-black-900 font-semibold">Add Details</p>
-          <p className="text-sm">You can add details here</p>
-        </div>
-        <div className="mt-5 grid grid-cols-12 gap-5">
+      <div>
+        <div className="grid grid-cols-12 gap-3">
           <div className="col-span-8">
             <div className="mt-5 grid grid-cols-12 gap-5">
               <div className="col-span-6">
@@ -338,14 +419,13 @@ const AddForm = forwardRef(
                         </div>
                       )}
                     </>
-                  ) :  (
+                  ) : (
                     <></>
                   )}
                 </div>
               </div>
             </div>
             <div className="mt-5 grid grid-cols-12 gap-5">
-              
               <div className="col-span-6">
                 <div className="flex flex-col gap-2">
                   <label className="text-sm">Last Name*</label>
@@ -372,7 +452,7 @@ const AddForm = forwardRef(
                   }`}</label>
                   <input
                     required
-                    type="text"
+                    type="email"
                     value={selectedUser?.contact?.email}
                     onChange={(e) =>
                       handleUserChange("contact.email", e.target.value)
@@ -426,7 +506,7 @@ const AddForm = forwardRef(
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-12 gap-5 mt-2">
+        <div className="grid grid-cols-12 gap-3 mt-3">
           <div className="col-span-4">
             <div className="flex flex-col gap-2">
               <label className="text-sm">Gender*</label>
@@ -476,7 +556,7 @@ const AddForm = forwardRef(
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-12 gap-5 mt-5">
+        <div className="grid grid-cols-12 gap-3 mt-3">
           <div className="col-span-4">
             <div className="flex flex-col gap-2">
               <label className="text-sm">Primary Contact*</label>
@@ -503,7 +583,9 @@ const AddForm = forwardRef(
                 required
                 type="number"
                 value={selectedUser?.contact?.secondaryPhone}
-                onChange={(e) => handleUserChange("contact.secondaryPhone", e.target.value)}
+                onChange={(e) =>
+                  handleUserChange("contact.secondaryPhone", e.target.value)
+                }
                 className="outline-none border border-gray-400 rounded-md text-black bg-white px-3 py-2"
               />
             </div>
@@ -532,9 +614,8 @@ const AddForm = forwardRef(
               )}
             </div>
           </div>
-          
         </div>
-        <div className="grid grid-cols-12 gap-5 mt-2">
+        <div className="grid grid-cols-12 gap-3 mt-3">
           <div className="col-span-4">
             <div className="flex flex-col gap-2">
               <label className="text-sm">Emergency Contact Name</label>
@@ -574,33 +655,29 @@ const AddForm = forwardRef(
             </div>
           </div>
           {userType === "agent" && (
-                    <div className="col-span-4">
-                      <div className="flex flex-col gap-2">
-                      <label className="w-56 text-sm">City*</label>
-                      <select
-                        required
-                        value={selectedUser?.city}
-                        disabled={!selectedUser?.country}
-                        onChange={(e) =>
-                          handleUserChange("city", e.target.value)
-                        }
-                        className="outline-none border border-gray-400 rounded-md text-black bg-white px-3 py-2 w-full"
-                      >
-                        <option value="">Select City</option>
-                        {citiesAvailable?.map((city) => (
-                          <option key={city.name} value={city.name}>
-                            {city.name}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.city && (
-                        <div className="text-red-500 text-sm">
-                          {errors.city}
-                        </div>
-                      )}
-                      </div>
-                    </div>
-                  ) }
+            <div className="col-span-4">
+              <div className="flex flex-col gap-2">
+                <label className="w-56 text-sm">City*</label>
+                <select
+                  required
+                  value={selectedUser?.city}
+                  disabled={!selectedUser?.country}
+                  onChange={(e) => handleUserChange("city", e.target.value)}
+                  className="outline-none border border-gray-400 rounded-md text-black bg-white px-3 py-2 w-full"
+                >
+                  <option value="">Select City</option>
+                  {citiesAvailable?.map((city) => (
+                    <option key={city.name} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.city && (
+                  <div className="text-red-500 text-sm">{errors.city}</div>
+                )}
+              </div>
+            </div>
+          )}
           {userType === "agent" && (
             <div className="col-span-4">
               <div className="flex flex-col gap-2">
@@ -619,27 +696,27 @@ const AddForm = forwardRef(
             </div>
           )}
         </div>
-        
-          <div className="mt-2">
-            <div className="flex flex-col gap-2">
-              <label className="text-sm">Address*</label>
-              <textarea
-                rows={3}
-                value={selectedUser?.contact?.address}
-                onChange={(e) =>
-                  handleUserChange("contact.address", e.target.value)
-                }
-                className={
-                  "outline-none border border-gray-400 rounded-md text-black bg-white px-3 py-2"
-                }
-              />
-              {errors.contact?.address && (
-                <div className="text-red-500 text-sm">
-                  {errors.contact?.address}
-                </div>
-              )}
-            </div>
+
+        <div className="mt-3">
+          <div className="flex flex-col gap-3">
+            <label className="text-sm">Address*</label>
+            <textarea
+              rows={3}
+              value={selectedUser?.contact?.address}
+              onChange={(e) =>
+                handleUserChange("contact.address", e.target.value)
+              }
+              className={
+                "outline-none border border-gray-400 rounded-md text-black bg-white px-3 py-2"
+              }
+            />
+            {errors.contact?.address && (
+              <div className="text-red-500 text-sm">
+                {errors.contact?.address}
+              </div>
+            )}
           </div>
+        </div>
         {(userType === "employee" || userType === "agent") && (
           <div className="flex justify-end mt-3">
             <button

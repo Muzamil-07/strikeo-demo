@@ -71,7 +71,7 @@ const Profile = ({ loggedInUser, selectedUser, setSelectedUser, getUsers, userTy
 			setSelectedUser(res.data.data);
 			setProfile(res.data.data);
 		} catch (error) {
-			console.log(error);
+			//
 		}
 	};
 
@@ -169,7 +169,6 @@ const Profile = ({ loggedInUser, selectedUser, setSelectedUser, getUsers, userTy
 			getUsers();
 			getSelectedUser();
 		} catch (error) {
-			console.log(error);
 			toast.error("Failed to update profile!");
 		}
 		setIsLoading(false);
@@ -180,7 +179,7 @@ const Profile = ({ loggedInUser, selectedUser, setSelectedUser, getUsers, userTy
 			const res = await http.get("/role/vendor?all=true");
 			setRoles(res.data.data?.roles);
 		} catch (error) {
-			console.log(error);
+			//
 		}
 	};
 

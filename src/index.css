@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -40,7 +39,8 @@
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -49,13 +49,13 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #264653;
-  border-radius: 10px;
+  background-color: #111;
+  border-radius: 4px;
 }
 
 .info-scroll::-webkit-scrollbar {
   width: 6px;
-  height: 6px;
+  height: 4px;
 }
 
 .info-scroll::-webkit-scrollbar-track {
@@ -64,9 +64,8 @@
 }
 
 .info-scroll::-webkit-scrollbar-thumb {
-  background-color: #c1c1c1b4;
-  background-color: #374151;
-  border-radius: 10px;
+  background-color: #111;
+  border-radius: 4px;
 }
 
 .cookies-list {
@@ -143,8 +142,7 @@ input[type='number'] {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: white !important;
+  background: black !important;
 }
 
 div#root {
@@ -154,10 +152,7 @@ div#root {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: rgb(255, 242, 59);
-  background: rgb(95, 93, 67);
-  background: rgb(117, 78, 5);
-  background: white !important;
+  background: #111 !important;
 }
 
 input:focus,
@@ -168,4 +163,136 @@ input:active {
 
 #video_container div {
   height: auto !important;
+}
+
+.MuiAccordion-root {
+  background: transparent !important;
+  color: white !important;
+}
+
+.MuiCircularProgress-svg {
+  color: #dd8560 !important;
+}
+
+.slick-dots li button:before {
+  color: grey !important;
+  opacity: 0.5 !important;
+  font-size: 10px !important;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #dd8560 !important;
+  opacity: 1 !important;
+  font-size: 10px !important;
+}
+.slick-next {
+  right: 0 !important;
+  z-index: 200000 !important;
+}
+.slick-prev {
+  left: 0 !important;
+  z-index: 200000 !important;
+}
+.MuiLoadingButton-root.MuiLoadingButton-loading {
+  background-color: #888a8d72 !important;
+}
+
+.logo-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeInScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logo {
+  height: auto;
+  animation: fadeInScaleUp 2s ease-in-out backwards infinite;
+  object-fit: cover;
+}
+
+.cursor {
+  width: 40px;
+  height: 40px;
+  border: 2px solid white;
+  border-radius: 50%;
+  position: absolute;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+  animation: cursorAnim 0.5s infinite alternate;
+  pointer-events: none;
+  z-index: 10000000;
+}
+
+.cursor::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  border: 8px solid gray;
+  border-radius: 50%;
+  opacity: 0.5;
+  top: -4px;
+  left: -4px;
+  animation: cursorAnim2 0.5s infinite alternate;
+}
+
+@keyframes cursorAnim {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.7);
+  }
+}
+
+@keyframes cursorAnim2 {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0.4);
+  }
+}
+
+@keyframes cursorAnim3 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(3);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+.expand {
+  animation: cursorAnim3 0.5s forwards;
+  border: 1px solid red;
+}
+
+.circle {
+  height: 24px;
+  width: 24px;
+  border-radius: 24px;
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999999; /* so that it stays on top of all other elements */
 }

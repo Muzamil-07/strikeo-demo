@@ -1,12 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react'
-import {
-  NavLink,
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams
-} from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Flowbite, Spinner, Rating } from 'flowbite-react'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { IoMdHeart } from 'react-icons/io'
@@ -21,13 +15,13 @@ import {
 import ContentLoader from '../components/ContentLoader/ContentLoader'
 import { Button } from 'flowbite-react'
 import { toast } from 'react-toastify'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setFavourites } from '../../../redux/slices/Favourite'
-import Header from '../components/Header/Header'
 import Cookies from 'js-cookie'
 import Reviews from './Reviews'
 import RelatedProducts from './RelatedProducts'
 import ImageContainer from '../../../components/ImageContainer'
+import Navbar from '../mobile/components/Navbar'
 
 const theme = {
   accordion: {
@@ -135,7 +129,8 @@ const QuantitySelector = ({ handleDecrement, quantity, handleIncrement }) => {
 
 const ProductDetails = () => {
   const { state } = useLocation()
-  if (!state) <Navigate to='/experience' />
+  const user = useSelector(state => state.user)
+  if (!state) <Navigate to='/' />
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -168,7 +163,9 @@ const ProductDetails = () => {
     useGetProductQuery({ id })
 
   const { data: favouriteData, isLoading: isFavouriteLoading } =
-    useGetFavouritesQuery()
+    useGetFavouritesQuery(null, {
+      skip: !user.isLoggedIn
+    })
 
   const starElements = Array.from({ length: 5 }, (_, index) => (
     <Rating.Star
@@ -208,15 +205,9 @@ const ProductDetails = () => {
       toast.success('Item has been removed from your favourite list!')
     }
   }
-
   useEffect(() => {
     if (productData) {
-      setSelectedImage(
-        productData.data.image.replace(
-          'http://localhost:3000/',
-          'http://localhost:8000/'
-        )
-      )
+      setSelectedImage(productData.data.image)
       setSelectedSize(productData.data.sizes[0])
       setSelectedColor(productData.data.colors[0])
     }
@@ -227,42 +218,37 @@ const ProductDetails = () => {
   }, [dispatch, favouriteData, id, productData])
   return (
     <>
-      <Header background={'black'} />
+      <Navbar bgLight />
       <div className="bg-[url('/strikeo.webp')] h-screen bg-cover bg-no-repeat bg-center bg-fixed text-white px-24">
         <div className='fixed left-0 top-0 bg-black bg-opacity-60 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none'></div>
-        <div className='fixed inset-0 z-[1065] h-full pt-[6rem] pb-[3rem]'>
-          <div className='h-full w-11/12 mx-auto rounded-2xl bg-primary bg-opacity-70 pl-8 pr-6 py-8'>
+        <div className='fixed inset-0 z-[1065] h-full pt-[5rem] '>
+          <div className='h-full  mx-auto rounded-2xl bg-primary bg-opacity-70 pl-4 pr-3 py-4'>
             {/*TOP BACK ARROW */}
-            <div className='text-2xl font-semibold flex justify-center items-start relative'>
-              <NavLink
-                to={`/products/category/${state.category.name}`}
-                state={{
-                  category: state.category.name,
-                  item: state.item
-                }}
+            <div
+              className='text-2xl font-semibold flex justify-center items-start relative cursor-pointer'
+              onClick={() => navigate(-1)}
+            >
+              <svg
+                className='w-6 h-6 text-white absolute left-0'
+                aria-hidden='true'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='white'
+                viewBox='0 0 14 10'
               >
-                <svg
-                  className='w-6 h-6 text-white absolute left-0'
-                  aria-hidden='true'
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='white'
-                  viewBox='0 0 14 10'
-                >
-                  <path
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M13 5H1m0 0 4 4M1 5l4-4'
-                  />
-                </svg>
-              </NavLink>
+                <path
+                  stroke='currentColor'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth='2'
+                  d='M13 5H1m0 0 4 4M1 5l4-4'
+                />
+              </svg>
             </div>
 
-            <div className='h-full py-6 pt-14'>
+            <div className='h-full pt-10'>
               <div className='h-full w-full flex gap-4'>
                 {/* LEFT CONTENT */}
-                <div className='w-1/3 px-4 bg-black flex justify-center items-center'>
+                <div className='w-[28%] px-4 bg-black flex justify-center items-center rounded-lg'>
                   <ExportModel
                     type={state.item}
                     category={state.category.name}
@@ -270,35 +256,27 @@ const ProductDetails = () => {
                 </div>
 
                 {/* RIGHT CONTENT */}
-                {productData ? (
-                  <div className='flex-1 px-4 border-l overflow-y-auto info-scroll  flex-col gap-6'>
+                {productData && selectedImage ? (
+                  <div className='flex-1 px-4 overflow-y-auto info-scroll  flex-col gap-6'>
                     <div className='grid grid-cols-2 px-6 gap-3'>
                       <div className='items-center w-[80%] justify-center'>
                         <ImageContainer
                           width={350}
                           height={350}
-                          src={productData.data.image}
-                          // src={selectedImage}
+                          src={selectedImage}
                         />
                         <div className='grid grid-cols-4 gap-2'>
                           {productData.data.subImages?.map(
-                            (otherImages, index, arr) => {
-                              if (otherImages)
+                            (otherImage, index, arr) => {
+                              if (otherImage)
                                 return (
                                   <div
                                     key={index}
                                     className={`w-[calc(100%/${arr.length})] h-50 cursor-pointer`}
-                                    onClick={e =>
-                                      setSelectedImage(e.target.src)
-                                    }
+                                    onClick={() => setSelectedImage(otherImage)}
                                   >
                                     <img
-                                      // src={otherImages.replace(
-                                      //   "http://localhost:3000/",
-                                      //   "http://localhost:8000/"
-                                      // )}
-                                      src={otherImages}
-                                      value={otherImages}
+                                      src={otherImage}
                                       alt={productData.data.name}
                                       className='h-auto max-w-full rounded-lg'
                                     />
@@ -308,7 +286,7 @@ const ProductDetails = () => {
                           )}
                         </div>
                       </div>
-                      <div className=''>
+                      <div>
                         <div className='text-3xl mb-2'>
                           {productData.data.name}
                         </div>
@@ -432,7 +410,7 @@ const ProductDetails = () => {
                 ) : (
                   <div
                     className={
-                      'flex-1 px-4 border-l flex flex-wrap overflow-y-auto info-scroll justify-center'
+                      'flex-1 px-4 flex flex-wrap overflow-y-auto info-scroll justify-center'
                     }
                   >
                     <ContentLoader />

@@ -1,0 +1,19 @@
+:root {
+  --bg: red;
+  --fg: white;
+  --dur: 8s;
+  /* font-size: calc(20px + (30 - 20) * (100vw - 320px) / (1280 - 320)); */
+}
+.loader {
+  font-size: calc(20px + (30 - 20) * (100vw - 320px) / (1280 - 320));
+
+  background: transparent;
+  color: white !important;
+  font: bold 1em/1.5 'Comfortaa', sans-serif;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  height: 100vh;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

@@ -41,7 +41,7 @@ function UserTabs({ selectedUser, setSelectedUser, getUsers, currentPage }) {
 			setSelectedUser(res.data.data);
 			setUser(res.data.data);
 		} catch (error) {
-			console.log(error);
+			//
 		}
 	};
 
@@ -96,9 +96,6 @@ function UserTabs({ selectedUser, setSelectedUser, getUsers, currentPage }) {
 				});
 				imgData = res.data;
 			}
-
-			// console.log("imgData: ", imgData[0]?.[user?.file?.name]);
-
 			const res = await http.put(
 				"user/update-profile",
 				filterUpdateUser({
@@ -112,7 +109,6 @@ function UserTabs({ selectedUser, setSelectedUser, getUsers, currentPage }) {
 			getUsers(currentPage);
 			getUser();
 		} catch (error) {
-			console.log(error);
 			toast.error("Failed to update user!");
 		}
 		setActionLoader({ ...actionLoader, profile: false });

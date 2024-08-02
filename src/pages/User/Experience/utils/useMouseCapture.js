@@ -22,12 +22,12 @@ export function useMouseCapture () {
   const dragMove = e => {
     e.preventDefault()
     e.stopImmediatePropagation()
-    if (e.target.tagName === 'BUTTON') return
+    // if (e.target.tagName !== 'CANVAS') return
 
     const touch1 = e.targetTouches[0]
     const touch2 = e.targetTouches[1]
 
-    if (previousTouch1 && touch1.target.tagName !== 'BUTTON') {
+    if (previousTouch1 && e.target.tagName === 'CANVAS') {
       const touch1MovementX = touch1.pageX - previousTouch1.pageX
       const touch1MovementY = touch1.pageY - previousTouch1.pageY
 
@@ -50,6 +50,8 @@ export function useMouseCapture () {
   // Function to request pointer lock (capture mouse)
   const capture = () => {
     // Ask the browser to lock the pointer
+    // const storeCanvas = document.getElementById("storeCanvas");
+    // if (!storeCanvas) return;
     document.body.requestPointerLock =
       document.body.requestPointerLock ||
       document.body.mozRequestPointerLock ||
@@ -59,16 +61,25 @@ export function useMouseCapture () {
 
   useEffect(() => {
     // Add event listeners for mouse movement and click
+    const storeCanvas = document.getElementById('storeCanvas')
     document.addEventListener('mousemove', mouseMove)
-    document.addEventListener('touchmove', dragMove, { passive: false })
-    document.addEventListener('touchend', dragEnd)
+    // if (storeCanvas) {
+    storeCanvas.addEventListener('touchmove', dragMove, { passive: false })
+    storeCanvas.addEventListener('touchend', dragEnd)
+    // }
+
     document.addEventListener('dblclick', capture)
 
     // Clean up the event listeners when the component unmounts
     return () => {
       document.removeEventListener('mousemove', mouseMove)
-      document.removeEventListener('touchmove', dragMove)
-      document.removeEventListener('touchend', dragEnd)
+      const storeCanvas = document.getElementById('storeCanvas')
+
+      // if (storeCanvas) {
+      storeCanvas?.removeEventListener('touchmove', dragMove)
+      storeCanvas?.removeEventListener('touchend', dragEnd)
+      // }
+
       document.removeEventListener('click', capture)
     }
   })

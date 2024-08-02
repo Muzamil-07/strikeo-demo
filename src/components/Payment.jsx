@@ -48,7 +48,7 @@ const Payment = ({ clientToken }) => {
       const res = await CartService.getCart(user.details.id)
       dispatch(setCart(res.data.data))
     } catch (error) {
-      console.log(error)
+      //
     }
   }
 
@@ -77,7 +77,6 @@ const Payment = ({ clientToken }) => {
 
       return res.data.data
     } catch (error) {
-      console.error(error)
       toast.error("Couldn't initiate payment. Please try again later.")
     }
   }
@@ -135,7 +134,6 @@ const Payment = ({ clientToken }) => {
       getUserCart()
       handleOpen()
     } catch (error) {
-      console.log(error)
       toast.error(error.response.data.message)
     } finally {
       setIsPlacingOrder(false)
@@ -181,7 +179,6 @@ const Payment = ({ clientToken }) => {
     }
 
     if (Object.keys(newErrors).length > 0) {
-      console.log(newErrors)
       // setErrors(newErrors);
       return true
     } else {

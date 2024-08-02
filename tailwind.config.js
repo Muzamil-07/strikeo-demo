@@ -17,9 +17,6 @@ export default {
         theme_tertiary: '#3C3C3C',
         theme_quaternary: '#E2E2E2'
       },
-      fontFamily: {
-        poppins: ['Poppins', 'sans-serif']
-      }
     }
   },
   plugins: [import('flowbite/plugin')]

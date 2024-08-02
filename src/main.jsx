@@ -8,6 +8,8 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js'
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore } from 'redux-persist'
 import { store } from './redux/store.js'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
 
 let persistor = persistStore(store)
 

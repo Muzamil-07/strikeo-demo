@@ -88,7 +88,7 @@ export const Player = ({
     camera.quaternion.copy(gaze)
   })
 
-  let playerPosition = isMobileDevice() ? [0, 2, 68] : [2, 0, 270]
+  let playerPosition = isMobileDevice() ? [0, 2, 68] : [2, 1, 270]
   return (
     <RigidBody
       ref={api}
